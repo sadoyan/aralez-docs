@@ -1,0 +1,78 @@
+{#-
+This file was automatically generated - do not edit
+-#}
+{% extends "base.html" %}
+
+{% block header %}
+<header class="md-header" data-md-component="header">
+    <nav class="md-header-nav xl-grid">
+        <div class="md-flex">
+            <div class="md-flex__cell md-flex__cell--shrink">
+                <a href="https://sadoyan.github.io/puypuydocs/" title="PuyPuy" class="md-header-nav__button md-logo">         
+                    <img src="{{ config.theme.logo | url }}" width="65">            
+                </a>        
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+                <a href="{{ config.site_url | default(nav.homepage.url, true) | url }}" title="Home" class="home">
+                    {% if config.theme.favicon %}            
+<!--                    <img src="{{ config.theme.favicon }}" width="35" height="30">              -->
+                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="35" height="28" viewBox="0 0 640 640" class="icon">
+                        <path d="M640 409.027l-320-248.391-320 248.392v-101.274l320-248.391 320 248.393zM560 400v240h-160v-160h-160v160h-160v-240l240-180z"></path>
+                    </svg>
+                    {% endif %}
+                </a>
+            </div>
+            {% if config.repo_url %}
+            <div class="md-flex__cell md-flex__cell--shrink">
+                <div class="md-header-nav__source">
+                    {% include "partials/source.html" %}
+                </div>
+            </div>
+            {% endif %}  
+            <div class="md-flex__cell md-flex__cell--shrink">
+                <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch">
+                <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">                                       
+                    <span class="md-header-nav__topic">
+                       {{ config.site_name }}
+                    </span>
+                    <span class="md-header-nav__topic">
+                        {{ page.title }}
+                    </span>                   
+                </div>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+                {% if "search" in config["plugins"] %}
+                <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+                {% include "partials/search.html" %}
+                {% endif %}
+            </div>      
+        </div>
+    </nav>
+</header>
+{% endblock %}
+
+{% block content %}
+<!--                {% if page.edit_url %}
+                  <a href="{{ page.edit_url }}" title="{{ lang.t('edit.link.title') }}" class="md-icon md-content__icon">&#xE3C9;</a>
+                {% endif %}-->
+    {% if not "\x3ch1" in page.content %}
+     <h1></h1>
+    {% endif %}     
+{{ page.content }}
+{% block source %}
+{% if page and page.meta and page.meta.source %}
+<h2 id="__source">{{ lang.t("meta.source") }}</h2>
+{% set repo = config.repo_url %}
+{% if repo | last == "/" %}
+{% set repo = repo[:-1] %}
+{% endif %}
+{% set path = page.meta.path | default([""]) %}
+{% set file = page.meta.source %}
+<a href="{{ [repo, path, file] | join('/') }}" title="{{ file }}" class="md-source-file">
+    {{ file }}
+</a>
+{% endif %}
+{% endblock %}
+{% endblock %}

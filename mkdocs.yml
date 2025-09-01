@@ -1,0 +1,47 @@
+site_name: Aralez (Արալեզ), Reverse proxy and service mesh built on top of Cloudflare's Pingora
+theme:
+  name: null
+  custom_dir: mkdocs-material/material
+  include_search_page: true
+  search_index_only: true
+  language: en
+  palette:
+    primary: blue grey
+    accent: blue
+  font:
+    text: Roboto
+    code: Roboto Mono
+  favicon: '/assets/images/home_white.png'
+  logo: 'images/logo/minimal.png'
+  feature:
+    tabs: false
+
+extra_css:
+  - 'stylesheets/bootstrap.css'
+  - 'stylesheets/extra.css'
+extra_javascript:
+  - 'javascripts/jquery.min.js'
+  - 'javascripts/bootstrap.min.js'
+
+repo_url: https://github.com/sadoyan/aralez
+site_url: https://github.com/sadoyan/aralez
+
+nav:
+  - 'Home': 'index.md'
+  - 'Config': 'assets/config.md'
+  - 'Authentication': 'assets/auth.md'
+  - 'Benchmarks': 'assets/perf.md'
+  - 'Prometheus Metrics': 'assets/metrics.md'
+  - 'Kubernetes Ingress': 'assets/kubernetes.md'
+#  - 'WEB Servers':
+#      - 'Apache': 'assets/ws/apache.md'
+#      - 'NginX': 'assets/ws/nginx.md'
+#      - 'PHP-FPM': 'assets/ws/php.md'
+#      - 'Tomcat': 'assets/ws/tomcat.md'
+#      - 'Jetty': 'assets/ws/jetty.md'
+#      - 'Lighttpd': 'assets/ws/lighty.md'
+#      - 'HTTP API': 'assets/ws/rest.md'
+markdown_extensions:
+  - codehilite
+plugins:
+  - search

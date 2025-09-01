@@ -1,0 +1,28 @@
+<div class="x_panel">        
+    <div class="x_content">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <nav>
+                <ul class="nextPrev ">
+                    {%- block next_prev %}
+                    {%- if page and (page.next_page or page.previous_page) %}
+                    <li {% if not page.previous_page %}class="disabled"{% endif %}>
+                        <a rel="next" {% if page.previous_page %}href="{{ base_url }}/{{ page.previous_page.url }}"{% endif %}>
+                       <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li {% if not page.next_page %}class="disabled"{% endif %}>
+                        <a rel="prev" {% if page.next_page %}href="{{ base_url }}/{{ page.next_page.url }}"{% endif %}>
+                       Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                    {%- endif %}
+                    {%- endblock %}
+                </ul>
+                <ul class="toc">
+                    {% include 'toc.html' %}
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+</div>
