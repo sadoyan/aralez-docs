@@ -117,6 +117,3 @@ rate(aralez_response_latency_seconds_sum[5m]) / rate(aralez_response_latency_sec
 | `aralez_responses_total{status="200"}` | CounterVec | Response status breakdown |
 | `aralez_response_latency_seconds`      | Histogram  | How fast responses are    |
 
-📘 *Last updated: May 2025*
-
-
