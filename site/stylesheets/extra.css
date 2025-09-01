@@ -1,0 +1,121 @@
+a {
+    color: inherit;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+}
+label {
+    margin-bottom: 0;
+}
+.md-typeset h1 {
+    display: none;
+}
+.md-sidebar--secondary {
+    margin-left: 100%!important;
+}
+.xl-grid {
+    max-width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+.md-nav {
+    font-size: .7rem;
+    line-height: 1.4;
+}
+.md-typeset {
+    font-size: .7rem;
+    line-height: 1.5;
+}
+.md-typeset .md-typeset__table {
+    display: inline-block;
+    width: 100%!important;
+    margin-bottom: .5em;
+    padding: 0 .8rem;
+}
+.md-typeset a {
+    color: #00adee;
+}
+.md-header {
+    background-color: #c7cccc;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+.md-header-nav__button.md-logo {
+    padding: 0;
+}
+.md-header-nav__title {
+    text-align: center;
+}
+.md-nav__source,
+.md-footer-nav {
+    background-color: #c7cccc;
+}
+.md-footer-nav__link {
+    padding-top: .8rem;
+    padding-bottom: .2rem;
+}
+.md-footer-nav__link:hover {
+    opacity: 1;
+    color: #0e0e0e;
+}
+.md-nav__link--active,
+.md-nav__link:active {
+    color: #00adee;
+}
+a.home>img {
+    width: 1.4rem;
+    height: 1.2rem;
+    margin-top: .6rem;
+    margin-left: .6rem;
+}
+a.try-now {
+    display: inline-block;
+    width: 140px;
+    margin: 10px 0 0 8px;
+    color: #f0f0f0;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    user-select: none;
+    outline: none;
+    border-radius: .15rem;
+    transition: 0.2s;
+}
+.md-search__input:hover {    
+    background-color: rgba(52, 58, 64, 0.6);
+    border: 1px solid #fff;
+}
+a.try-now:hover,
+a.md-source:hover,
+a.home:hover,
+a.login-now:hover {
+    opacity: 1;
+    color: #0e0e0e;
+}
+.md-search__icon[for=__search] {
+    top: .2rem;
+    left: .3rem;
+}
+.md-search__input {
+    background-color: rgba(52, 58, 64, 0.4);
+    height: 1.3rem;
+    margin-top: 3px;
+}
+.icon {
+  display: inline-block;
+  margin: 10px 0 0 8px;
+  width: 35px;
+  height: 28px;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+.icon-try {
+  display: inline-block;
+  width: 28px;
+  height: 20px;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+
