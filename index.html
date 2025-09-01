@@ -789,8 +789,20 @@ Make the binary executable <code>chmod 755 ./aralez-VERSION</code> and run.</p>
 <td><code>aralez-aarch64-glibc.gz</code></td>
 <td>Dynamic Linux ARM64 binary, with minimal system dependencies</td>
 </tr>
+<tr>
+<td><code>sadoyan/aralez</code></td>
+<td>Docker image on Debian 13 slim (https://hub.docker.com/r/sadoyan/aralez)</td>
+</tr>
 </tbody>
 </table>
+<p><strong>Via docker</strong></p>
+<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span>/local/path/to/config:/etc/aralez:ro<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="m">80</span>:80<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="m">443</span>:443<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>sadoyan/aralez
+</code></pre></div>
+
 <hr />
 <h2 id="hot-reload">🔄 Hot Reload</h2>
 <ul>
