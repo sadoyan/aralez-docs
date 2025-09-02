@@ -7,6 +7,8 @@ What Aralez means ?
 
 Built on Rust, on top of **Cloudflare’s Pingora engine**, **Aralez** delivers world-class performance, security and scalability — right out of the box.
 
+**Support my OpenSource initiative :** [![Buy Me A Coffee](https://img.shields.io/badge/☕-Buy%20me%20a%20coffee-orange)](https://www.buymeacoffee.com/sadoyan)
+
 ---
 
 ## 🔧 Key Features
