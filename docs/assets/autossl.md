@@ -11,7 +11,15 @@ This guide will walk you through preparing **Aralez** for ACME challenges and in
 In order to respond to certificate validation requests, you need to expose the path `/.well-known/acme-challenge` in your upstream configuration.  
 This allows **Let’s Encrypt** (or another ACME CA) to verify that you own the domain.  
 
-Here’s a sample configuration:  
+Edit `main.yaml` and set correct folder to `proxy_certificates` 
+
+```
+proxy_certificates: /path/to/certificates/for/aralez/
+```
+
+Basic settings in `main.yaml` requires restart of Aralez.
+
+Edit `upstreams.yaml`. Here’s a sample configuration:  
 
 ```yaml
 myhost.mydomain.com:
@@ -30,7 +38,7 @@ myhost.mydomain.com:
 ✨ **Important Notes:**
 
 * healthcheck: false ensures Aralez does not remove the ephemeral upstreams (temporary validation servers) from the proxy pool.
-* Once saved, Aralez will auto-reload the configuration 🔄 – no manual restart needed!
+* Once saved, Aralez watch and auto-reload `upstreams.yaml` 🔄 – no manual restart needed!
 
 ## 📥 Step 2: Download and Install Lego
 
@@ -46,19 +54,23 @@ Getting Lego installed is a breeze! 🪄
 
 Use Lego to request SSL certificates for one or more domain
 ```shell
+cd /path/to/lego/root/folder
+
 lego --key-type rsa2048 \
   --domains="site1.example.com" \
   --domains="site2.example.com" \
   --domains="site3.example.com" \
   --email "your-email@example.com" \
+  --accept-tos \
 --http.port=127.0.0.1:8899 --http run
 ```
 
 ### 🔎 What happens here?
-* --key-type → sets the type of cryptographic key (RSA 2048 in this case).
-* --domains → add one or multiple domains you want to secure.
-* --email → your contact email (used by Let’s Encrypt).
-* --http.port → the local port Lego will bind for the HTTP challenge.
+* `--key-type` → sets the type of cryptographic key (RSA 2048 in this case).
+* `--domains` → add one or multiple domains you want to secure.
+* `--email` → your contact email (used by Let’s Encrypt).
+* `--http.port` → the local port Lego will bind for the HTTP challenge.
+* `--accept-tos` →  Accept Let's Encrypt terms of service. (default: false).
 
 Certificates will be created in the ./.lego/certificates/ directory. 🗂️
 
@@ -66,8 +78,8 @@ Certificates will be created in the ./.lego/certificates/ directory. 🗂️
 
 Combine and copy the certificates into a path where Aralez expects them:
 ```shell
-cat ./.lego/certificates/site1.example.com*.crt > /path/for/certificates/for/aralez/example.com.crt
-cat ./.lego/certificates/site1.example.com.key > /path/for/certificates/for/aralez/example.com.key
+cat ./.lego/certificates/site1.example.com*.crt > /path/to/certificates/for/aralez/example.com.crt
+cat ./.lego/certificates/site1.example.com.key > /path/to/certificates/for/aralez/example.com.key
 ```
 💡 Pro tip:
 
@@ -102,19 +114,64 @@ The easiest is to create a tiny wrapper bash script and put it in crontab.
 ```shell
 #!/bin/bash
 
+cd /path/to/lego/root/folder
+
 lego --key-type rsa2048 \
   --domains="site1.example.com" \
   --domains="site2.example.com" \
   --domains="site3.example.com" \
   --email "your-email@example.com" \
---http.port=127.0.0.1:8899 --http run
+  --accept-tos \
+--http.port=127.0.0.1:8899 --http $1
 
-cat ./.lego/certificates/site1.example.com*.crt > /path/for/certificates/for/aralez/example.com.crt
-cat ./.lego/certificates/site1.example.com.key > /path/for/certificates/for/aralez/example.com.key
+cat ./.lego/certificates/site1.example.com*.crt > /path/to/certificates/for/aralez/example.com.crt
+cat ./.lego/certificates/site1.example.com.key > /path/to/certificates/for/aralez/example.com.key
 ```
 
 Crontab entry 
 
 ```shell
-0 9 * * * /path/to/lego.sh
+0 9 * * * /path/to/lego.sh renew
 ```
+
+## ⚙️ Using ZeroSSL instead of Let's Encrypt 
+
+1. Create an account at ZeroSSL. 
+2. Login to web app, go to [Developer](https://app.zerossl.com/developer) 
+3. Generate and save your `KID` and `HMAC`
+
+**Create a wrapper script: `lego.sh`**  
+
+```shell
+#!/bin/bash
+
+cd /path/to/lego/root/folder 
+
+lego --key-type rsa2048 \
+	--domains="site1.example.com" \
+	--domains="site2.example.com" \
+	--domains="site1.example.com" \
+	--email "your-email@example.com" \
+	--accept-tos \
+	--server "https://acme.zerossl.com/v2/DV90" \
+	--eab --kid "$YOUR_KID" \
+	--hmac "$YOUR_HMAC" \
+--http.port=127.0.0.1:8899 --http $1
+
+cat ./.lego/certificates/site1.example.com*.crt > /path/to/certificates/for/aralez/example.com.crt
+cat ./.lego/certificates/site1.example.com.key > /path/to/certificates/for/aralez/example.com.key
+```
+
+### 🔎 What is changed here?
+* `--servers` → The URL to ZeroSSL Server.
+* `--eab` → EAB copied from developer section of ZeroSSL web app.
+* `--hmac` → HMAC copied from developer section of ZeroSSL web app.
+
+
+**Obtain the certificate**
+
+`./lego.sh run`
+
+**Renew the certificate**
+
+`./lego.sh renew`
