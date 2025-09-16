@@ -609,6 +609,10 @@
 <span class="w">      </span><span class="nt">servers</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;127.0.0.4:8443&quot;</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;127.0.0.5:8443&quot;</span>
+<span class="w">    </span><span class="s">&quot;/.well-known/acme-challenge&quot;</span><span class="p p-Indicator">:</span>
+<span class="w">      </span><span class="nt">healthcheck</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">      </span><span class="nt">servers</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;127.0.0.1:8001&quot;</span>
 </code></pre></div>
 
 <p><strong>This means:</strong></p>
@@ -625,6 +629,7 @@
 <li>Requests to <code>myhost.mydomain.com/</code> will be proxied to <code>127.0.0.1</code> and <code>127.0.0.2</code>.</li>
 <li>Plain HTTP to <code>myhost.mydomain.com/foo</code> will get 301 redirect to configured TLS port of Aralez.</li>
 <li>Requests to <code>myhost.mydomain.com/foo</code> will be proxied to <code>127.0.0.4</code> and <code>127.0.0.5</code>.</li>
+<li>Requests to <code>myhost.mydomain.com/.well-known/acme-challenge</code> will be proxied to <code>127.0.0.1:8001</code>, but healthcheks are disabled.</li>
 <li>SSL/TLS for upstreams is detected automatically, no need to set any config parameter.<ul>
 <li>Assuming the <code>127.0.0.5:8443</code> is SSL protected. The inner traffic will use TLS.</li>
 <li>Self-signed certificates are silently accepted.</li>
