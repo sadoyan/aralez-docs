@@ -33,6 +33,7 @@ nav:
   - 'Benchmarks': 'assets/perf.md'
   - 'Prometheus Metrics': 'assets/metrics.md'
   - 'Kubernetes Ingress': 'assets/kubernetes.md'
+  - 'Automate Certificates': 'assets/autossl.md'
 #  - 'WEB Servers':
 #      - 'Apache': 'assets/ws/apache.md'
 #      - 'NginX': 'assets/ws/nginx.md'
