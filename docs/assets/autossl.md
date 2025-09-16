@@ -25,7 +25,7 @@ myhost.mydomain.com:
     "/.well-known/acme-challenge":
       healthcheck: false
       servers:
-        - "127.0.0.1:8001"
+        - "127.0.0.1:8899"
 ```
 ✨ **Important Notes:**
 
@@ -94,21 +94,6 @@ The magic part ✨ – Aralez automatically detects changes to your certificates
 🔎 The exact prefix doesn’t matter (it can be any string), but it must be unique per certificate.
 
 Aralez scans the certificate and key files, then matches them in memory by content. This ensures the correct pairs are always loaded together.
-The magic part 
-
-✨ – Aralez will automatically detect changes to certificates and reload them on-the-fly.
-No downtime. No hassle. Just pure HTTPS goodness. 🔒🚀
-
-**💡 Important tip: Aralez requires:**
-
-1. Certificate to have `.crt` extension 
-2. Private key file to have `.key` extension
-3. Same `.crt` and `.key` pairs should have the same prefix.   
-
-  * example.com.crt
-  * example.com.key
-   
-The exact prefix not matters, it just needs to unique per certificate. Aralez reads certificate files and joins by content with key files in memory. 
 
 ## 📜 Step 5: Renewing certificates
 
