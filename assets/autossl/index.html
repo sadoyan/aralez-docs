@@ -388,6 +388,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#using-zerossl-instead-of-lets-encrypt" class="md-nav__link">
+    ⚙️ Using ZeroSSL instead of Let's Encrypt
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-changed-here" class="md-nav__link">
+    🔎 What is changed here?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
       
       
       
@@ -479,6 +499,26 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#using-zerossl-instead-of-lets-encrypt" class="md-nav__link">
+    ⚙️ Using ZeroSSL instead of Let's Encrypt
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-is-changed-here" class="md-nav__link">
+    🔎 What is changed here?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
       
       
       
@@ -508,7 +548,12 @@ This guide will walk you through preparing <strong>Aralez</strong> for ACME chal
 <h2 id="step-1-prepare-aralez-for-acme-challenge">⚙️ Step 1: Prepare Aralez for ACME Challenge</h2>
 <p>In order to respond to certificate validation requests, you need to expose the path <code>/.well-known/acme-challenge</code> in your upstream configuration.<br />
 This allows <strong>Let’s Encrypt</strong> (or another ACME CA) to verify that you own the domain.  </p>
-<p>Here’s a sample configuration:  </p>
+<p>Edit <code>main.yaml</code> and set correct folder to <code>proxy_certificates</code> </p>
+<div class="codehilite"><pre><span></span><code>proxy_certificates: /path/to/certificates/for/aralez/
+</code></pre></div>
+
+<p>Basic settings in <code>main.yaml</code> requires restart of Aralez.</p>
+<p>Edit <code>upstreams.yaml</code>. Here’s a sample configuration:  </p>
 <div class="codehilite"><pre><span></span><code><span class="nt">myhost.mydomain.com</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">paths</span><span class="p">:</span>
 <span class="w">    </span><span class="s">&quot;/&quot;</span><span class="p p-Indicator">:</span>
@@ -526,7 +571,7 @@ This allows <strong>Let’s Encrypt</strong> (or another ACME CA) to verify that
 <p>✨ <strong>Important Notes:</strong></p>
 <ul>
 <li>healthcheck: false ensures Aralez does not remove the ephemeral upstreams (temporary validation servers) from the proxy pool.</li>
-<li>Once saved, Aralez will auto-reload the configuration 🔄 – no manual restart needed!</li>
+<li>Once saved, Aralez watch and auto-reload <code>upstreams.yaml</code> 🔄 – no manual restart needed!</li>
 </ul>
 <h2 id="step-2-download-and-install-lego">📥 Step 2: Download and Install Lego</h2>
 <p>Getting Lego installed is a breeze! 🪄</p>
@@ -539,26 +584,30 @@ This allows <strong>Let’s Encrypt</strong> (or another ACME CA) to verify that
 </ol>
 <h2 id="step-3-request-certificates">📜 Step 3: Request Certificates</h2>
 <p>Use Lego to request SSL certificates for one or more domain</p>
-<div class="codehilite"><pre><span></span><code>lego<span class="w"> </span>--key-type<span class="w"> </span>rsa2048<span class="w"> </span><span class="se">\</span>
+<div class="codehilite"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>/path/to/lego/root/folder
+
+lego<span class="w"> </span>--key-type<span class="w"> </span>rsa2048<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--domains<span class="o">=</span><span class="s2">&quot;site1.example.com&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--domains<span class="o">=</span><span class="s2">&quot;site2.example.com&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--domains<span class="o">=</span><span class="s2">&quot;site3.example.com&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--email<span class="w"> </span><span class="s2">&quot;your-email@example.com&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--accept-tos<span class="w"> </span><span class="se">\</span>
 --http.port<span class="o">=</span><span class="m">127</span>.0.0.1:8899<span class="w"> </span>--http<span class="w"> </span>run
 </code></pre></div>
 
 <h3 id="what-happens-here">🔎 What happens here?</h3>
 <ul>
-<li>--key-type → sets the type of cryptographic key (RSA 2048 in this case).</li>
-<li>--domains → add one or multiple domains you want to secure.</li>
-<li>--email → your contact email (used by Let’s Encrypt).</li>
-<li>--http.port → the local port Lego will bind for the HTTP challenge.</li>
+<li><code>--key-type</code> → sets the type of cryptographic key (RSA 2048 in this case).</li>
+<li><code>--domains</code> → add one or multiple domains you want to secure.</li>
+<li><code>--email</code> → your contact email (used by Let’s Encrypt).</li>
+<li><code>--http.port</code> → the local port Lego will bind for the HTTP challenge.</li>
+<li><code>--accept-tos</code> →  Accept Let's Encrypt terms of service. (default: false).</li>
 </ul>
 <p>Certificates will be created in the ./.lego/certificates/ directory. 🗂️</p>
 <h2 id="step-4-make-certificates-usable-for-aralez">🔗 Step 4: Make Certificates Usable for Aralez</h2>
 <p>Combine and copy the certificates into a path where Aralez expects them:</p>
-<div class="codehilite"><pre><span></span><code>cat<span class="w"> </span>./.lego/certificates/site1.example.com*.crt<span class="w"> </span>&gt;<span class="w"> </span>/path/for/certificates/for/aralez/example.com.crt
-cat<span class="w"> </span>./.lego/certificates/site1.example.com.key<span class="w"> </span>&gt;<span class="w"> </span>/path/for/certificates/for/aralez/example.com.key
+<div class="codehilite"><pre><span></span><code>cat<span class="w"> </span>./.lego/certificates/site1.example.com*.crt<span class="w"> </span>&gt;<span class="w"> </span>/path/to/certificates/for/aralez/example.com.crt
+cat<span class="w"> </span>./.lego/certificates/site1.example.com.key<span class="w"> </span>&gt;<span class="w"> </span>/path/to/certificates/for/aralez/example.com.key
 </code></pre></div>
 
 <p>💡 Pro tip:</p>
@@ -584,20 +633,60 @@ cat<span class="w"> </span>./.lego/certificates/site1.example.com.key<span class
 <p>The easiest is to create a tiny wrapper bash script and put it in crontab.</p>
 <div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 
+<span class="nb">cd</span><span class="w"> </span>/path/to/lego/root/folder
+
 lego<span class="w"> </span>--key-type<span class="w"> </span>rsa2048<span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--domains<span class="o">=</span><span class="s2">&quot;site1.example.com&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--domains<span class="o">=</span><span class="s2">&quot;site2.example.com&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--domains<span class="o">=</span><span class="s2">&quot;site3.example.com&quot;</span><span class="w"> </span><span class="se">\</span>
 <span class="w">  </span>--email<span class="w"> </span><span class="s2">&quot;your-email@example.com&quot;</span><span class="w"> </span><span class="se">\</span>
---http.port<span class="o">=</span><span class="m">127</span>.0.0.1:8899<span class="w"> </span>--http<span class="w"> </span>run
+<span class="w">  </span>--accept-tos<span class="w"> </span><span class="se">\</span>
+--http.port<span class="o">=</span><span class="m">127</span>.0.0.1:8899<span class="w"> </span>--http<span class="w"> </span><span class="nv">$1</span>
 
-cat<span class="w"> </span>./.lego/certificates/site1.example.com*.crt<span class="w"> </span>&gt;<span class="w"> </span>/path/for/certificates/for/aralez/example.com.crt
-cat<span class="w"> </span>./.lego/certificates/site1.example.com.key<span class="w"> </span>&gt;<span class="w"> </span>/path/for/certificates/for/aralez/example.com.key
+cat<span class="w"> </span>./.lego/certificates/site1.example.com*.crt<span class="w"> </span>&gt;<span class="w"> </span>/path/to/certificates/for/aralez/example.com.crt
+cat<span class="w"> </span>./.lego/certificates/site1.example.com.key<span class="w"> </span>&gt;<span class="w"> </span>/path/to/certificates/for/aralez/example.com.key
 </code></pre></div>
 
 <p>Crontab entry </p>
-<div class="codehilite"><pre><span></span><code><span class="m">0</span><span class="w"> </span><span class="m">9</span><span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>/path/to/lego.sh
+<div class="codehilite"><pre><span></span><code><span class="m">0</span><span class="w"> </span><span class="m">9</span><span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>*<span class="w"> </span>/path/to/lego.sh<span class="w"> </span>renew
 </code></pre></div>
+
+<h2 id="using-zerossl-instead-of-lets-encrypt">⚙️ Using ZeroSSL instead of Let's Encrypt</h2>
+<ol>
+<li>Create an account at ZeroSSL. </li>
+<li>Login to web app, go to <a href="https://app.zerossl.com/developer">Developer</a> </li>
+<li>Generate and save your <code>KID</code> and <code>HMAC</code></li>
+</ol>
+<p><strong>Create a wrapper script: <code>lego.sh</code></strong>  </p>
+<div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+
+<span class="nb">cd</span><span class="w"> </span>/path/to/lego/root/folder<span class="w"> </span>
+
+lego<span class="w"> </span>--key-type<span class="w"> </span>rsa2048<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--domains<span class="o">=</span><span class="s2">&quot;site1.example.com&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--domains<span class="o">=</span><span class="s2">&quot;site2.example.com&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--domains<span class="o">=</span><span class="s2">&quot;site1.example.com&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--email<span class="w"> </span><span class="s2">&quot;your-email@example.com&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--accept-tos<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--server<span class="w"> </span><span class="s2">&quot;https://acme.zerossl.com/v2/DV90&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--eab<span class="w"> </span>--kid<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$YOUR_KID</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--hmac<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$YOUR_HMAC</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+--http.port<span class="o">=</span><span class="m">127</span>.0.0.1:8899<span class="w"> </span>--http<span class="w"> </span><span class="nv">$1</span>
+
+cat<span class="w"> </span>./.lego/certificates/site1.example.com*.crt<span class="w"> </span>&gt;<span class="w"> </span>/path/to/certificates/for/aralez/example.com.crt
+cat<span class="w"> </span>./.lego/certificates/site1.example.com.key<span class="w"> </span>&gt;<span class="w"> </span>/path/to/certificates/for/aralez/example.com.key
+</code></pre></div>
+
+<h3 id="what-is-changed-here">🔎 What is changed here?</h3>
+<ul>
+<li><code>--servers</code> → The URL to ZeroSSL Server.</li>
+<li><code>--eab</code> → EAB copied from developer section of ZeroSSL web app.</li>
+<li><code>--hmac</code> → HMAC copied from developer section of ZeroSSL web app.</li>
+</ul>
+<p><strong>Obtain the certificate</strong></p>
+<p><code>./lego.sh run</code></p>
+<p><strong>Renew the certificate</strong></p>
+<p><code>./lego.sh renew</code></p>
 
 
 
