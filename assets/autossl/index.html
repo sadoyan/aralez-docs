@@ -520,7 +520,7 @@ This allows <strong>Let’s Encrypt</strong> (or another ACME CA) to verify that
 <span class="w">    </span><span class="s">&quot;/.well-known/acme-challenge&quot;</span><span class="p p-Indicator">:</span>
 <span class="w">      </span><span class="nt">healthcheck</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">      </span><span class="nt">servers</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;127.0.0.1:8001&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;127.0.0.1:8899&quot;</span>
 </code></pre></div>
 
 <p>✨ <strong>Important Notes:</strong></p>
@@ -579,23 +579,7 @@ cat<span class="w"> </span>./.lego/certificates/site1.example.com.key<span class
 <li><code>example.com.key</code></li>
 </ul>
 <p>🔎 The exact prefix doesn’t matter (it can be any string), but it must be unique per certificate.</p>
-<p>Aralez scans the certificate and key files, then matches them in memory by content. This ensures the correct pairs are always loaded together.
-The magic part </p>
-<p>✨ – Aralez will automatically detect changes to certificates and reload them on-the-fly.
-No downtime. No hassle. Just pure HTTPS goodness. 🔒🚀</p>
-<p><strong>💡 Important tip: Aralez requires:</strong></p>
-<ol>
-<li>Certificate to have <code>.crt</code> extension </li>
-<li>Private key file to have <code>.key</code> extension</li>
-<li>
-<p>Same <code>.crt</code> and <code>.key</code> pairs should have the same prefix.   </p>
-</li>
-<li>
-<p>example.com.crt</p>
-</li>
-<li>example.com.key</li>
-</ol>
-<p>The exact prefix not matters, it just needs to unique per certificate. Aralez reads certificate files and joins by content with key files in memory. </p>
+<p>Aralez scans the certificate and key files, then matches them in memory by content. This ensures the correct pairs are always loaded together.</p>
 <h2 id="step-5-renewing-certificates">📜 Step 5: Renewing certificates</h2>
 <p>The easiest is to create a tiny wrapper bash script and put it in crontab.</p>
 <div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/bash</span>
