@@ -104,12 +104,15 @@ headers:
 #  creds: "5ecbf799-1343-4e94-a9b5-e278af5cd313-56b45249-1839-4008-a450-a60dc76d2bae"
 kubernetes:
   services:
-    - proxy: "vt-api-service-v2"
-      real: "vt-api-service-v2"
-    - proxy: "vt-search-service"
+    - proxy: "api-service"
+      real: "api-service"
+      path: "/"
+    - proxy: "api-service"
       real: "vt-search-service"
+      path: "/search"
     - proxy: "vt-websocket-service"
       real: "vt-websocket-service"
+      path: "/"
   tokenpath: "/var/run/secrets/kubernetes.io/serviceaccount/token"
 ```
 
