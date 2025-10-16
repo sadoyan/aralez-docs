@@ -99,19 +99,27 @@ headers:
 #  type: "jwt"
 #  creds: "910517d9-f9a1-48de-8826-dbadacbd84af-cb6f830e-ab16-47ec-9d8f-0090de732774"
 #  type: "basic"
-#  creds: "zangag:Anhnazand1234"
+#  creds: "username:Passw0rd"
 #  type: "apikey"
 #  creds: "5ecbf799-1343-4e94-a9b5-e278af5cd313-56b45249-1839-4008-a450-a60dc76d2bae"
 kubernetes:
   services:
-    - proxy: "api-service"
-      real: "api-service"
+    - hostname: "vt-webapi-service"
       path: "/"
-    - proxy: "api-service"
-      real: "vt-search-service"
-      path: "/search"
-    - proxy: "vt-websocket-service"
-      real: "vt-websocket-service"
+      upstream: "vt-webapi-service"
+    - hostname: "vt-webapi-service"
+      upstream: "vt-console-service"
+      path: "/one"
+      headers:
+        - "X-Some-Thing:Yaaaaaaaaaaaaaaa"
+        - "X-Proxy-From:Aralez"
+      rate_limit: 100
+      to_https: false
+    - hostname: "vt-webapi-service"
+      upstream: "vt-rambulik-service"
+      path: "/two"
+    - hostname: "vt-websocket-service"
+      upstream: "vt-websocket-service"
       path: "/"
   tokenpath: "/var/run/secrets/kubernetes.io/serviceaccount/token"
 ```
