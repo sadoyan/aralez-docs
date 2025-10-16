@@ -598,14 +598,22 @@ We’ll create the necessary <strong>ServiceAccount</strong>, apply the right <s
 <span class="c1">#  creds: &quot;5ecbf799-1343-4e94-a9b5-e278af5cd313-56b45249-1839-4008-a450-a60dc76d2bae&quot;</span>
 <span class="nt">kubernetes</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">services</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">proxy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;api-service&quot;</span>
-<span class="w">      </span><span class="nt">real</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;api-service&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-webapi-service&quot;</span>
 <span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/&quot;</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">proxy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;api-service&quot;</span>
-<span class="w">      </span><span class="nt">real</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-search-service&quot;</span>
-<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/search&quot;</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">proxy</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-websocket-service&quot;</span>
-<span class="w">      </span><span class="nt">real</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-websocket-service&quot;</span>
+<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-webapi-service&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-webapi-service&quot;</span>
+<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-console-service&quot;</span>
+<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/one&quot;</span>
+<span class="w">      </span><span class="nt">headers</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Some-Thing:Yaaaaaaaaaaaaaaa&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Proxy-From:Aralez&quot;</span>
+<span class="w">      </span><span class="nt">rate_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">      </span><span class="nt">to_https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-webapi-service&quot;</span>
+<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-rambulik-service&quot;</span>
+<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/two&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-websocket-service&quot;</span>
+<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-websocket-service&quot;</span>
 <span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/&quot;</span>
 <span class="w">  </span><span class="nt">tokenpath</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/var/run/secrets/kubernetes.io/serviceaccount/token&quot;</span>
 </code></pre></div>
