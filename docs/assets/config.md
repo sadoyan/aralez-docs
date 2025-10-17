@@ -5,8 +5,8 @@
 | Key                              | Example Value                        | Description                                                                                        |
 |----------------------------------|--------------------------------------|----------------------------------------------------------------------------------------------------|
 | **threads**                      | 12                                   | Number of running daemon threads. Optional, defaults to 1                                          |
-| **runuser**                         | aralez                               | Optional, Username for running aralez after dropping root privileges, requires to launch as root   |
-| **rungroup**                        | aralez                               | Optional,Group for running aralez after dropping root privileges, requires to launch as root       |
+| **runuser**                      | aralez                               | Optional, Username for running aralez after dropping root privileges, requires to launch as root   |
+| **rungroup**                     | aralez                               | Optional,Group for running aralez after dropping root privileges, requires to launch as root       |
 | **daemon**                       | false                                | Run in background (boolean)                                                                        |
 | **upstream_keepalive_pool_size** | 500                                  | Pool size for upstream keepalive connections                                                       |
 | **pid_file**                     | /tmp/aralez.pid                      | Path to PID file                                                                                   |
@@ -104,3 +104,111 @@ myhost.mydomain.com:
     - Firs parameter specifies the mechanism of authorisation `jwt`
     - Second is the secret key for validating `jwt` tokens
 
+## 💡 For Kubernetes and Consul provider
+```yaml
+provider: "kubernetes" # "consul" "kubernetes"
+sticky_sessions: false
+to_https: false
+rate_limit: 100
+headers:
+  - "Access-Control-Allow-Origin:*"
+  - "Access-Control-Allow-Methods:POST, GET, OPTIONS"
+  - "Access-Control-Max-Age:86400"
+  - "Strict-Transport-Security:max-age=31536000; includeSubDomains; preload"
+consul:
+  servers:
+    - "http://consul1:8500"
+  services: # hostname: The hostname to access the proxy server, upstream : The real service name in Consul database.
+    - hostname: "nconsul"
+      upstream: "nginx-consul-NginX-health"
+      path: "/one"
+      headers:
+        - "X-Some-Thing:Yaaaaaaaaaaaaaaa"
+        - "X-Proxy-From:Aralez"
+      rate_limit: 1
+      to_https: false
+    - hostname: "nconsul"
+      upstream: "nginx-consul-NginX-health"
+      path: "/"
+  token: "8e2db809-845b-45e1-8b47-2c8356a09da0-a4370955-18c2-4d6e-a8f8-ffcc0b47be81" # Consul server access token, If Consul auth is enabled
+kubernetes:
+  servers:
+    - "172.16.0.11:5443" # Gets KUBERNETES_SERVICE_HOST : KUBERNETES_SERVICE_PORT_HTTPS env variables.
+  services:
+    - hostname: "vt-api-service-v2"
+      path: "/"
+      upstream: "vt-api-service-v2"
+    - hostname: "vt-api-service-v2"
+      upstream: "vt-console-service"
+      path: "/one"
+      headers:
+        - "X-Some-Thing:Yaaaaaaaaaaaaaaa"
+        - "X-Proxy-From:Aralez"
+      rate_limit: 100
+      to_https: false
+    - hostname: "vt-api-service-v2"
+      upstream: "vt-feed-fanout-service"
+      path: "/two"
+    - hostname: "vt-websocket-service"
+      upstream: "vt-websocket-service"
+      path: "/"
+  tokenpath: "/opt/Rust/Projects/asyncweb/etc/kubetoken.txt" # Defaults to /var/run/secrets/kubernetes.io/serviceaccount/token
+```
+
+The yaml structure of Consul and Kubernetes providers is different. Each section contains mandatory and optional fields. 
+
+### **Mandatory Fields:** 
+```yaml
+    - hostname: "vt-api-service-v2"
+      upstream: "vt-api-service-v2"
+```
+Where `hostname` is actually the `Host` header to access the service and `upstream` is a service name in Consul or Kubernetes. 
+
+### **Optional Fields:** 
+```yaml
+      path: "/one"
+      headers:
+        - "X-Some-Thing:Yaaaaaaaaaaaaaaa"
+        - "X-Proxy-From:Aralez"
+      rate_limit: 100
+      to_https: false
+```
+Optional parameters defaults to `None`, if not set 
+
+
+|                 |                                 |
+|-----------------|---------------------------------|
+| **path:**       | Url path to proxy to upstreams  |
+| **headers:**    | List of additional headers      |
+| **rate_limit:** | Rate limiter, number per second |
+| **to_https:**   | Redirect to HTTPS               |
+
+### **Consul only** 
+```yaml
+token: "8e2db809-845b-45e1-8b47-2c8356a09da0-a4370955-18c2-4d6e-a8f8-ffcc0b47be81"
+```
+If authentication is enabled this parameter should contain. Default `None`, mandatory if Consul auth is enabled  
+
+```yaml
+  servers:
+    - "http://consul1:8500"
+```
+The list of Consul servers. **Mandatory for Consul**
+
+### **Kubernetes only** 
+```yaml
+tokenpath: "/opt/Rust/Projects/asyncweb/etc/kubetoken.txt
+```
+For development propose only. Default to `/var/run/secrets/kubernetes.io/serviceaccount/token`. Remove iot for production use.
+
+```yaml
+  servers:
+    - "172.16.0.11:5443"
+```
+
+Defaults to the following environment variables.
+```
+KUBERNETES_SERVICE_HOST
+KUBERNETES_SERVICE_PORT_HTTPS 
+```
+For development propose only. Delete for production use.
