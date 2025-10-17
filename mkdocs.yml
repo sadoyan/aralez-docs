@@ -29,6 +29,7 @@ site_url: https://sadoyan.github.io/aralez-docs/
 nav:
   - 'Home': 'index.md'
   - 'Config': 'assets/config.md'
+  - 'Comparition': 'assets/compare.md'
   - 'Authentication': 'assets/auth.md'
   - 'Benchmarks': 'assets/perf.md'
   - 'Prometheus Metrics': 'assets/metrics.md'
