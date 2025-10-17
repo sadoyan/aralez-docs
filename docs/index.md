@@ -177,18 +177,3 @@ curl -XPOST --data-binary @./etc/upstreams.txt 127.0.0.1:3000/conf?key=${MASTERK
 - Sticky session support.
 - HTTP2 ready.
 
-📊 Why Choose Aralez? – Feature Comparison
-
-| Feature                    | **Aralez**                                                           | **Nginx**                | **HAProxy**             | **Traefik**     |
-|----------------------------|----------------------------------------------------------------------|--------------------------|-------------------------|-----------------|
-| **Hot Reload**             | ✅ Yes (live, API/file)                                               | ⚠️ Reloads config        | ⚠️ Reloads config       | ✅ Yes (dynamic) |
-| **JWT Auth**               | ✅ Built-in                                                           | ❌ External scripts       | ❌ External Lua or agent | ⚠️ With plugins |
-| **WebSocket Support**      | ✅ Automatic                                                          | ⚠️ Manual config         | ✅ Yes                   | ✅ Yes           |
-| **gRPC Support**           | ✅ Automatic (no config)                                              | ⚠️ Manual + HTTP/2 + TLS | ⚠️ Complex setup        | ✅ Native        |
-| **TLS Termination**        | ✅ Built-in (OpenSSL)                                                 | ✅ Yes                    | ✅ Yes                   | ✅ Yes           |
-| **TLS Upstream Detection** | ✅ Automatic                                                          | ❌                        | ❌                       | ❌               |
-| **HTTP/2 Support**         | ✅ Automatic                                                          | ⚠️ Requires extra config | ⚠️ Requires build flags | ✅ Native        |
-| **Sticky Sessions**        | ✅ Cookie-based                                                       | ⚠️ In plus version only  | ✅                       | ✅               |
-| **Prometheus Metrics**     | ✅ [Built in](https://github.com/sadoyan/aralez/blob/main/METRICS.md) | ⚠️ With Lua or exporter  | ⚠️ With external script | ✅ Native        |
-| **Built With**             | 🦀 Rust                                                              | C                        | C                       | Go              |
-
