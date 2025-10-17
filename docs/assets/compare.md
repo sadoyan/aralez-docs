@@ -39,3 +39,15 @@ Where most proxies require external tooling or complex configuration for dynamic
 
 In short, Aralez is designed for developers and operators who want **a fast, self-contained reverse proxy** that “just works,” while still being flexible enough to scale into a service-mesh-like architecture.
 
+### ⚡ Zero-Config Features
+
+Aralez is designed to **just work out of the box**, minimizing setup and manual configuration. With Aralez, you get:
+
+- **Automatic protocol detection:** gRPC, HTTP/2, WebSockets, and SSL are proxied correctly without extra config.  
+- **Hot reloads & zero downtime:** Upstreams and configuration changes take effect immediately without restarting the server.  
+- **Automatic TLS / certificate updates:** Drop new certificates on disk and Aralez picks them up instantly.  
+- **Built-in authentication & rate limiting:** Basic auth, API key, JWT, and request limits are ready-to-use.  
+- **Observability & metrics:** Prometheus metrics are available automatically.  
+- **Service discovery integration:** Works seamlessly with Consul and Kubernetes DNS without extra setup.
+
+In short, Aralez is a **modern reverse proxy that configures itself around your environment**, so you can focus on building and deploying apps — not managing your proxy.
