@@ -1,4 +1,4 @@
-### 🧩 Summary Table: Feature Comparison
+### 🧩 Feature Comparison
 
 | Feature / Proxy                     |    **Aralez**     | **Nginx** | **HAProxy** |           **Traefik**            | **Caddy** |    **Envoy**    |
 |------------------------------------|:-----------------:|:----------:|:------------:|:--------------------------------:|:----------:|:---------------:|
