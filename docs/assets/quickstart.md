@@ -19,7 +19,7 @@ Make the binary executable `chmod 755 ./aralez-VERSION` and run.
 
 
 1. **Download the latest release** for your architecture from [Releases](https://github.com/sadoyan/aralez/releases).  
-   ```bash
+   ```shell
    wget https://github.com/sadoyan/aralez/releases/download/vX.Y.Z/aralez-xxx-yyy.tar.gz
    tar -xzf aralez-xxx-yyy.tar.gz
    ```
