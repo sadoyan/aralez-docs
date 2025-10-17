@@ -312,6 +312,47 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#for-kubernetes-and-consul-provider" class="md-nav__link">
+    💡 For Kubernetes and Consul provider
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mandatory-fields" class="md-nav__link">
+    Mandatory Fields:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-fields" class="md-nav__link">
+    Optional Fields:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consul-only" class="md-nav__link">
+    Consul only
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubernetes-only" class="md-nav__link">
+    Kubernetes only
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
       
       
       
@@ -444,6 +485,47 @@
   <a href="#example" class="md-nav__link">
     💡 Example
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#for-kubernetes-and-consul-provider" class="md-nav__link">
+    💡 For Kubernetes and Consul provider
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mandatory-fields" class="md-nav__link">
+    Mandatory Fields:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#optional-fields" class="md-nav__link">
+    Optional Fields:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consul-only" class="md-nav__link">
+    Consul only
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kubernetes-only" class="md-nav__link">
+    Kubernetes only
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -680,6 +762,124 @@
 </ul>
 </li>
 </ul>
+<h2 id="for-kubernetes-and-consul-provider">💡 For Kubernetes and Consul provider</h2>
+<div class="codehilite"><pre><span></span><code><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;kubernetes&quot;</span><span class="w"> </span><span class="c1"># &quot;consul&quot; &quot;kubernetes&quot;</span>
+<span class="nt">sticky_sessions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="nt">to_https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="nt">rate_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="nt">headers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Access-Control-Allow-Origin:*&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Access-Control-Allow-Methods:POST,</span><span class="nv"> </span><span class="s">GET,</span><span class="nv"> </span><span class="s">OPTIONS&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Access-Control-Max-Age:86400&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Strict-Transport-Security:max-age=31536000;</span><span class="nv"> </span><span class="s">includeSubDomains;</span><span class="nv"> </span><span class="s">preload&quot;</span>
+<span class="nt">consul</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">servers</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;http://consul1:8500&quot;</span>
+<span class="w">  </span><span class="nt">services</span><span class="p">:</span><span class="w"> </span><span class="c1"># hostname: The hostname to access the proxy server, upstream : The real service name in Consul database.</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nconsul&quot;</span>
+<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nginx-consul-NginX-health&quot;</span>
+<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/one&quot;</span>
+<span class="w">      </span><span class="nt">headers</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Some-Thing:Yaaaaaaaaaaaaaaa&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Proxy-From:Aralez&quot;</span>
+<span class="w">      </span><span class="nt">rate_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">      </span><span class="nt">to_https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nconsul&quot;</span>
+<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nginx-consul-NginX-health&quot;</span>
+<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/&quot;</span>
+<span class="w">  </span><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;8e2db809-845b-45e1-8b47-2c8356a09da0-a4370955-18c2-4d6e-a8f8-ffcc0b47be81&quot;</span><span class="w"> </span><span class="c1"># Consul server access token, If Consul auth is enabled</span>
+<span class="nt">kubernetes</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">servers</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;172.16.0.11:5443&quot;</span><span class="w"> </span><span class="c1"># Gets KUBERNETES_SERVICE_HOST : KUBERNETES_SERVICE_PORT_HTTPS env variables.</span>
+<span class="w">  </span><span class="nt">services</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-api-service-v2&quot;</span>
+<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/&quot;</span>
+<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-api-service-v2&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-api-service-v2&quot;</span>
+<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-console-service&quot;</span>
+<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/one&quot;</span>
+<span class="w">      </span><span class="nt">headers</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Some-Thing:Yaaaaaaaaaaaaaaa&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Proxy-From:Aralez&quot;</span>
+<span class="w">      </span><span class="nt">rate_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">      </span><span class="nt">to_https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-api-service-v2&quot;</span>
+<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-feed-fanout-service&quot;</span>
+<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/two&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-websocket-service&quot;</span>
+<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-websocket-service&quot;</span>
+<span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/&quot;</span>
+<span class="w">  </span><span class="nt">tokenpath</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/opt/Rust/Projects/asyncweb/etc/kubetoken.txt&quot;</span><span class="w"> </span><span class="c1"># Defaults to /var/run/secrets/kubernetes.io/serviceaccount/token</span>
+</code></pre></div>
+
+<p>The yaml structure of Consul and Kubernetes providers is different. Each section contains mandatory and optional fields. </p>
+<h3 id="mandatory-fields"><strong>Mandatory Fields:</strong></h3>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-api-service-v2&quot;</span>
+<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-api-service-v2&quot;</span>
+</code></pre></div>
+
+<p>Where <code>hostname</code> is actually the <code>Host</code> header to access the service and <code>upstream</code> is a service name in Consul or Kubernetes. </p>
+<h3 id="optional-fields"><strong>Optional Fields:</strong></h3>
+<div class="codehilite"><pre><span></span><code><span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/one&quot;</span>
+<span class="w">      </span><span class="nt">headers</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Some-Thing:Yaaaaaaaaaaaaaaa&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Proxy-From:Aralez&quot;</span>
+<span class="w">      </span><span class="nt">rate_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">      </span><span class="nt">to_https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</code></pre></div>
+
+<p>Optional parameters defaults to <code>None</code>, if not set </p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>path:</strong></td>
+<td>Url path to proxy to upstreams</td>
+</tr>
+<tr>
+<td><strong>headers:</strong></td>
+<td>List of additional headers</td>
+</tr>
+<tr>
+<td><strong>rate_limit:</strong></td>
+<td>Rate limiter, number per second</td>
+</tr>
+<tr>
+<td><strong>to_https:</strong></td>
+<td>Redirect to HTTPS</td>
+</tr>
+</tbody>
+</table>
+<h3 id="consul-only"><strong>Consul only</strong></h3>
+<div class="codehilite"><pre><span></span><code><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;8e2db809-845b-45e1-8b47-2c8356a09da0-a4370955-18c2-4d6e-a8f8-ffcc0b47be81&quot;</span>
+</code></pre></div>
+
+<p>If authentication is enabled this parameter should contain. Default <code>None</code>, mandatory if Consul auth is enabled  </p>
+<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="nt">servers</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;http://consul1:8500&quot;</span>
+</code></pre></div>
+
+<p>The list of Consul servers. <strong>Mandatory for Consul</strong></p>
+<h3 id="kubernetes-only"><strong>Kubernetes only</strong></h3>
+<div class="codehilite"><pre><span></span><code><span class="nt">tokenpath</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/opt/Rust/Projects/asyncweb/etc/kubetoken.txt</span>
+</code></pre></div>
+
+<p>For development propose only. Default to <code>/var/run/secrets/kubernetes.io/serviceaccount/token</code>. Remove iot for production use.</p>
+<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="nt">servers</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;172.16.0.11:5443&quot;</span>
+</code></pre></div>
+
+<p>Defaults to the following environment variables.</p>
+<div class="codehilite"><pre><span></span><code>KUBERNETES_SERVICE_HOST
+KUBERNETES_SERVICE_PORT_HTTPS 
+</code></pre></div>
+
+<p>For development propose only. Delete for production use.</p>
 
 
 
