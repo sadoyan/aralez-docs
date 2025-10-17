@@ -292,6 +292,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#zero-config-features" class="md-nav__link">
+    ⚡ Zero-Config Features
+  </a>
+  
+</li>
+      
       
       
       
@@ -391,6 +398,13 @@
         <li class="md-nav__item">
   <a href="#interpretation" class="md-nav__link">
     💡 Interpretation
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#zero-config-features" class="md-nav__link">
+    ⚡ Zero-Config Features
   </a>
   
 </li>
@@ -598,6 +612,17 @@
 - <strong>Consul and Kubernetes integration</strong> make it mesh-ready without extra agents.
 - Written in <strong>safe, high-performance Rust</strong>, offering reliability and modern concurrency.</p>
 <p>In short, Aralez is designed for developers and operators who want <strong>a fast, self-contained reverse proxy</strong> that “just works,” while still being flexible enough to scale into a service-mesh-like architecture.</p>
+<h3 id="zero-config-features">⚡ Zero-Config Features</h3>
+<p>Aralez is designed to <strong>just work out of the box</strong>, minimizing setup and manual configuration. With Aralez, you get:</p>
+<ul>
+<li><strong>Automatic protocol detection:</strong> gRPC, HTTP/2, WebSockets, and SSL are proxied correctly without extra config.  </li>
+<li><strong>Hot reloads &amp; zero downtime:</strong> Upstreams and configuration changes take effect immediately without restarting the server.  </li>
+<li><strong>Automatic TLS / certificate updates:</strong> Drop new certificates on disk and Aralez picks them up instantly.  </li>
+<li><strong>Built-in authentication &amp; rate limiting:</strong> Basic auth, API key, JWT, and request limits are ready-to-use.  </li>
+<li><strong>Observability &amp; metrics:</strong> Prometheus metrics are available automatically.  </li>
+<li><strong>Service discovery integration:</strong> Works seamlessly with Consul and Kubernetes DNS without extra setup.</li>
+</ul>
+<p>In short, Aralez is a <strong>modern reverse proxy that configures itself around your environment</strong>, so you can focus on building and deploying apps — not managing your proxy.</p>
 
 
 
