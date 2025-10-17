@@ -1,6 +1,6 @@
 ## 🚀 Quick Start
 
-### Getting Aralez running is fast — just a few steps:
+### Run it manually:
 
 Download the prebuilt binary for your architecture from releases section of [GitHub](https://github.com/sadoyan/aralez/releases) repo
 Make the binary executable `chmod 755 ./aralez-VERSION` and run.
@@ -38,7 +38,7 @@ wget https://raw.githubusercontent.com/sadoyan/aralez/refs/heads/main/etc/upstre
 aralez-xxx-yyy -c main.yaml
 ``` 
 
-### 🧩 Or via docker 
+### Or via docker 
 ```shell
 docker run -d \
   -v /local/path/to/config:/etc/aralez:ro \
