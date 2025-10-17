@@ -1,8 +1,22 @@
-### 🧩 Summary Table: Feature Comparison
-
 ## 🚀 Quick Start
 
-Getting Aralez running is fast — just a few steps:
+### Getting Aralez running is fast — just a few steps:
+
+Download the prebuilt binary for your architecture from releases section of [GitHub](https://github.com/sadoyan/aralez/releases) repo
+Make the binary executable `chmod 755 ./aralez-VERSION` and run.
+---
+**File names:**
+
+| File Name                 | Description                                                              |
+|---------------------------|--------------------------------------------------------------------------|
+| `aralez-x86_64-musl.gz`   | Static Linux x86_64 binary, without any system dependency                |
+| `aralez-x86_64-glibc.gz`  | Dynamic Linux x86_64 binary, with minimal system dependencies            |
+| `aralez-aarch64-musl.gz`  | Static Linux ARM64 binary, without any system dependency                 |
+| `aralez-aarch64-glibc.gz` | Dynamic Linux ARM64 binary, with minimal system dependencies             |
+| `sadoyan/aralez`          | Docker image on Debian 13 slim (https://hub.docker.com/r/sadoyan/aralez) |
+
+
+
 
 1. **Download the latest release** for your architecture from [Releases](https://github.com/sadoyan/aralez/releases).  
    ```bash
@@ -24,3 +38,11 @@ wget https://raw.githubusercontent.com/sadoyan/aralez/refs/heads/main/etc/upstre
 aralez-xxx-yyy -c main.yaml
 ``` 
 
+### 🧩 Or via docker 
+```shell
+docker run -d \
+  -v /local/path/to/config:/etc/aralez:ro \
+  -p 80:80 \
+  -p 443:443 \
+  sadoyan/aralez
+```
