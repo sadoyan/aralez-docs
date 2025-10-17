@@ -11,7 +11,7 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       
       
-        <link rel="canonical" href="https://sadoyan.github.io/aralez-docs/assets/config/">
+        <link rel="canonical" href="https://sadoyan.github.io/aralez-docs/assets/compare/">
       
       
       
@@ -38,7 +38,7 @@
     
     
       
-        <title>Config - Aralez (Արալեզ), Reverse proxy and service mesh built on top of Cloudflare's Pingora</title>
+        <title>Comparition - Aralez (Արալեզ), Reverse proxy and service mesh built on top of Cloudflare's Pingora</title>
       
     
     
@@ -91,7 +91,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#configuration-overview" tabindex="1" class="md-skip">
+      <a href="#summary-table-summary-table-feature-comparison" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -146,7 +146,7 @@
                        Aralez (Արալեզ), Reverse proxy and service mesh built on top of Cloudflare's Pingora
                     </span>
                     <span class="md-header-nav__topic">
-                        Config
+                        Comparition
                     </span>                   
                 </div>
             </div>
@@ -242,6 +242,18 @@
       
       
 
+
+  <li class="md-nav__item">
+    <a href="../config/" title="Config" class="md-nav__link">
+      Config
+    </a>
+  </li>
+
+    
+      
+      
+      
+
   
 
 
@@ -251,11 +263,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Config
+        Comparition
       </label>
     
-    <a href="./" title="Config" class="md-nav__link md-nav__link--active">
-      Config
+    <a href="./" title="Comparition" class="md-nav__link md-nav__link--active">
+      Comparition
     </a>
     
       
@@ -267,35 +279,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#configuration-overview" class="md-nav__link">
-    🛠 Configuration Overview
+  <a href="#summary-table-summary-table-feature-comparison" class="md-nav__link">
+    🧩 Summary Table: ### 🧩 Summary Table: Feature Comparison
   </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#mainyaml" class="md-nav__link">
-    🔧 main.yaml
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#upstreamsyaml" class="md-nav__link">
-    🌐 upstreams.yaml
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    💡 Example
+  <a href="#interpretation" class="md-nav__link">
+    💡 Interpretation
   </a>
   
 </li>
@@ -308,18 +300,6 @@
   
 </nav>
     
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../compare/" title="Comparition" class="md-nav__link">
-      Comparition
-    </a>
   </li>
 
     
@@ -402,35 +382,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#configuration-overview" class="md-nav__link">
-    🛠 Configuration Overview
+  <a href="#summary-table-summary-table-feature-comparison" class="md-nav__link">
+    🧩 Summary Table: ### 🧩 Summary Table: Feature Comparison
   </a>
-  
-    <nav class="md-nav">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#mainyaml" class="md-nav__link">
-    🔧 main.yaml
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#upstreamsyaml" class="md-nav__link">
-    🌐 upstreams.yaml
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#example" class="md-nav__link">
-    💡 Example
+  <a href="#interpretation" class="md-nav__link">
+    💡 Interpretation
   </a>
   
 </li>
@@ -451,223 +411,193 @@
             <article class="md-content__inner md-typeset">
               
 <!--                
-                  <a href="https://github.com/sadoyan/aralez/edit/master/docs/assets/config.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/sadoyan/aralez/edit/master/docs/assets/compare.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 -->
     
      <h1></h1>
          
-<h2 id="configuration-overview">🛠 Configuration Overview</h2>
-<h3 id="mainyaml">🔧 <code>main.yaml</code></h3>
+<h3 id="summary-table-summary-table-feature-comparison">🧩 Summary Table: ### 🧩 Summary Table: Feature Comparison</h3>
 <table>
 <thead>
 <tr>
-<th>Key</th>
-<th>Example Value</th>
-<th>Description</th>
+<th>Feature / Proxy</th>
+<th style="text-align: center;"><strong>Aralez</strong></th>
+<th style="text-align: center;"><strong>Nginx</strong></th>
+<th style="text-align: center;"><strong>HAProxy</strong></th>
+<th style="text-align: center;"><strong>Traefik</strong></th>
+<th style="text-align: center;"><strong>Caddy</strong></th>
+<th style="text-align: center;"><strong>Envoy</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>threads</strong></td>
-<td>12</td>
-<td>Number of running daemon threads. Optional, defaults to 1</td>
+<td><strong>Hot Reload (Zero Downtime)</strong></td>
+<td style="text-align: center;">✅ <strong>Automatic</strong></td>
+<td style="text-align: center;">⚙️ Manual (graceful reload)</td>
+<td style="text-align: center;">⚙️ Manual</td>
+<td style="text-align: center;">✅ Automatic</td>
+<td style="text-align: center;">✅ Automatic</td>
+<td style="text-align: center;">✅ Automatic</td>
 </tr>
 <tr>
-<td><strong>runuser</strong></td>
-<td>aralez</td>
-<td>Optional, Username for running aralez after dropping root privileges, requires to launch as root</td>
+<td><strong>Auto Cert Reload (from disk)</strong></td>
+<td style="text-align: center;">✅ <strong>Automatic</strong></td>
+<td style="text-align: center;">❌ No</td>
+<td style="text-align: center;">❌ No</td>
+<td style="text-align: center;">✅ Automatic (Let's Encrypt only)</td>
+<td style="text-align: center;">✅ Automatic</td>
+<td style="text-align: center;">⚙️ Manual</td>
 </tr>
 <tr>
-<td><strong>rungroup</strong></td>
-<td>aralez</td>
-<td>Optional,Group for running aralez after dropping root privileges, requires to launch as root</td>
+<td><strong>Auth: Basic / API Key / JWT</strong></td>
+<td style="text-align: center;">✅ <strong>Built-in</strong></td>
+<td style="text-align: center;">⚙️ Basic only</td>
+<td style="text-align: center;">⚙️ Basic only</td>
+<td style="text-align: center;">✅ Config-based</td>
+<td style="text-align: center;">✅ Config-based</td>
+<td style="text-align: center;">✅ Config-based</td>
 </tr>
 <tr>
-<td><strong>daemon</strong></td>
-<td>false</td>
-<td>Run in background (boolean)</td>
+<td><strong>TLS / HTTP2 Termination</strong></td>
+<td style="text-align: center;">✅ <strong>Automatic</strong></td>
+<td style="text-align: center;">⚙️ Manual config</td>
+<td style="text-align: center;">⚙️ Manual config</td>
+<td style="text-align: center;">✅ Automatic</td>
+<td style="text-align: center;">✅ Automatic</td>
+<td style="text-align: center;">✅ Automatic</td>
 </tr>
 <tr>
-<td><strong>upstream_keepalive_pool_size</strong></td>
-<td>500</td>
-<td>Pool size for upstream keepalive connections</td>
+<td><strong>Built-in A+ TLS Grades</strong></td>
+<td style="text-align: center;">✅ <strong>Automatic</strong></td>
+<td style="text-align: center;">⚙️ Manual tuning</td>
+<td style="text-align: center;">⚙️ Manual</td>
+<td style="text-align: center;">⚙️ Manual</td>
+<td style="text-align: center;">✅ Automatic</td>
+<td style="text-align: center;">⚙️ Manual</td>
 </tr>
 <tr>
-<td><strong>pid_file</strong></td>
-<td>/tmp/aralez.pid</td>
-<td>Path to PID file</td>
+<td><strong>gRPC Proxy</strong></td>
+<td style="text-align: center;">✅ <strong>Zero-Config</strong></td>
+<td style="text-align: center;">⚙️ Manual setup</td>
+<td style="text-align: center;">⚙️ Manual</td>
+<td style="text-align: center;">⚙️ Needs config</td>
+<td style="text-align: center;">⚙️ Needs config</td>
+<td style="text-align: center;">⚙️ Needs config</td>
 </tr>
 <tr>
-<td><strong>error_log</strong></td>
-<td>/tmp/aralez_err.log</td>
-<td>Path to error log file</td>
+<td><strong>SSL Proxy</strong></td>
+<td style="text-align: center;">✅ <strong>Zero-Config</strong></td>
+<td style="text-align: center;">⚙️ Manual</td>
+<td style="text-align: center;">⚙️ Manual</td>
+<td style="text-align: center;">✅ Automatic</td>
+<td style="text-align: center;">✅ Automatic</td>
+<td style="text-align: center;">✅ Automatic</td>
 </tr>
 <tr>
-<td><strong>upgrade_sock</strong></td>
-<td>/tmp/aralez.sock</td>
-<td>Path to live upgrade socket file</td>
+<td><strong>HTTP/2 Proxy</strong></td>
+<td style="text-align: center;">✅ <strong>Zero-Config</strong></td>
+<td style="text-align: center;">⚙️ Manual enable</td>
+<td style="text-align: center;">⚙️ Manual enable</td>
+<td style="text-align: center;">✅ Automatic</td>
+<td style="text-align: center;">✅ Automatic</td>
+<td style="text-align: center;">✅ Automatic</td>
 </tr>
 <tr>
-<td><strong>config_address</strong></td>
-<td>0.0.0.0:3000</td>
-<td>HTTP API address for pushing upstreams.yaml from remote location</td>
+<td><strong>WebSocket Proxy</strong></td>
+<td style="text-align: center;">✅ <strong>Zero-Config</strong></td>
+<td style="text-align: center;">⚙️ Manual upgrade</td>
+<td style="text-align: center;">⚙️ Manual upgrade</td>
+<td style="text-align: center;">✅ Automatic</td>
+<td style="text-align: center;">✅ Automatic</td>
+<td style="text-align: center;">✅ Automatic</td>
 </tr>
 <tr>
-<td><strong>config_tls_address</strong></td>
-<td>0.0.0.0:3001</td>
-<td>HTTPS API address for pushing upstreams.yaml from remote location</td>
+<td><strong>Sticky Sessions</strong></td>
+<td style="text-align: center;">✅ <strong>Built-in</strong></td>
+<td style="text-align: center;">⚙️ Config-based</td>
+<td style="text-align: center;">⚙️ Config-based</td>
+<td style="text-align: center;">✅ Automatic</td>
+<td style="text-align: center;">⚙️ Limited</td>
+<td style="text-align: center;">✅ Config-based</td>
 </tr>
 <tr>
-<td><strong>config_tls_certificate</strong></td>
-<td>etc/server.crt</td>
-<td>Certificate file path for API. Mandatory if proxy_address_tls is set, else optional</td>
+<td><strong>Prometheus Metrics</strong></td>
+<td style="text-align: center;">✅ <strong>Built-in</strong></td>
+<td style="text-align: center;">⚙️ External exporter</td>
+<td style="text-align: center;">✅ Built-in</td>
+<td style="text-align: center;">✅ Built-in</td>
+<td style="text-align: center;">✅ Built-in</td>
+<td style="text-align: center;">✅ Built-in</td>
 </tr>
 <tr>
-<td><strong>proxy_tls_grade</strong></td>
-<td>(high, medium, unsafe)</td>
-<td>Grade of TLS ciphers, for easy configuration. High matches Qualys SSL Labs A+ (defaults to medium)</td>
+<td><strong>Consul Integration</strong></td>
+<td style="text-align: center;">✅ <strong>Yes</strong></td>
+<td style="text-align: center;">❌ No</td>
+<td style="text-align: center;">⚙️ Via DNS only</td>
+<td style="text-align: center;">✅ Yes</td>
+<td style="text-align: center;">❌ No</td>
+<td style="text-align: center;">✅ Yes</td>
 </tr>
 <tr>
-<td><strong>config_tls_key_file</strong></td>
-<td>etc/key.pem</td>
-<td>Private Key file path. Mandatory if proxy_address_tls is set, else optional</td>
+<td><strong>Kubernetes Integration</strong></td>
+<td style="text-align: center;">✅ <strong>Yes</strong></td>
+<td style="text-align: center;">⚙️ Needs ingress setup</td>
+<td style="text-align: center;">⚙️ External</td>
+<td style="text-align: center;">✅ Yes</td>
+<td style="text-align: center;">⚙️ Limited</td>
+<td style="text-align: center;">✅ Yes</td>
 </tr>
 <tr>
-<td><strong>proxy_address_http</strong></td>
-<td>0.0.0.0:6193</td>
-<td>Aralez HTTP bind address</td>
+<td><strong>Request Limiter</strong></td>
+<td style="text-align: center;">✅ <strong>Yes</strong></td>
+<td style="text-align: center;">✅ Config-based</td>
+<td style="text-align: center;">✅ Config-based</td>
+<td style="text-align: center;">✅ Config-based</td>
+<td style="text-align: center;">✅ Config-based</td>
+<td style="text-align: center;">✅ Config-based</td>
 </tr>
 <tr>
-<td><strong>proxy_address_tls</strong></td>
-<td>0.0.0.0:6194</td>
-<td>Aralez HTTPS bind address (Optional)</td>
+<td><strong>Serve Static Files</strong></td>
+<td style="text-align: center;">✅ <strong>Yes</strong></td>
+<td style="text-align: center;">✅ Yes</td>
+<td style="text-align: center;">⚙️ Basic</td>
+<td style="text-align: center;">✅ Automatic</td>
+<td style="text-align: center;">✅ Automatic</td>
+<td style="text-align: center;">❌ No</td>
 </tr>
 <tr>
-<td><strong>proxy_certificates</strong></td>
-<td>etc/certs/</td>
-<td>The directory containing certificate and key files. In a format {NAME}.crt, {NAME}.key.</td>
+<td><strong>Upstream Health Checks</strong></td>
+<td style="text-align: center;">✅ <strong>Automatic</strong></td>
+<td style="text-align: center;">⚙️ Manual config</td>
+<td style="text-align: center;">⚙️ Manual config</td>
+<td style="text-align: center;">✅ Automatic</td>
+<td style="text-align: center;">✅ Automatic</td>
+<td style="text-align: center;">✅ Automatic</td>
 </tr>
 <tr>
-<td><strong>upstreams_conf</strong></td>
-<td>etc/upstreams.yaml</td>
-<td>The location of upstreams file</td>
-</tr>
-<tr>
-<td><strong>log_level</strong></td>
-<td>info</td>
-<td>Log level , possible values : info, warn, error, debug, trace, off</td>
-</tr>
-<tr>
-<td><strong>hc_method</strong></td>
-<td>HEAD</td>
-<td>Healthcheck method (HEAD, GET, POST are supported) UPPERCASE</td>
-</tr>
-<tr>
-<td><strong>hc_interval</strong></td>
-<td>2</td>
-<td>Interval for health checks in seconds</td>
-</tr>
-<tr>
-<td><strong>master_key</strong></td>
-<td>5aeff7f9-7b94-447c-af60-e8c488544a3e</td>
-<td>Master key for working with API server and JWT Secret generation</td>
-</tr>
-<tr>
-<td><strong>file_server_folder</strong></td>
-<td>/some/local/folder</td>
-<td>Optional, local folder to serve</td>
-</tr>
-<tr>
-<td><strong>file_server_address</strong></td>
-<td>127.0.0.1:3002</td>
-<td>Optional, Local address for file server. Can set as upstream for public access</td>
-</tr>
-<tr>
-<td><strong>config_api_enabled</strong></td>
-<td>true</td>
-<td>Boolean to enable/disable remote config push capability</td>
+<td><strong>Built With</strong></td>
+<td style="text-align: center;">🦀 <strong>Rust</strong></td>
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">C</td>
+<td style="text-align: center;">Go</td>
+<td style="text-align: center;">Go</td>
+<td style="text-align: center;">C++</td>
 </tr>
 </tbody>
 </table>
-<h3 id="upstreamsyaml">🌐 <code>upstreams.yaml</code></h3>
-<ul>
-<li><code>provider</code>: <code>file</code> or <code>consul</code></li>
-<li>File-based upstreams define:<ul>
-<li>Hostnames and routing paths</li>
-<li>Backend servers (load-balanced)</li>
-<li>Optional request headers, specific to this upstream</li>
-</ul>
-</li>
-<li>Global headers (e.g., CORS) apply to all proxied responses</li>
-<li>Optional authentication (Basic, API Key, JWT)</li>
-</ul>
 <hr />
-<h2 id="example">💡 Example</h2>
-<p>A sample <code>upstreams.yaml</code> entry:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;file&quot;</span>
-<span class="nt">sticky_sessions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="nt">to_https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="nt">rate_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
-<span class="nt">headers</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Access-Control-Allow-Origin:*&quot;</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Access-Control-Allow-Methods:POST,</span><span class="nv"> </span><span class="s">GET,</span><span class="nv"> </span><span class="s">OPTIONS&quot;</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Access-Control-Max-Age:86400&quot;</span>
-<span class="nt">authorization</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;jwt&quot;</span>
-<span class="w">  </span><span class="nt">creds</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;910517d9-f9a1-48de-8826-dbadacbd84af-cb6f830e-ab16-47ec-9d8f-0090de732774&quot;</span>
-<span class="nt">myhost.mydomain.com</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">paths</span><span class="p">:</span>
-<span class="w">    </span><span class="s">&quot;/&quot;</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="nt">rate_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
-<span class="w">      </span><span class="nt">to_https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">      </span><span class="nt">headers</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Some-Thing:Yaaaaaaaaaaaaaaa&quot;</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Proxy-From:Hopaaaaaaaaaaaar&quot;</span>
-<span class="w">      </span><span class="nt">servers</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;127.0.0.1:8000&quot;</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;127.0.0.2:8000&quot;</span>
-<span class="w">    </span><span class="s">&quot;/foo&quot;</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="nt">to_https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">      </span><span class="nt">headers</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Another-Header:Hohohohoho&quot;</span>
-<span class="w">      </span><span class="nt">servers</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;127.0.0.4:8443&quot;</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;127.0.0.5:8443&quot;</span>
-<span class="w">    </span><span class="s">&quot;/.well-known/acme-challenge&quot;</span><span class="p p-Indicator">:</span>
-<span class="w">      </span><span class="nt">healthcheck</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">      </span><span class="nt">servers</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;127.0.0.1:8001&quot;</span>
-</code></pre></div>
-
-<p><strong>This means:</strong></p>
-<ul>
-<li>Sticky sessions are disabled globally. This setting applies to all upstreams. If enabled all requests will be 301 redirected to HTTPS.</li>
-<li>HTTP to HTTPS redirect disabled globally, but can be overridden by <code>to_https</code> setting per upstream.</li>
-<li>Requests to each hosted domains will be limited to 10 requests per second per virtualhost.<ul>
-<li>Requests limits are calculated per requester ip plus requested virtualhost.</li>
-<li>If the requester exceeds the limit it will receive <code>429 Too Many Requests</code> error.</li>
-<li>Optional. Rate limiter will be disabled if the parameter is entirely removed from config.</li>
-</ul>
-</li>
-<li>Requests to <code>myhost.mydomain.com/</code> will be limited to 20 requests per second.</li>
-<li>Requests to <code>myhost.mydomain.com/</code> will be proxied to <code>127.0.0.1</code> and <code>127.0.0.2</code>.</li>
-<li>Plain HTTP to <code>myhost.mydomain.com/foo</code> will get 301 redirect to configured TLS port of Aralez.</li>
-<li>Requests to <code>myhost.mydomain.com/foo</code> will be proxied to <code>127.0.0.4</code> and <code>127.0.0.5</code>.</li>
-<li>Requests to <code>myhost.mydomain.com/.well-known/acme-challenge</code> will be proxied to <code>127.0.0.1:8001</code>, but healthcheks are disabled.</li>
-<li>SSL/TLS for upstreams is detected automatically, no need to set any config parameter.<ul>
-<li>Assuming the <code>127.0.0.5:8443</code> is SSL protected. The inner traffic will use TLS.</li>
-<li>Self-signed certificates are silently accepted.</li>
-</ul>
-</li>
-<li>Global headers (CORS for this case) will be injected to all upstreams.</li>
-<li>Additional headers will be injected into the request for <code>myhost.mydomain.com</code>.</li>
-<li>You can choose any path, deep nested paths are supported, the best match chosen.</li>
-<li>All requests to servers will require JWT token authentication (You can comment out the authorization to disable it),<ul>
-<li>Firs parameter specifies the mechanism of authorisation <code>jwt</code></li>
-<li>Second is the secret key for validating <code>jwt</code> tokens</li>
-</ul>
-</li>
-</ul>
+<p>✅ <strong>Automatic / Zero-Config</strong> – Works immediately, no setup required<br />
+⚙️ <strong>Manual / Config-based</strong> – Requires explicit configuration or modules<br />
+❌ <strong>No</strong> – Not supported</p>
+<h3 id="interpretation">💡 Interpretation</h3>
+<p>Aralez aims to combine the <strong>simplicity of NGINX</strong>, the <strong>observability of Envoy</strong>, and the <strong>dynamic features of Traefik</strong>, all in a modern, lightweight Rust codebase.</p>
+<p>Where most proxies require external tooling or complex configuration for dynamic updates, Aralez focuses on <strong>automatic behavior by default</strong>:
+- Upstreams and certificates <strong>reload instantly</strong> with zero downtime.
+- <strong>Health checks, TLS termination, and protocol upgrades</strong> happen automatically.
+- <strong>Authentication and metrics</strong> are built-in, not bolted on.
+- <strong>Consul and Kubernetes integration</strong> make it mesh-ready without extra agents.
+- Written in <strong>safe, high-performance Rust</strong>, offering reliability and modern concurrency.</p>
+<p>In short, Aralez is designed for developers and operators who want <strong>a fast, self-contained reverse proxy</strong> that “just works,” while still being flexible enough to scale into a service-mesh-like architecture.</p>
 
 
 
@@ -688,7 +618,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../.." title="Home" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../config/" title="Config" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -697,19 +627,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Home
+                Config
               </span>
             </div>
           </a>
         
         
-          <a href="../compare/" title="Comparition" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../auth/" title="Authentication" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Comparition
+                Authentication
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
