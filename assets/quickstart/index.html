@@ -91,7 +91,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#summary-table-feature-comparison" tabindex="1" class="md-skip">
+      <a href="#quick-start" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -267,16 +267,29 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#summary-table-feature-comparison" class="md-nav__link">
-    🧩 Summary Table: Feature Comparison
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#quick-start" class="md-nav__link">
     🚀 Quick Start
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#getting-aralez-running-is-fast-just-a-few-steps" class="md-nav__link">
+    Getting Aralez running is fast — just a few steps:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#or-via-docker" class="md-nav__link">
+    🧩 Or via docker
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -394,16 +407,29 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#summary-table-feature-comparison" class="md-nav__link">
-    🧩 Summary Table: Feature Comparison
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#quick-start" class="md-nav__link">
     🚀 Quick Start
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#getting-aralez-running-is-fast-just-a-few-steps" class="md-nav__link">
+    Getting Aralez running is fast — just a few steps:
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#or-via-docker" class="md-nav__link">
+    🧩 Or via docker
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -428,9 +454,42 @@
     
      <h1></h1>
          
-<h3 id="summary-table-feature-comparison">🧩 Summary Table: Feature Comparison</h3>
 <h2 id="quick-start">🚀 Quick Start</h2>
-<p>Getting Aralez running is fast — just a few steps:</p>
+<h3 id="getting-aralez-running-is-fast-just-a-few-steps">Getting Aralez running is fast — just a few steps:</h3>
+<p>Download the prebuilt binary for your architecture from releases section of <a href="https://github.com/sadoyan/aralez/releases">GitHub</a> repo
+Make the binary executable <code>chmod 755 ./aralez-VERSION</code> and run.</p>
+<hr />
+<p><strong>File names:</strong></p>
+<table>
+<thead>
+<tr>
+<th>File Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>aralez-x86_64-musl.gz</code></td>
+<td>Static Linux x86_64 binary, without any system dependency</td>
+</tr>
+<tr>
+<td><code>aralez-x86_64-glibc.gz</code></td>
+<td>Dynamic Linux x86_64 binary, with minimal system dependencies</td>
+</tr>
+<tr>
+<td><code>aralez-aarch64-musl.gz</code></td>
+<td>Static Linux ARM64 binary, without any system dependency</td>
+</tr>
+<tr>
+<td><code>aralez-aarch64-glibc.gz</code></td>
+<td>Dynamic Linux ARM64 binary, with minimal system dependencies</td>
+</tr>
+<tr>
+<td><code>sadoyan/aralez</code></td>
+<td>Docker image on Debian 13 slim (https://hub.docker.com/r/sadoyan/aralez)</td>
+</tr>
+</tbody>
+</table>
 <ol>
 <li><strong>Download the latest release</strong> for your architecture from <a href="https://github.com/sadoyan/aralez/releases">Releases</a>.<br />
 <code>bash
@@ -453,6 +512,14 @@ wget<span class="w"> </span>https://raw.githubusercontent.com/sadoyan/aralez/ref
 <li>Run it </li>
 </ol>
 <div class="codehilite"><pre><span></span><code>aralez-xxx-yyy<span class="w"> </span>-c<span class="w"> </span>main.yaml
+</code></pre></div>
+
+<h3 id="or-via-docker">🧩 Or via docker</h3>
+<div class="codehilite"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-v<span class="w"> </span>/local/path/to/config:/etc/aralez:ro<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="m">80</span>:80<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-p<span class="w"> </span><span class="m">443</span>:443<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>sadoyan/aralez
 </code></pre></div>
 
 
