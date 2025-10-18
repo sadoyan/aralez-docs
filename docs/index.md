@@ -1,6 +1,8 @@
 ![Aralez](https://netangels.net/utils/aralez-white.jpg)
 
-### Aralez (Արալեզ),Reverse proxy built on top of Cloudflare's Pingora
+---
+
+## Aralez (Արալեզ),Reverse proxy built on top of Cloudflare's Pingora
 
 Aralez is a high-performance Rust reverse proxy with zero-configuration automatic HTTP, HTTPS, gRPC, WebSockets protocol handling, TLS, and upstream management,
 featuring Consul and Kubernetes integration for dynamic pod discovery and health-checked routing, acting as a lightweight ingress-style proxy.
