@@ -11,7 +11,6 @@
 | **upstream_keepalive_pool_size** | 500                                  | Pool size for upstream keepalive connections                                                       |
 | **pid_file**                     | /tmp/aralez.pid                      | Path to PID file                                                                                   |
 | **error_log**                    | /tmp/aralez_err.log                  | Path to error log file                                                                             |
-| **upgrade_sock**                 | /tmp/aralez.sock                     | Path to live upgrade socket file                                                                   |
 | **config_address**               | 0.0.0.0:3000                         | HTTP API address for pushing upstreams.yaml from remote location                                   |
 | **config_tls_address**           | 0.0.0.0:3001                         | HTTPS API address for pushing upstreams.yaml from remote location                                  |
 | **config_tls_certificate**       | etc/server.crt                       | Certificate file path for API. Mandatory if proxy_address_tls is set, else optional                |
@@ -187,7 +186,7 @@ Optional parameters defaults to `None`, if not set
 ```yaml
 token: "8e2db809-845b-45e1-8b47-2c8356a09da0-a4370955-18c2-4d6e-a8f8-ffcc0b47be81"
 ```
-If authentication is enabled this parameter should contain. Default `None`, mandatory if Consul auth is enabled  
+If authentication is enabled this parameter should be the Consul auth token. Default `None`, mandatory if Consul auth is enabled  
 
 ```yaml
   servers:
