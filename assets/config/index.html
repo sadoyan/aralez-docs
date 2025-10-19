@@ -597,11 +597,6 @@
 <td>Path to error log file</td>
 </tr>
 <tr>
-<td><strong>upgrade_sock</strong></td>
-<td>/tmp/aralez.sock</td>
-<td>Path to live upgrade socket file</td>
-</tr>
-<tr>
 <td><strong>config_address</strong></td>
 <td>0.0.0.0:3000</td>
 <td>HTTP API address for pushing upstreams.yaml from remote location</td>
@@ -859,7 +854,7 @@
 <div class="codehilite"><pre><span></span><code><span class="nt">token</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;8e2db809-845b-45e1-8b47-2c8356a09da0-a4370955-18c2-4d6e-a8f8-ffcc0b47be81&quot;</span>
 </code></pre></div>
 
-<p>If authentication is enabled this parameter should contain. Default <code>None</code>, mandatory if Consul auth is enabled  </p>
+<p>If authentication is enabled this parameter should be the Consul auth token. Default <code>None</code>, mandatory if Consul auth is enabled  </p>
 <div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="nt">servers</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;http://consul1:8500&quot;</span>
 </code></pre></div>
