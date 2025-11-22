@@ -49,7 +49,10 @@ provider: "file"
 sticky_sessions: false
 to_https: false
 rate_limit: 10
-headers:
+server_headers:
+  - "X-Forwarded-Proto:https"
+  - "X-Forwarded-Port:443"
+client_headers:
   - "Access-Control-Allow-Origin:*"
   - "Access-Control-Allow-Methods:POST, GET, OPTIONS"
   - "Access-Control-Max-Age:86400"
@@ -61,7 +64,10 @@ myhost.mydomain.com:
     "/":
       rate_limit: 20
       to_https: false
-      headers:
+      server_headers:
+        - "X-Something-Else:Foobar"
+        - "X-Another-Header:Hohohohoho"
+      client_headers:
         - "X-Some-Thing:Yaaaaaaaaaaaaaaa"
         - "X-Proxy-From:Hopaaaaaaaaaaaar"
       servers:
@@ -69,7 +75,7 @@ myhost.mydomain.com:
         - "127.0.0.2:8000"
     "/foo":
       to_https: true
-      headers:
+      client_headers:
         - "X-Another-Header:Hohohohoho"
       servers:
         - "127.0.0.4:8443"
@@ -84,6 +90,8 @@ myhost.mydomain.com:
 
 - Sticky sessions are disabled globally. This setting applies to all upstreams. If enabled all requests will be 301 redirected to HTTPS.
 - HTTP to HTTPS redirect disabled globally, but can be overridden by `to_https` setting per upstream.
+- All upstreams will receive custom headers : `X-Forwarded-Proto:https` and `X-Forwarded-Port:443`
+- Additionally myhost,mydomain.com with path / will receive custom headers : `X-Another-Header:Hohohohoho` and `X-Something-Else:Foobar`
 - Requests to each hosted domains will be limited to 10 requests per second per virtualhost.
     - Requests limits are calculated per requester ip plus requested virtualhost.
     - If the requester exceeds the limit it will receive `429 Too Many Requests` error.
@@ -109,11 +117,13 @@ provider: "kubernetes" # "consul" "kubernetes"
 sticky_sessions: false
 to_https: false
 rate_limit: 100
-headers:
+server_headers:
+  - "X-Forwarded-Proto:https"
+  - "X-Forwarded-Port:443"
+client_headers:
   - "Access-Control-Allow-Origin:*"
   - "Access-Control-Allow-Methods:POST, GET, OPTIONS"
   - "Access-Control-Max-Age:86400"
-  - "Strict-Transport-Security:max-age=31536000; includeSubDomains; preload"
 consul:
   servers:
     - "http://consul1:8500"
@@ -121,7 +131,7 @@ consul:
     - hostname: "nconsul"
       upstream: "nginx-consul-NginX-health"
       path: "/one"
-      headers:
+      client_headers:
         - "X-Some-Thing:Yaaaaaaaaaaaaaaa"
         - "X-Proxy-From:Aralez"
       rate_limit: 1
@@ -140,7 +150,7 @@ kubernetes:
     - hostname: "vt-api-service-v2"
       upstream: "vt-console-service"
       path: "/one"
-      headers:
+      client_headers:
         - "X-Some-Thing:Yaaaaaaaaaaaaaaa"
         - "X-Proxy-From:Aralez"
       rate_limit: 100
@@ -166,7 +176,10 @@ Where `hostname` is actually the `Host` header to access the service and `upstre
 ### **Optional Fields:** 
 ```yaml
       path: "/one"
-      headers:
+      client_headers:
+        - "X-Some-Thing:Yaaaaaaaaaaaaaaa"
+        - "X-Proxy-From:Aralez"
+      server_headers:
         - "X-Some-Thing:Yaaaaaaaaaaaaaaa"
         - "X-Proxy-From:Aralez"
       rate_limit: 100
@@ -175,12 +188,13 @@ Where `hostname` is actually the `Host` header to access the service and `upstre
 Optional parameters defaults to `None`, if not set 
 
 
-|                 |                                 |
-|-----------------|---------------------------------|
-| **path:**       | Url path to proxy to upstreams  |
-| **headers:**    | List of additional headers      |
-| **rate_limit:** | Rate limiter, number per second |
-| **to_https:**   | Redirect to HTTPS               |
+|                     |                                          |
+|---------------------|------------------------------------------|
+| **path:**           | Url path to proxy to upstreams           |
+| **client_headers:** | List of additional headers               |
+| **server_headers:** | List of additional headers for upstreams |
+| **rate_limit:**     | Rate limiter, number per second          |
+| **to_https:**       | Redirect to HTTPS                        |
 
 ### **Consul only** 
 ```yaml
