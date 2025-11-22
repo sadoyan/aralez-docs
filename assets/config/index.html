@@ -697,7 +697,10 @@
 <span class="nt">sticky_sessions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="nt">to_https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="nt">rate_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
-<span class="nt">headers</span><span class="p">:</span>
+<span class="nt">server_headers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Forwarded-Proto:https&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Forwarded-Port:443&quot;</span>
+<span class="nt">client_headers</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Access-Control-Allow-Origin:*&quot;</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Access-Control-Allow-Methods:POST,</span><span class="nv"> </span><span class="s">GET,</span><span class="nv"> </span><span class="s">OPTIONS&quot;</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Access-Control-Max-Age:86400&quot;</span>
@@ -709,7 +712,10 @@
 <span class="w">    </span><span class="s">&quot;/&quot;</span><span class="p p-Indicator">:</span>
 <span class="w">      </span><span class="nt">rate_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
 <span class="w">      </span><span class="nt">to_https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">      </span><span class="nt">headers</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">server_headers</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Something-Else:Foobar&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Another-Header:Hohohohoho&quot;</span>
+<span class="w">      </span><span class="nt">client_headers</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Some-Thing:Yaaaaaaaaaaaaaaa&quot;</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Proxy-From:Hopaaaaaaaaaaaar&quot;</span>
 <span class="w">      </span><span class="nt">servers</span><span class="p">:</span>
@@ -717,7 +723,7 @@
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;127.0.0.2:8000&quot;</span>
 <span class="w">    </span><span class="s">&quot;/foo&quot;</span><span class="p p-Indicator">:</span>
 <span class="w">      </span><span class="nt">to_https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">      </span><span class="nt">headers</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">client_headers</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Another-Header:Hohohohoho&quot;</span>
 <span class="w">      </span><span class="nt">servers</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;127.0.0.4:8443&quot;</span>
@@ -732,6 +738,8 @@
 <ul>
 <li>Sticky sessions are disabled globally. This setting applies to all upstreams. If enabled all requests will be 301 redirected to HTTPS.</li>
 <li>HTTP to HTTPS redirect disabled globally, but can be overridden by <code>to_https</code> setting per upstream.</li>
+<li>All upstreams will receive custom headers : <code>X-Forwarded-Proto:https</code> and <code>X-Forwarded-Port:443</code></li>
+<li>Additionally myhost,mydomain.com with path / will receive custom headers : <code>X-Another-Header:Hohohohoho</code> and <code>X-Something-Else:Foobar</code></li>
 <li>Requests to each hosted domains will be limited to 10 requests per second per virtualhost.<ul>
 <li>Requests limits are calculated per requester ip plus requested virtualhost.</li>
 <li>If the requester exceeds the limit it will receive <code>429 Too Many Requests</code> error.</li>
@@ -762,11 +770,13 @@
 <span class="nt">sticky_sessions</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="nt">to_https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="nt">rate_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
-<span class="nt">headers</span><span class="p">:</span>
+<span class="nt">server_headers</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Forwarded-Proto:https&quot;</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Forwarded-Port:443&quot;</span>
+<span class="nt">client_headers</span><span class="p">:</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Access-Control-Allow-Origin:*&quot;</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Access-Control-Allow-Methods:POST,</span><span class="nv"> </span><span class="s">GET,</span><span class="nv"> </span><span class="s">OPTIONS&quot;</span>
 <span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Access-Control-Max-Age:86400&quot;</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Strict-Transport-Security:max-age=31536000;</span><span class="nv"> </span><span class="s">includeSubDomains;</span><span class="nv"> </span><span class="s">preload&quot;</span>
 <span class="nt">consul</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">servers</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;http://consul1:8500&quot;</span>
@@ -774,7 +784,7 @@
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nconsul&quot;</span>
 <span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;nginx-consul-NginX-health&quot;</span>
 <span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/one&quot;</span>
-<span class="w">      </span><span class="nt">headers</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">client_headers</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Some-Thing:Yaaaaaaaaaaaaaaa&quot;</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Proxy-From:Aralez&quot;</span>
 <span class="w">      </span><span class="nt">rate_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
@@ -793,7 +803,7 @@
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-api-service-v2&quot;</span>
 <span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-console-service&quot;</span>
 <span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/one&quot;</span>
-<span class="w">      </span><span class="nt">headers</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">client_headers</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Some-Thing:Yaaaaaaaaaaaaaaa&quot;</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Proxy-From:Aralez&quot;</span>
 <span class="w">      </span><span class="nt">rate_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
@@ -816,7 +826,10 @@
 <p>Where <code>hostname</code> is actually the <code>Host</code> header to access the service and <code>upstream</code> is a service name in Consul or Kubernetes. </p>
 <h3 id="optional-fields"><strong>Optional Fields:</strong></h3>
 <div class="codehilite"><pre><span></span><code><span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/one&quot;</span>
-<span class="w">      </span><span class="nt">headers</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">client_headers</span><span class="p">:</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Some-Thing:Yaaaaaaaaaaaaaaa&quot;</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Proxy-From:Aralez&quot;</span>
+<span class="w">      </span><span class="nt">server_headers</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Some-Thing:Yaaaaaaaaaaaaaaa&quot;</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Proxy-From:Aralez&quot;</span>
 <span class="w">      </span><span class="nt">rate_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
@@ -837,8 +850,12 @@
 <td>Url path to proxy to upstreams</td>
 </tr>
 <tr>
-<td><strong>headers:</strong></td>
+<td><strong>client_headers:</strong></td>
 <td>List of additional headers</td>
+</tr>
+<tr>
+<td><strong>server_headers:</strong></td>
+<td>List of additional headers for upstreams</td>
 </tr>
 <tr>
 <td><strong>rate_limit:</strong></td>
