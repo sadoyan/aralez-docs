@@ -144,22 +144,22 @@ kubernetes:
   servers:
     - "172.16.0.11:5443" # Gets KUBERNETES_SERVICE_HOST : KUBERNETES_SERVICE_PORT_HTTPS env variables.
   services:
-    - hostname: "vt-api-service-v2"
+    - hostname: "api-service"
       path: "/"
-      upstream: "vt-api-service-v2"
-    - hostname: "vt-api-service-v2"
-      upstream: "vt-console-service"
+      upstream: "api-service"
+    - hostname: "api-service"
+      upstream: "console-service"
       path: "/one"
       client_headers:
         - "X-Some-Thing:Yaaaaaaaaaaaaaaa"
         - "X-Proxy-From:Aralez"
       rate_limit: 100
       to_https: false
-    - hostname: "vt-api-service-v2"
-      upstream: "vt-feed-fanout-service"
+    - hostname: "api-service"
+      upstream: "feed-service"
       path: "/two"
-    - hostname: "vt-websocket-service"
-      upstream: "vt-websocket-service"
+    - hostname: "websocket-service"
+      upstream: "websocket-service"
       path: "/"
   tokenpath: "/opt/Rust/Projects/asyncweb/etc/kubetoken.txt" # Defaults to /var/run/secrets/kubernetes.io/serviceaccount/token
 ```
@@ -168,8 +168,8 @@ The yaml structure of Consul and Kubernetes providers is different. Each section
 
 ### **Mandatory Fields:** 
 ```yaml
-    - hostname: "vt-api-service-v2"
-      upstream: "vt-api-service-v2"
+    - hostname: "api-service"
+      upstream: "api-service"
 ```
 Where `hostname` is actually the `Host` header to access the service and `upstream` is a service name in Consul or Kubernetes. 
 

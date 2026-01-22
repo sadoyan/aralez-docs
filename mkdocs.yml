@@ -30,6 +30,7 @@ nav:
   - 'Home': 'index.md'
   - 'Quick Start': 'assets/quickstart.md'
   - 'Config': 'assets/config.md'
+  - 'Api': 'assets/api.md'
   - 'Comparition': 'assets/compare.md'
   - 'Authentication': 'assets/auth.md'
   - 'Benchmarks': 'assets/perf.md'
