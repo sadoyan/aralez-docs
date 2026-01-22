@@ -11,7 +11,7 @@
       <meta http-equiv="x-ua-compatible" content="ie=edge">
       
       
-        <link rel="canonical" href="https://sadoyan.github.io/aralez-docs/assets/compare/">
+        <link rel="canonical" href="https://sadoyan.github.io/aralez-docs/assets/api/">
       
       
       
@@ -38,7 +38,7 @@
     
     
       
-        <title>Comparition - Aralez (Արալեզ), Reverse proxy and service mesh built on top of Cloudflare's Pingora</title>
+        <title>Api - Aralez (Արալեզ), Reverse proxy and service mesh built on top of Cloudflare's Pingora</title>
       
     
     
@@ -91,7 +91,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#feature-comparison" tabindex="1" class="md-skip">
+      <a href="#remote-config-api" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -146,7 +146,7 @@
                        Aralez (Արալեզ), Reverse proxy and service mesh built on top of Cloudflare's Pingora
                     </span>
                     <span class="md-header-nav__topic">
-                        Comparition
+                        Api
                     </span>                   
                 </div>
             </div>
@@ -266,18 +266,6 @@
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../api/" title="Api" class="md-nav__link">
-      Api
-    </a>
-  </li>
-
-    
-      
-      
-      
-
   
 
 
@@ -287,11 +275,11 @@
     
     
       <label class="md-nav__link md-nav__link--active" for="__toc">
-        Comparition
+        Api
       </label>
     
-    <a href="./" title="Comparition" class="md-nav__link md-nav__link--active">
-      Comparition
+    <a href="./" title="Api" class="md-nav__link md-nav__link--active">
+      Api
     </a>
     
       
@@ -303,22 +291,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#feature-comparison" class="md-nav__link">
-    🧩 Feature Comparison
+  <a href="#remote-config-api" class="md-nav__link">
+    📡 Remote Config API
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#interpretation" class="md-nav__link">
-    💡 Interpretation
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#zero-config-features" class="md-nav__link">
-    ⚡ Zero-Config Features
+  <a href="#status-api" class="md-nav__link">
+    📡 Status API
   </a>
   
 </li>
@@ -331,6 +312,18 @@
   
 </nav>
     
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../compare/" title="Comparition" class="md-nav__link">
+      Comparition
+    </a>
   </li>
 
     
@@ -413,22 +406,15 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#feature-comparison" class="md-nav__link">
-    🧩 Feature Comparison
+  <a href="#remote-config-api" class="md-nav__link">
+    📡 Remote Config API
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#interpretation" class="md-nav__link">
-    💡 Interpretation
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#zero-config-features" class="md-nav__link">
-    ⚡ Zero-Config Features
+  <a href="#status-api" class="md-nav__link">
+    📡 Status API
   </a>
   
 </li>
@@ -449,204 +435,89 @@
             <article class="md-content__inner md-typeset">
               
 <!--                
-                  <a href="https://github.com/sadoyan/aralez/edit/master/docs/assets/compare.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/sadoyan/aralez/edit/master/docs/assets/api.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 -->
     
      <h1></h1>
          
-<h3 id="feature-comparison">🧩 Feature Comparison</h3>
-<table>
-<thead>
-<tr>
-<th>Feature / Proxy</th>
-<th style="text-align: center;"><strong>Aralez</strong></th>
-<th style="text-align: center;"><strong>Nginx</strong></th>
-<th style="text-align: center;"><strong>HAProxy</strong></th>
-<th style="text-align: center;"><strong>Traefik</strong></th>
-<th style="text-align: center;"><strong>Caddy</strong></th>
-<th style="text-align: center;"><strong>Envoy</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>Hot Reload (Zero Downtime)</strong></td>
-<td style="text-align: center;">✅ <strong>Automatic</strong></td>
-<td style="text-align: center;">⚙️ Manual (graceful reload)</td>
-<td style="text-align: center;">⚙️ Manual</td>
-<td style="text-align: center;">✅ Automatic</td>
-<td style="text-align: center;">✅ Automatic</td>
-<td style="text-align: center;">✅ Automatic</td>
-</tr>
-<tr>
-<td><strong>Auto Cert Reload (from disk)</strong></td>
-<td style="text-align: center;">✅ <strong>Automatic</strong></td>
-<td style="text-align: center;">❌ No</td>
-<td style="text-align: center;">❌ No</td>
-<td style="text-align: center;">✅ Automatic (Let's Encrypt only)</td>
-<td style="text-align: center;">✅ Automatic</td>
-<td style="text-align: center;">⚙️ Manual</td>
-</tr>
-<tr>
-<td><strong>Auth: Basic / API Key / JWT</strong></td>
-<td style="text-align: center;">✅ <strong>Built-in</strong></td>
-<td style="text-align: center;">⚙️ Basic only</td>
-<td style="text-align: center;">⚙️ Basic only</td>
-<td style="text-align: center;">✅ Config-based</td>
-<td style="text-align: center;">✅ Config-based</td>
-<td style="text-align: center;">✅ Config-based</td>
-</tr>
-<tr>
-<td><strong>TLS / HTTP2 Termination</strong></td>
-<td style="text-align: center;">✅ <strong>Automatic</strong></td>
-<td style="text-align: center;">⚙️ Manual config</td>
-<td style="text-align: center;">⚙️ Manual config</td>
-<td style="text-align: center;">✅ Automatic</td>
-<td style="text-align: center;">✅ Automatic</td>
-<td style="text-align: center;">✅ Automatic</td>
-</tr>
-<tr>
-<td><strong>Built-in A+ TLS Grades</strong></td>
-<td style="text-align: center;">✅ <strong>Automatic</strong></td>
-<td style="text-align: center;">⚙️ Manual tuning</td>
-<td style="text-align: center;">⚙️ Manual</td>
-<td style="text-align: center;">⚙️ Manual</td>
-<td style="text-align: center;">✅ Automatic</td>
-<td style="text-align: center;">⚙️ Manual</td>
-</tr>
-<tr>
-<td><strong>gRPC Proxy</strong></td>
-<td style="text-align: center;">✅ <strong>Zero-Config</strong></td>
-<td style="text-align: center;">⚙️ Manual setup</td>
-<td style="text-align: center;">⚙️ Manual</td>
-<td style="text-align: center;">⚙️ Needs config</td>
-<td style="text-align: center;">⚙️ Needs config</td>
-<td style="text-align: center;">⚙️ Needs config</td>
-</tr>
-<tr>
-<td><strong>SSL Proxy</strong></td>
-<td style="text-align: center;">✅ <strong>Zero-Config</strong></td>
-<td style="text-align: center;">⚙️ Manual</td>
-<td style="text-align: center;">⚙️ Manual</td>
-<td style="text-align: center;">✅ Automatic</td>
-<td style="text-align: center;">✅ Automatic</td>
-<td style="text-align: center;">✅ Automatic</td>
-</tr>
-<tr>
-<td><strong>HTTP/2 Proxy</strong></td>
-<td style="text-align: center;">✅ <strong>Zero-Config</strong></td>
-<td style="text-align: center;">⚙️ Manual enable</td>
-<td style="text-align: center;">⚙️ Manual enable</td>
-<td style="text-align: center;">✅ Automatic</td>
-<td style="text-align: center;">✅ Automatic</td>
-<td style="text-align: center;">✅ Automatic</td>
-</tr>
-<tr>
-<td><strong>WebSocket Proxy</strong></td>
-<td style="text-align: center;">✅ <strong>Zero-Config</strong></td>
-<td style="text-align: center;">⚙️ Manual upgrade</td>
-<td style="text-align: center;">⚙️ Manual upgrade</td>
-<td style="text-align: center;">✅ Automatic</td>
-<td style="text-align: center;">✅ Automatic</td>
-<td style="text-align: center;">✅ Automatic</td>
-</tr>
-<tr>
-<td><strong>Sticky Sessions</strong></td>
-<td style="text-align: center;">✅ <strong>Built-in</strong></td>
-<td style="text-align: center;">⚙️ Config-based</td>
-<td style="text-align: center;">⚙️ Config-based</td>
-<td style="text-align: center;">✅ Automatic</td>
-<td style="text-align: center;">⚙️ Limited</td>
-<td style="text-align: center;">✅ Config-based</td>
-</tr>
-<tr>
-<td><strong>Prometheus Metrics</strong></td>
-<td style="text-align: center;">✅ <strong>Built-in</strong></td>
-<td style="text-align: center;">⚙️ External exporter</td>
-<td style="text-align: center;">✅ Built-in</td>
-<td style="text-align: center;">✅ Built-in</td>
-<td style="text-align: center;">✅ Built-in</td>
-<td style="text-align: center;">✅ Built-in</td>
-</tr>
-<tr>
-<td><strong>Consul Integration</strong></td>
-<td style="text-align: center;">✅ <strong>Yes</strong></td>
-<td style="text-align: center;">❌ No</td>
-<td style="text-align: center;">⚙️ Via DNS only</td>
-<td style="text-align: center;">✅ Yes</td>
-<td style="text-align: center;">❌ No</td>
-<td style="text-align: center;">✅ Yes</td>
-</tr>
-<tr>
-<td><strong>Kubernetes Integration</strong></td>
-<td style="text-align: center;">✅ <strong>Yes</strong></td>
-<td style="text-align: center;">⚙️ Needs ingress setup</td>
-<td style="text-align: center;">⚙️ External</td>
-<td style="text-align: center;">✅ Yes</td>
-<td style="text-align: center;">⚙️ Limited</td>
-<td style="text-align: center;">✅ Yes</td>
-</tr>
-<tr>
-<td><strong>Request Limiter</strong></td>
-<td style="text-align: center;">✅ <strong>Yes</strong></td>
-<td style="text-align: center;">✅ Config-based</td>
-<td style="text-align: center;">✅ Config-based</td>
-<td style="text-align: center;">✅ Config-based</td>
-<td style="text-align: center;">✅ Config-based</td>
-<td style="text-align: center;">✅ Config-based</td>
-</tr>
-<tr>
-<td><strong>Serve Static Files</strong></td>
-<td style="text-align: center;">✅ <strong>Yes</strong></td>
-<td style="text-align: center;">✅ Yes</td>
-<td style="text-align: center;">⚙️ Basic</td>
-<td style="text-align: center;">✅ Automatic</td>
-<td style="text-align: center;">✅ Automatic</td>
-<td style="text-align: center;">❌ No</td>
-</tr>
-<tr>
-<td><strong>Upstream Health Checks</strong></td>
-<td style="text-align: center;">✅ <strong>Automatic</strong></td>
-<td style="text-align: center;">⚙️ Manual config</td>
-<td style="text-align: center;">⚙️ Manual config</td>
-<td style="text-align: center;">✅ Automatic</td>
-<td style="text-align: center;">✅ Automatic</td>
-<td style="text-align: center;">✅ Automatic</td>
-</tr>
-<tr>
-<td><strong>Built With</strong></td>
-<td style="text-align: center;">🦀 <strong>Rust</strong></td>
-<td style="text-align: center;">C</td>
-<td style="text-align: center;">C</td>
-<td style="text-align: center;">Go</td>
-<td style="text-align: center;">Go</td>
-<td style="text-align: center;">C++</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<p>✅ <strong>Automatic / Zero-Config</strong> – Works immediately, no setup required<br />
-⚙️ <strong>Manual / Config-based</strong> – Requires explicit configuration or modules<br />
-❌ <strong>No</strong> – Not supported</p>
-<h3 id="interpretation">💡 Interpretation</h3>
-<p>Aralez aims to combine the <strong>simplicity of NGINX</strong>, the <strong>observability of Envoy</strong>, and the <strong>dynamic features of Traefik</strong>, all in a modern, lightweight Rust codebase.</p>
-<p>Where most proxies require external tooling or complex configuration for dynamic updates, Aralez focuses on <strong>automatic behavior by default</strong>:
-- Upstreams and certificates <strong>reload instantly</strong> with zero downtime.
-- <strong>Health checks, TLS termination, and protocol upgrades</strong> happen automatically.
-- <strong>Authentication and metrics</strong> are built-in, not bolted on.
-- <strong>Consul and Kubernetes integration</strong> make it mesh-ready without extra agents.
-- Written in <strong>safe, high-performance Rust</strong>, offering reliability and modern concurrency.</p>
-<p>In short, Aralez is designed for developers and operators who want <strong>a fast, self-contained reverse proxy</strong> that “just works,” while still being flexible enough to scale into a service-mesh-like architecture.</p>
-<h3 id="zero-config-features">⚡ Zero-Config Features</h3>
-<p>Aralez is designed to <strong>just work out of the box</strong>, minimizing setup and manual configuration. With Aralez, you get:</p>
-<ul>
-<li><strong>Automatic protocol detection:</strong> gRPC, HTTP/2, WebSockets, and SSL are proxied correctly without extra config.  </li>
-<li><strong>Hot reloads &amp; zero downtime:</strong> Upstreams and configuration changes take effect immediately without restarting the server.  </li>
-<li><strong>Automatic TLS / certificate updates:</strong> Drop new certificates on disk and Aralez picks them up instantly.  </li>
-<li><strong>Built-in authentication &amp; rate limiting:</strong> Basic auth, API key, JWT, and request limits are ready-to-use.  </li>
-<li><strong>Observability &amp; metrics:</strong> Prometheus metrics are available automatically.  </li>
-<li><strong>Service discovery integration:</strong> Works seamlessly with Consul and Kubernetes DNS without extra setup.</li>
-</ul>
-<p>In short, Aralez is a <strong>modern reverse proxy that configures itself around your environment</strong>, so you can focus on building and deploying apps — not managing your proxy.</p>
+<h2 id="remote-config-api">📡 Remote Config API</h2>
+<p>Push new <code>upstreams.yaml</code> over HTTP to <code>config_address</code> (<code>:3000</code> by default). Useful for CI/CD automation or remote config updates.
+URL parameter. <code>key=MASTERKEY</code> is required. <code>MASTERKEY</code> is the value of <code>master_key</code> in the <code>main.yaml</code></p>
+<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span>-XPOST<span class="w"> </span>--data-binary<span class="w"> </span>@./etc/upstreams.txt<span class="w"> </span><span class="m">127</span>.0.0.1:3000/conf?key<span class="o">=</span><span class="si">${</span><span class="nv">MASTERKEY</span><span class="si">}</span>
+</code></pre></div>
+
+<h2 id="status-api">📡 Status API</h2>
+<p><strong>Get the list of upstreams with current status.</strong>  </p>
+<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span><span class="m">127</span>.0.0.1:3000/staus?live
+</code></pre></div>
+
+<p>Example putput </p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;mip.domain.com&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;/&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;backends&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;alive&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;port&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8000</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;polo.domain.com&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;/&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;backends&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;192.168.1.1&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;alive&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;port&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8000</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">]</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Get the full list of configured upstreams with configurations parameters</strong></p>
+<div class="codehilite"><pre><span></span><code>curl<span class="w"> </span><span class="m">127</span>.0.0.1:3000/staus?all
+</code></pre></div>
+
+<p>Example output</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;mip.domain.com&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;/&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;backends&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;127.0.0.1&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;port&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8000</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;is_ssl&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;is_http2&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;to_https&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;rate_limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;healthcheck&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;requests&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="nt">&quot;polo.domain.com&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;/&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;backends&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;address&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;192.168.1.1&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;port&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">8000</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;is_ssl&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;is_http2&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;to_https&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;rate_limit&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;healthcheck&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">],</span>
+<span class="w">            </span><span class="nt">&quot;requests&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
 
 
 
@@ -667,7 +538,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../api/" title="Api" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../config/" title="Config" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -676,19 +547,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Api
+                Config
               </span>
             </div>
           </a>
         
         
-          <a href="../auth/" title="Authentication" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../compare/" title="Comparition" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Authentication
+                Comparition
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">

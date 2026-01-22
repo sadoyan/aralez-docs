@@ -370,6 +370,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../api/" title="Api" class="md-nav__link">
+      Api
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../compare/" title="Comparition" class="md-nav__link">
       Comparition
     </a>
@@ -797,30 +809,30 @@
 <span class="w">  </span><span class="nt">servers</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;172.16.0.11:5443&quot;</span><span class="w"> </span><span class="c1"># Gets KUBERNETES_SERVICE_HOST : KUBERNETES_SERVICE_PORT_HTTPS env variables.</span>
 <span class="w">  </span><span class="nt">services</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-api-service-v2&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;api-service&quot;</span>
 <span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/&quot;</span>
-<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-api-service-v2&quot;</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-api-service-v2&quot;</span>
-<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-console-service&quot;</span>
+<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;api-service&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;api-service&quot;</span>
+<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;console-service&quot;</span>
 <span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/one&quot;</span>
 <span class="w">      </span><span class="nt">client_headers</span><span class="p">:</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Some-Thing:Yaaaaaaaaaaaaaaa&quot;</span>
 <span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Proxy-From:Aralez&quot;</span>
 <span class="w">      </span><span class="nt">rate_limit</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
 <span class="w">      </span><span class="nt">to_https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-api-service-v2&quot;</span>
-<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-feed-fanout-service&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;api-service&quot;</span>
+<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;feed-service&quot;</span>
 <span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/two&quot;</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-websocket-service&quot;</span>
-<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-websocket-service&quot;</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;websocket-service&quot;</span>
+<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;websocket-service&quot;</span>
 <span class="w">      </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/&quot;</span>
 <span class="w">  </span><span class="nt">tokenpath</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/opt/Rust/Projects/asyncweb/etc/kubetoken.txt&quot;</span><span class="w"> </span><span class="c1"># Defaults to /var/run/secrets/kubernetes.io/serviceaccount/token</span>
 </code></pre></div>
 
 <p>The yaml structure of Consul and Kubernetes providers is different. Each section contains mandatory and optional fields. </p>
 <h3 id="mandatory-fields"><strong>Mandatory Fields:</strong></h3>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-api-service-v2&quot;</span>
-<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;vt-api-service-v2&quot;</span>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hostname</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;api-service&quot;</span>
+<span class="w">      </span><span class="nt">upstream</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;api-service&quot;</span>
 </code></pre></div>
 
 <p>Where <code>hostname</code> is actually the <code>Host</code> header to access the service and <code>upstream</code> is a service name in Consul or Kubernetes. </p>
@@ -927,13 +939,13 @@ KUBERNETES_SERVICE_PORT_HTTPS
           </a>
         
         
-          <a href="../compare/" title="Comparition" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../api/" title="Api" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Comparition
+                Api
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
