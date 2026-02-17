@@ -136,6 +136,14 @@
 ### **Requests per second chart during test**
 ![Aralez](https://raw.githubusercontent.com/sadoyan/aralez/refs/heads/main/assets/bench2.png)
 
+### 📈 Throughput Stability & Peak RPS Analysis
+This chart illustrates the Requests Per Second (RPS) during sequential stress tests under a 1024-concurrency load. Each color block represents the "steady-state" performance of the proxy after the kernel was fully optimized.
+
+* **Aralez:** Dominates the chart with the highest sustained throughput, reaching a clean plateau near 30K RPS. Its "flat-top" signature indicates perfect synchronization with the tuned TCP stack, showing almost zero throughput jitter.
+* **Nginx:** Achieves high throughput but exhibits significant "noise" and variance (jagged peaks) compared to the stability of Aralez.
+* **HAProxy:** Showcases its trademark "unshakeable" stability with perfectly flat lines, though it operates at a lower throughput ceiling (~17K RPS) in this specific environment.
+* **Envoy, Traefik, & Caddy:** These engines show a visible "performance tax," with lower sustained RPS and more frequent throughput dips, highlighting the efficiency of the Aralez event-loop.
+
 # 🚀 High-Performance Proxy Benchmark Report
 
 ### 🥇 Aralez Performance Highlights:
