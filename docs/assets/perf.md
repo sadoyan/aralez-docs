@@ -185,4 +185,4 @@ This chart illustrates the Requests Per Second (RPS) during sequential stress te
 
 ---
 ## 🏆 Why Aralez is the New Standard
-Aralez isn't just fast; it's **predictably fast**. Under extreme load (1024 concurrency), most proxies start "stuttering," but Aralez maintains a rock-solid performance profile.
+Aralez isn't just fast; it's **predictably fast**. Under extreme load (2x1024 concurrency), most proxies start "stuttering," but Aralez maintains a rock-solid performance profile.
