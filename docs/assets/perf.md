@@ -7,14 +7,16 @@
 #### **Test Overview**
 
 **Proxies tested:**
- * Aralez
- * HAProxy
- * Envoy
- * NginX
- * Traefik
- * Caddy
+
+* Aralez
+* HAProxy
+* Envoy
+* NginX
+* Traefik
+* Caddy
 
 **Load profile:**
+
 * Proxy servers running on same host with different ports
 * 2x Oha instances for parallel testing of GET/POST requests
 * 3x Upstream servers on separate machines with responses per 3 domains with sample json files
@@ -31,6 +33,7 @@
 * Mixed routing and domain handling
 
 ### **Latency Distribution (Percentiles)**
+
 **All values in seconds unless otherwise specified.**
 **GET Requests**
 
@@ -71,6 +74,7 @@
 
 ### **Tail Latency (p99)**
 **GET**
+
 * Best: Aralez (0.0528s)
 * Next: NGINX (0.1292s)
 * HAProxy and Traefik moderate
@@ -78,6 +82,7 @@
 * Caddy highest tail
 
 **POST**
+
 * Best: Aralez (0.0507s)
 * HAProxy stable
 * Traefik acceptable
@@ -95,29 +100,35 @@
 ### **High-Level Summary**
 
 **Aralez**
+
 * Best p99 for both GET and POST
 * Extremely tight latency distribution
 * Minimal tail amplification
 
 **HAProxy**
+
 * Very consistent
 * Predictable scaling
 * Strong under mixed workload
 
 **NginX**
+
 * Good GET stability
 * POST tail increases under high concurrency
 
 **Envoy**
+
 * Good median
 * Heavy tail under POST
 * Likely requires tuning for buffer/thread settings
 
 **Traefik**
+
 * Higher baseline
 * Stable but not high-performance edge grade
 
 **Caddy**
+
 * Clean configuration
 * Higher baseline latency
 * Larger tail spread under load
