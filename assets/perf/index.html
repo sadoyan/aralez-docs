@@ -389,28 +389,32 @@
 <h2 id="simple-benchmark-by-oha">💡 Simple benchmark by <a href="https://github.com/hatoo/oha">Oha</a></h2>
 <h3 id="reverse-proxy-mixed-load-benchmark"><strong>Reverse Proxy Mixed Load Benchmark</strong></h3>
 <h4 id="test-overview"><strong>Test Overview</strong></h4>
-<p><strong>Proxies tested:</strong>
- * Aralez
- * HAProxy
- * Envoy
- * NginX
- * Traefik
- * Caddy</p>
-<p><strong>Load profile:</strong>
-* Proxy servers running on same host with different ports
-* 2x Oha instances for parallel testing of GET/POST requests
-* 3x Upstream servers on separate machines with responses per 3 domains with sample json files
-* Tuned Kernel parameters for heavy load
-* 10 gbit network
-* All instances running 4 Core+HT Intel(R) Xeon(R) CPU E5-2699C v4 @ 2.20GHz 
-* 60 URLs (deep / nested paths)
-* Majority HTTPS (TLS termination active)
-* Mixed GET + POST
-* JSON payload for POST
-* 2048 total concurrent connections (2 × 1024)
-* Upstreams on separate machines
-* No caching
-* Mixed routing and domain handling</p>
+<p><strong>Proxies tested:</strong></p>
+<ul>
+<li>Aralez</li>
+<li>HAProxy</li>
+<li>Envoy</li>
+<li>NginX</li>
+<li>Traefik</li>
+<li>Caddy</li>
+</ul>
+<p><strong>Load profile:</strong></p>
+<ul>
+<li>Proxy servers running on same host with different ports</li>
+<li>2x Oha instances for parallel testing of GET/POST requests</li>
+<li>3x Upstream servers on separate machines with responses per 3 domains with sample json files</li>
+<li>Tuned Kernel parameters for heavy load</li>
+<li>10 gbit network</li>
+<li>All instances running 4 Core+HT Intel(R) Xeon(R) CPU E5-2699C v4 @ 2.20GHz </li>
+<li>60 URLs (deep / nested paths)</li>
+<li>Majority HTTPS (TLS termination active)</li>
+<li>Mixed GET + POST</li>
+<li>JSON payload for POST</li>
+<li>2048 total concurrent connections (2 × 1024)</li>
+<li>Upstreams on separate machines</li>
+<li>No caching</li>
+<li>Mixed routing and domain handling</li>
+</ul>
 <h3 id="latency-distribution-percentiles"><strong>Latency Distribution (Percentiles)</strong></h3>
 <p><strong>All values in seconds unless otherwise specified.</strong>
 <strong>GET Requests</strong></p>
@@ -616,18 +620,22 @@
 <li>Traefik and Caddy have noticeably higher baseline latency.</li>
 </ul>
 <h3 id="tail-latency-p99"><strong>Tail Latency (p99)</strong></h3>
-<p><strong>GET</strong>
-* Best: Aralez (0.0528s)
-* Next: NGINX (0.1292s)
-* HAProxy and Traefik moderate
-* Envoy higher tail
-* Caddy highest tail</p>
-<p><strong>POST</strong>
-* Best: Aralez (0.0507s)
-* HAProxy stable
-* Traefik acceptable
-* Envoy and NGINX show significant tail increase under POST
-* Caddy moderate but above HAProxy</p>
+<p><strong>GET</strong></p>
+<ul>
+<li>Best: Aralez (0.0528s)</li>
+<li>Next: NGINX (0.1292s)</li>
+<li>HAProxy and Traefik moderate</li>
+<li>Envoy higher tail</li>
+<li>Caddy highest tail</li>
+</ul>
+<p><strong>POST</strong></p>
+<ul>
+<li>Best: Aralez (0.0507s)</li>
+<li>HAProxy stable</li>
+<li>Traefik acceptable</li>
+<li>Envoy and NGINX show significant tail increase under POST</li>
+<li>Caddy moderate but above HAProxy</li>
+</ul>
 <h3 id="extreme-tail-p999-p9999"><strong>Extreme Tail (p99.9 / p99.99)</strong></h3>
 <ul>
 <li>Aralez remains very stable even at extreme percentiles.</li>
@@ -637,28 +645,40 @@
 <li>Caddy shows noticeable spread under stress.</li>
 </ul>
 <h3 id="high-level-summary"><strong>High-Level Summary</strong></h3>
-<p><strong>Aralez</strong>
-* Best p99 for both GET and POST
-* Extremely tight latency distribution
-* Minimal tail amplification</p>
-<p><strong>HAProxy</strong>
-* Very consistent
-* Predictable scaling
-* Strong under mixed workload</p>
-<p><strong>NginX</strong>
-* Good GET stability
-* POST tail increases under high concurrency</p>
-<p><strong>Envoy</strong>
-* Good median
-* Heavy tail under POST
-* Likely requires tuning for buffer/thread settings</p>
-<p><strong>Traefik</strong>
-* Higher baseline
-* Stable but not high-performance edge grade</p>
-<p><strong>Caddy</strong>
-* Clean configuration
-* Higher baseline latency
-* Larger tail spread under load</p>
+<p><strong>Aralez</strong></p>
+<ul>
+<li>Best p99 for both GET and POST</li>
+<li>Extremely tight latency distribution</li>
+<li>Minimal tail amplification</li>
+</ul>
+<p><strong>HAProxy</strong></p>
+<ul>
+<li>Very consistent</li>
+<li>Predictable scaling</li>
+<li>Strong under mixed workload</li>
+</ul>
+<p><strong>NginX</strong></p>
+<ul>
+<li>Good GET stability</li>
+<li>POST tail increases under high concurrency</li>
+</ul>
+<p><strong>Envoy</strong></p>
+<ul>
+<li>Good median</li>
+<li>Heavy tail under POST</li>
+<li>Likely requires tuning for buffer/thread settings</li>
+</ul>
+<p><strong>Traefik</strong></p>
+<ul>
+<li>Higher baseline</li>
+<li>Stable but not high-performance edge grade</li>
+</ul>
+<p><strong>Caddy</strong></p>
+<ul>
+<li>Clean configuration</li>
+<li>Higher baseline latency</li>
+<li>Larger tail spread under load</li>
+</ul>
 <h3 id="requests-per-second-chart-during-test"><strong>Requests per second chart during test</strong></h3>
 <p><img alt="Aralez" src="https://raw.githubusercontent.com/sadoyan/aralez/refs/heads/main/assets/bench2.png" /></p>
 <h1 id="high-performance-proxy-benchmark-report">🚀 High-Performance Proxy Benchmark Report</h1>
