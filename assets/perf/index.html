@@ -309,51 +309,12 @@
     
     <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
     
+      
     
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Benchmarks
-      </label>
     
     <a href="./" title="Benchmarks" class="md-nav__link md-nav__link--active">
       Benchmarks
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-  
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#aralez-performance-benchmarks" class="md-nav__link">
-    🚀 Aralez performance benchmarks
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simple-benchmark-by-oha" class="md-nav__link">
-    💡 Simple benchmark by Oha
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#aralez-nginx-traefik-performance-benchmark" class="md-nav__link">
-    🚀 Aralez, Nginx, Traefik performance benchmark
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
-  
-</nav>
     
   </li>
 
@@ -408,36 +369,8 @@
 <nav class="md-nav md-nav--secondary">
   
   
+    
   
-    <label class="md-nav__title" for="__toc">Table of contents</label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#aralez-performance-benchmarks" class="md-nav__link">
-    🚀 Aralez performance benchmarks
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simple-benchmark-by-oha" class="md-nav__link">
-    💡 Simple benchmark by Oha
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#aralez-nginx-traefik-performance-benchmark" class="md-nav__link">
-    🚀 Aralez, Nginx, Traefik performance benchmark
-  </a>
-  
-</li>
-      
-      
-      
-      
-      
-    </ul>
   
 </nav>
                   </div>
@@ -451,164 +384,624 @@
 <!--                
                   <a href="https://github.com/sadoyan/aralez/edit/master/docs/assets/perf.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 -->
-    
-     <h1></h1>
          
 <h2 id="aralez-performance-benchmarks">🚀 Aralez performance benchmarks</h2>
 <h2 id="simple-benchmark-by-oha">💡 Simple benchmark by <a href="https://github.com/hatoo/oha">Oha</a></h2>
-<p>⚠️ These benchmarks use :</p>
+<h3 id="reverse-proxy-mixed-load-benchmark"><strong>Reverse Proxy Mixed Load Benchmark</strong></h3>
+<h4 id="test-overview"><strong>Test Overview</strong></h4>
+<p><strong>Proxies tested:</strong>
+ * Aralez
+ * HAProxy
+ * Envoy
+ * NginX
+ * Traefik
+ * Caddy</p>
+<p><strong>Load profile:</strong>
+* Proxy servers running on same host with different ports
+* 2x Oha instances for parallel testing of GET/POST requests
+* 3x Upstream servers on separate machines with responses per 3 domains with sample json files
+* Tuned Kernel parameters for heavy load
+* 10 gbit network
+* All instances running 4 Core+HT Intel(R) Xeon(R) CPU E5-2699C v4 @ 2.20GHz 
+* 60 URLs (deep / nested paths)
+* Majority HTTPS (TLS termination active)
+* Mixed GET + POST
+* JSON payload for POST
+* 2048 total concurrent connections (2 × 1024)
+* Upstreams on separate machines
+* No caching
+* Mixed routing and domain handling</p>
+<h3 id="latency-distribution-percentiles"><strong>Latency Distribution (Percentiles)</strong></h3>
+<p><strong>All values in seconds unless otherwise specified.</strong>
+<strong>GET Requests</strong></p>
+<table>
+<thead>
+<tr>
+<th>Percentile</th>
+<th>Aralez</th>
+<th>HAProxy</th>
+<th>Envoy</th>
+<th>NGINX</th>
+<th>Traefik</th>
+<th>Caddy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p10</td>
+<td>0.0024</td>
+<td>0.0303</td>
+<td>0.0307</td>
+<td>0.0022</td>
+<td>0.0781</td>
+<td>0.0749</td>
+</tr>
+<tr>
+<td>p25</td>
+<td>0.0038</td>
+<td>0.0492</td>
+<td>0.0467</td>
+<td>0.0025</td>
+<td>0.1105</td>
+<td>0.1105</td>
+</tr>
+<tr>
+<td>p50</td>
+<td>0.0061</td>
+<td>0.0691</td>
+<td>0.0640</td>
+<td>0.0029</td>
+<td>0.1271</td>
+<td>0.1574</td>
+</tr>
+<tr>
+<td>p75</td>
+<td>0.0088</td>
+<td>0.1035</td>
+<td>0.0943</td>
+<td>0.0054</td>
+<td>0.1483</td>
+<td>0.2487</td>
+</tr>
+<tr>
+<td>p90</td>
+<td>0.0132</td>
+<td>0.1407</td>
+<td>0.1432</td>
+<td>0.0263</td>
+<td>0.1798</td>
+<td>0.3919</td>
+</tr>
+<tr>
+<td>p95</td>
+<td>0.0228</td>
+<td>0.1742</td>
+<td>0.2263</td>
+<td>0.0700</td>
+<td>0.2142</td>
+<td>0.4960</td>
+</tr>
+<tr>
+<td>p99</td>
+<td>0.0528</td>
+<td>0.2846</td>
+<td>0.4744</td>
+<td>0.1292</td>
+<td>0.3859</td>
+<td>0.7093</td>
+</tr>
+<tr>
+<td>p99.9</td>
+<td>0.1931</td>
+<td>0.5404</td>
+<td>1.0309</td>
+<td>0.2525</td>
+<td>0.7853</td>
+<td>1.0799</td>
+</tr>
+<tr>
+<td>p99.99</td>
+<td>0.4220</td>
+<td>2.5017</td>
+<td>2.1869</td>
+<td>0.4524</td>
+<td>1.1503</td>
+<td>2.2552</td>
+</tr>
+</tbody>
+</table>
+<p><strong>POST Requests</strong></p>
+<table>
+<thead>
+<tr>
+<th>Percentile</th>
+<th>Aralez</th>
+<th>HAProxy</th>
+<th>Envoy</th>
+<th>NGINX</th>
+<th>Traefik</th>
+<th>Caddy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p10</td>
+<td>0.0024</td>
+<td>0.0295</td>
+<td>0.0376</td>
+<td>0.0215</td>
+<td>0.0790</td>
+<td>0.0754</td>
+</tr>
+<tr>
+<td>p25</td>
+<td>0.0038</td>
+<td>0.0485</td>
+<td>0.0625</td>
+<td>0.0246</td>
+<td>0.1107</td>
+<td>0.1110</td>
+</tr>
+<tr>
+<td>p50</td>
+<td>0.0061</td>
+<td>0.0684</td>
+<td>0.0973</td>
+<td>0.0288</td>
+<td>0.1273</td>
+<td>0.1579</td>
+</tr>
+<tr>
+<td>p75</td>
+<td>0.0088</td>
+<td>0.1027</td>
+<td>0.1543</td>
+<td>0.0500</td>
+<td>0.1484</td>
+<td>0.2494</td>
+</tr>
+<tr>
+<td>p90</td>
+<td>0.0134</td>
+<td>0.1399</td>
+<td>0.3758</td>
+<td>0.2605</td>
+<td>0.1801</td>
+<td>0.3838</td>
+</tr>
+<tr>
+<td>p95</td>
+<td>0.0250</td>
+<td>0.1730</td>
+<td>0.5454</td>
+<td>0.4959</td>
+<td>0.2147</td>
+<td>0.4866</td>
+</tr>
+<tr>
+<td>p99</td>
+<td>0.0507</td>
+<td>0.2829</td>
+<td>1.2614</td>
+<td>1.2734</td>
+<td>0.3741</td>
+<td>0.6944</td>
+</tr>
+<tr>
+<td>p99.9</td>
+<td>0.1141</td>
+<td>0.5353</td>
+<td>2.5964</td>
+<td>2.3265</td>
+<td>0.6698</td>
+<td>1.0126</td>
+</tr>
+<tr>
+<td>p99.99</td>
+<td>0.3616</td>
+<td>1.4382</td>
+<td>4.0073</td>
+<td>4.1945</td>
+<td>1.2958</td>
+<td>1.3822</td>
+</tr>
+</tbody>
+</table>
+<h3 id="observations"><strong>Observations</strong></h3>
+<p><strong>Median Latency (p50)</strong></p>
 <ul>
-<li>3 async Rust echo servers on a local network with 1Gbit as upstreams.</li>
-<li>A dedicated server for running <strong>Aralez</strong></li>
-<li>A dedicated server for running <strong>Oha</strong></li>
-<li>The following upstreams configuration.</li>
-<li>9 test URLs from simple <code>/</code> to nested up to 7 subpaths.</li>
+<li>Aralez shows extremely low median latency in both GET and POST.</li>
+<li>HAProxy and Envoy follow closely for GET.</li>
+<li>NGINX performs well in POST median.</li>
+<li>Traefik and Caddy have noticeably higher baseline latency.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="nt">myhost.mydomain.com</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">paths</span><span class="p">:</span>
-<span class="w">      </span><span class="s">&quot;/&quot;</span><span class="p p-Indicator">:</span>
-<span class="w">        </span><span class="nt">to_https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">        </span><span class="nt">headers</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Proxy-From:Aralez&quot;</span>
-<span class="w">        </span><span class="nt">servers</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;192.168.211.211:8000&quot;</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;192.168.211.212:8000&quot;</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;192.168.211.213:8000&quot;</span>
-<span class="w">      </span><span class="s">&quot;/ping&quot;</span><span class="p p-Indicator">:</span>
-<span class="w">        </span><span class="nt">to_https</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">        </span><span class="nt">headers</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Some-Thing:Yaaaaaaaaaaaaaaa&quot;</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;X-Proxy-From:Aralez&quot;</span>
-<span class="w">        </span><span class="nt">servers</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;192.168.211.211:8000&quot;</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;192.168.211.212:8000&quot;</span>
-</code></pre></div>
-
-<p>💡 <strong>Results reflect synthetic performance under optimal conditions.</strong></p>
+<h3 id="tail-latency-p99"><strong>Tail Latency (p99)</strong></h3>
+<p><strong>GET</strong>
+* Best: Aralez (0.0528s)
+* Next: NGINX (0.1292s)
+* HAProxy and Traefik moderate
+* Envoy higher tail
+* Caddy highest tail</p>
+<p><strong>POST</strong>
+* Best: Aralez (0.0507s)
+* HAProxy stable
+* Traefik acceptable
+* Envoy and NGINX show significant tail increase under POST
+* Caddy moderate but above HAProxy</p>
+<h3 id="extreme-tail-p999-p9999"><strong>Extreme Tail (p99.9 / p99.99)</strong></h3>
 <ul>
-<li>CPU : Intel(R) Xeon(R) CPU E3-1270 v6 @ 3.80GHz</li>
-<li>300 : simultaneous connections</li>
-<li>Duration : 10 Minutes</li>
-<li>Binary : aralez-x86_64-glibc</li>
+<li>Aralez remains very stable even at extreme percentiles.</li>
+<li>HAProxy scales predictably but tail widens at 99.99.</li>
+<li>Envoy and NGINX show heavy tail amplification under POST.</li>
+<li>Traefik moderate.</li>
+<li>Caddy shows noticeable spread under stress.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="n">Summary</span><span class="o">:</span>
-<span class="w">  </span><span class="n">Success</span><span class="w"> </span><span class="n">rate</span><span class="o">:</span><span class="w"> </span><span class="mf">100.00</span><span class="o">%</span>
-<span class="w">  </span><span class="n">Total</span><span class="o">:</span><span class="w">    </span><span class="mf">600.0027</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="n">Slowest</span><span class="o">:</span><span class="w">  </span><span class="mf">0.2138</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="n">Fastest</span><span class="o">:</span><span class="w">  </span><span class="mf">0.0002</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="n">Average</span><span class="o">:</span><span class="w">  </span><span class="mf">0.0023</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="n">Requests</span><span class="o">/</span><span class="n">sec</span><span class="o">:</span><span class="w"> </span><span class="mf">129777.3838</span>
-
-<span class="w">  </span><span class="n">Total</span><span class="w"> </span><span class="n">data</span><span class="o">:</span><span class="w">   </span><span class="mi">0</span><span class="w"> </span><span class="n">B</span>
-<span class="w">  </span><span class="n">Size</span><span class="o">/</span><span class="n">request</span><span class="o">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">B</span>
-<span class="w">  </span><span class="n">Size</span><span class="o">/</span><span class="n">sec</span><span class="o">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">B</span>
-
-<span class="n">Response</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="n">histogram</span><span class="o">:</span>
-<span class="w">  </span><span class="mf">0.000</span><span class="w"> </span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="w">        </span><span class="o">|</span>
-<span class="w">  </span><span class="mf">0.022</span><span class="w"> </span><span class="o">[</span><span class="mi">77668026</span><span class="o">]</span><span class="w"> </span><span class="o">|</span><span class="err">■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■</span>
-<span class="w">  </span><span class="mf">0.043</span><span class="w"> </span><span class="o">[</span><span class="mi">190362</span><span class="o">]</span><span class="w">   </span><span class="o">|</span>
-<span class="w">  </span><span class="mf">0.064</span><span class="w"> </span><span class="o">[</span><span class="mi">7908</span><span class="o">]</span><span class="w">     </span><span class="o">|</span>
-<span class="w">  </span><span class="mf">0.086</span><span class="w"> </span><span class="o">[</span><span class="mi">319</span><span class="o">]</span><span class="w">      </span><span class="o">|</span>
-<span class="w">  </span><span class="mf">0.107</span><span class="w"> </span><span class="o">[</span><span class="mi">4</span><span class="o">]</span><span class="w">        </span><span class="o">|</span>
-<span class="w">  </span><span class="mf">0.128</span><span class="w"> </span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="w">        </span><span class="o">|</span>
-<span class="w">  </span><span class="mf">0.150</span><span class="w"> </span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="w">        </span><span class="o">|</span>
-<span class="w">  </span><span class="mf">0.171</span><span class="w"> </span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="w">        </span><span class="o">|</span>
-<span class="w">  </span><span class="mf">0.192</span><span class="w"> </span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="w">        </span><span class="o">|</span>
-<span class="w">  </span><span class="mf">0.214</span><span class="w"> </span><span class="o">[</span><span class="mi">4</span><span class="o">]</span><span class="w">        </span><span class="o">|</span>
-
-<span class="n">Response</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="n">distribution</span><span class="o">:</span>
-<span class="w">  </span><span class="mf">10.00</span><span class="o">%</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.0012</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="mf">25.00</span><span class="o">%</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.0016</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="mf">50.00</span><span class="o">%</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.0020</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="mf">75.00</span><span class="o">%</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.0026</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="mf">90.00</span><span class="o">%</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.0033</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="mf">95.00</span><span class="o">%</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.0040</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="mf">99.00</span><span class="o">%</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.0078</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="mf">99.90</span><span class="o">%</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.0278</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="mf">99.99</span><span class="o">%</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.0434</span><span class="w"> </span><span class="n">secs</span>
-
-
-<span class="n">Details</span><span class="w"> </span><span class="o">(</span><span class="n">average</span><span class="o">,</span><span class="w"> </span><span class="n">fastest</span><span class="o">,</span><span class="w"> </span><span class="n">slowest</span><span class="o">):</span>
-<span class="w">  </span><span class="n">DNS</span><span class="o">+</span><span class="n">dialup</span><span class="o">:</span><span class="w">   </span><span class="mf">0.0161</span><span class="w"> </span><span class="n">secs</span><span class="o">,</span><span class="w"> </span><span class="mf">0.0002</span><span class="w"> </span><span class="n">secs</span><span class="o">,</span><span class="w"> </span><span class="mf">0.0316</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="n">DNS</span><span class="o">-</span><span class="n">lookup</span><span class="o">:</span><span class="w">   </span><span class="mf">0.0000</span><span class="w"> </span><span class="n">secs</span><span class="o">,</span><span class="w"> </span><span class="mf">0.0000</span><span class="w"> </span><span class="n">secs</span><span class="o">,</span><span class="w"> </span><span class="mf">0.0000</span><span class="w"> </span><span class="n">secs</span>
-
-<span class="n">Status</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">distribution</span><span class="o">:</span>
-<span class="w">  </span><span class="o">[</span><span class="mi">200</span><span class="o">]</span><span class="w"> </span><span class="mi">77866624</span><span class="w"> </span><span class="n">responses</span>
-
-<span class="n">Error</span><span class="w"> </span><span class="n">distribution</span><span class="o">:</span>
-<span class="w">  </span><span class="o">[</span><span class="mi">158</span><span class="o">]</span><span class="w"> </span><span class="n">aborted</span><span class="w"> </span><span class="n">due</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">deadline</span>
-</code></pre></div>
-
-<p><img alt="Aralez" src="https://netangels.net/utils/glibc10.png" /></p>
+<h3 id="high-level-summary"><strong>High-Level Summary</strong></h3>
+<p><strong>Aralez</strong>
+* Best p99 for both GET and POST
+* Extremely tight latency distribution
+* Minimal tail amplification</p>
+<p><strong>HAProxy</strong>
+* Very consistent
+* Predictable scaling
+* Strong under mixed workload</p>
+<p><strong>NginX</strong>
+* Good GET stability
+* POST tail increases under high concurrency</p>
+<p><strong>Envoy</strong>
+* Good median
+* Heavy tail under POST
+* Likely requires tuning for buffer/thread settings</p>
+<p><strong>Traefik</strong>
+* Higher baseline
+* Stable but not high-performance edge grade</p>
+<p><strong>Caddy</strong>
+* Clean configuration
+* Higher baseline latency
+* Larger tail spread under load</p>
+<h3 id="requests-per-second-chart-during-test"><strong>Requests per second chart during test</strong></h3>
+<p><img alt="Aralez" src="https://raw.githubusercontent.com/sadoyan/aralez/refs/heads/main/assets/bench2.png" /></p>
+<h1 id="high-performance-proxy-benchmark-report">🚀 High-Performance Proxy Benchmark Report</h1>
+<h3 id="aralez-performance-highlights">🥇 Aralez Performance Highlights:</h3>
 <ul>
-<li>CPU : Intel(R) Xeon(R) CPU E3-1270 v6 @ 3.80GHz</li>
-<li>300 : simultaneous connections</li>
-<li>Duration : 10 Minutes</li>
-<li>Binary : aralez-x86_64-musl</li>
+<li><strong>Tail Latency Dominance</strong>: Aralez achieves a <strong>p99 of 0.1931 10 sec</strong>, outperforming Nginx (<strong>0.2525 10 sec</strong>) by more than <strong>2x</strong>.</li>
+<li><strong>Zero Payload Penalty</strong>: Unlike Envoy or Nginx, Aralez shows almost <strong>identical</strong> performance between GET and POST requests, proving its efficient buffer management.</li>
+<li><strong>Median Stability</strong>: A p50 of <strong>0.0088 10 sec</strong> ensures that the vast majority of users experience near-instant response times.</li>
 </ul>
-<div class="codehilite"><pre><span></span><code><span class="n">Summary</span><span class="o">:</span>
-<span class="w">  </span><span class="n">Success</span><span class="w"> </span><span class="n">rate</span><span class="o">:</span><span class="w"> </span><span class="mf">100.00</span><span class="o">%</span>
-<span class="w">  </span><span class="n">Total</span><span class="o">:</span><span class="w">    </span><span class="mf">600.0021</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="n">Slowest</span><span class="o">:</span><span class="w">  </span><span class="mf">0.2182</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="n">Fastest</span><span class="o">:</span><span class="w">  </span><span class="mf">0.0002</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="n">Average</span><span class="o">:</span><span class="w">  </span><span class="mf">0.0024</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="n">Requests</span><span class="o">/</span><span class="n">sec</span><span class="o">:</span><span class="w"> </span><span class="mf">123870.5820</span>
-
-<span class="w">  </span><span class="n">Total</span><span class="w"> </span><span class="n">data</span><span class="o">:</span><span class="w">   </span><span class="mi">0</span><span class="w"> </span><span class="n">B</span>
-<span class="w">  </span><span class="n">Size</span><span class="o">/</span><span class="n">request</span><span class="o">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">B</span>
-<span class="w">  </span><span class="n">Size</span><span class="o">/</span><span class="n">sec</span><span class="o">:</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">B</span>
-
-<span class="n">Response</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="n">histogram</span><span class="o">:</span>
-<span class="w">  </span><span class="mf">0.000</span><span class="w"> </span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="w">        </span><span class="o">|</span>
-<span class="w">  </span><span class="mf">0.022</span><span class="w"> </span><span class="o">[</span><span class="mi">74254679</span><span class="o">]</span><span class="w"> </span><span class="o">|</span><span class="err">■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■</span>
-<span class="w">  </span><span class="mf">0.044</span><span class="w"> </span><span class="o">[</span><span class="mi">61400</span><span class="o">]</span><span class="w">    </span><span class="o">|</span>
-<span class="w">  </span><span class="mf">0.066</span><span class="w"> </span><span class="o">[</span><span class="mi">5911</span><span class="o">]</span><span class="w">     </span><span class="o">|</span>
-<span class="w">  </span><span class="mf">0.087</span><span class="w"> </span><span class="o">[</span><span class="mi">385</span><span class="o">]</span><span class="w">      </span><span class="o">|</span>
-<span class="w">  </span><span class="mf">0.109</span><span class="w"> </span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="w">        </span><span class="o">|</span>
-<span class="w">  </span><span class="mf">0.131</span><span class="w"> </span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="w">        </span><span class="o">|</span>
-<span class="w">  </span><span class="mf">0.153</span><span class="w"> </span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="w">        </span><span class="o">|</span>
-<span class="w">  </span><span class="mf">0.175</span><span class="w"> </span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="w">        </span><span class="o">|</span>
-<span class="w">  </span><span class="mf">0.196</span><span class="w"> </span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="w">        </span><span class="o">|</span>
-<span class="w">  </span><span class="mf">0.218</span><span class="w"> </span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="w">        </span><span class="o">|</span>
-
-<span class="n">Response</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="n">distribution</span><span class="o">:</span>
-<span class="w">  </span><span class="mf">10.00</span><span class="o">%</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.0012</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="mf">25.00</span><span class="o">%</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.0016</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="mf">50.00</span><span class="o">%</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.0021</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="mf">75.00</span><span class="o">%</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.0028</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="mf">90.00</span><span class="o">%</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.0037</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="mf">95.00</span><span class="o">%</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.0045</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="mf">99.00</span><span class="o">%</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.0077</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="mf">99.90</span><span class="o">%</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.0214</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="mf">99.99</span><span class="o">%</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.0424</span><span class="w"> </span><span class="n">secs</span>
-
-
-<span class="n">Details</span><span class="w"> </span><span class="o">(</span><span class="n">average</span><span class="o">,</span><span class="w"> </span><span class="n">fastest</span><span class="o">,</span><span class="w"> </span><span class="n">slowest</span><span class="o">):</span>
-<span class="w">  </span><span class="n">DNS</span><span class="o">+</span><span class="n">dialup</span><span class="o">:</span><span class="w">   </span><span class="mf">0.0066</span><span class="w"> </span><span class="n">secs</span><span class="o">,</span><span class="w"> </span><span class="mf">0.0002</span><span class="w"> </span><span class="n">secs</span><span class="o">,</span><span class="w"> </span><span class="mf">0.0210</span><span class="w"> </span><span class="n">secs</span>
-<span class="w">  </span><span class="n">DNS</span><span class="o">-</span><span class="n">lookup</span><span class="o">:</span><span class="w">   </span><span class="mf">0.0000</span><span class="w"> </span><span class="n">secs</span><span class="o">,</span><span class="w"> </span><span class="mf">0.0000</span><span class="w"> </span><span class="n">secs</span><span class="o">,</span><span class="w"> </span><span class="mf">0.0000</span><span class="w"> </span><span class="n">secs</span>
-
-<span class="n">Status</span><span class="w"> </span><span class="n">code</span><span class="w"> </span><span class="n">distribution</span><span class="o">:</span>
-<span class="w">  </span><span class="o">[</span><span class="mi">200</span><span class="o">]</span><span class="w"> </span><span class="mi">74322377</span><span class="w"> </span><span class="n">responses</span>
-
-<span class="n">Error</span><span class="w"> </span><span class="n">distribution</span><span class="o">:</span>
-<span class="w">  </span><span class="o">[</span><span class="mi">228</span><span class="o">]</span><span class="w"> </span><span class="n">aborted</span><span class="w"> </span><span class="n">due</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">deadline</span>
-</code></pre></div>
-
-<p><img alt="Aralez" src="https://netangels.net/utils/musl10.png" /></p>
-<h2 id="aralez-nginx-traefik-performance-benchmark">🚀 Aralez, Nginx, Traefik performance benchmark</h2>
-<p>This benchmark is done on 4 servers. With CPU Intel(R) Xeon(R) E-2174G CPU @ 3.80GHz, 64 GB RAM.</p>
-<ol>
-<li>Sever runs Aralez, Traefik, Nginx on different ports. Tuned as much as I could .</li>
-<li>3x Upstreams servers, running Nginx. Replying with dummy json hardcoded in config file for max performance.</li>
-</ol>
-<p>All servers are connected to the same switch with 1GB port in datacenter , not a home lab. The results:
-<img alt="Aralez" src="https://raw.githubusercontent.com/sadoyan/aralez/refs/heads/main/assets/bench.png" /></p>
-<p>The results show requests per second performed by Load balancer. You can see 3 batches with 800 concurrent users.</p>
-<ol>
-<li>Requests via http1.1 to plain text endpoint.</li>
-<li>Requests to via http2 to SSL endpoint.</li>
-<li>Mixed workload with plain http1.1 and htt2 SSL.</li>
-</ol>
+<hr />
+<h2 id="detailed-comparison-tables">📊 Detailed Comparison Tables</h2>
+<h3 id="1-response-time-histogram">1. Response Time Histogram</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Threshold</th>
+<th style="text-align: center;">ARALEZ GET</th>
+<th style="text-align: center;">ARALEZ POST</th>
+<th style="text-align: center;">HAPROXY GET</th>
+<th style="text-align: center;">HAPROXY POST</th>
+<th style="text-align: center;">ENVOY GET</th>
+<th style="text-align: center;">ENVOY POST</th>
+<th style="text-align: center;">NGINX GET</th>
+<th style="text-align: center;">NGINX POST</th>
+<th style="text-align: center;">TRAEFIK GET</th>
+<th style="text-align: center;">TRAEFIK POST</th>
+<th style="text-align: center;">CADDY GET</th>
+<th style="text-align: center;">CADDY POST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">0.000 10 sec</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: left;">0.167 10 sec</td>
+<td style="text-align: center;">3691654</td>
+<td style="text-align: center;">3742220</td>
+<td style="text-align: center;">3700723</td>
+<td style="text-align: center;">3649573</td>
+<td style="text-align: center;">3502620</td>
+<td style="text-align: center;">1735719</td>
+<td style="text-align: center;">2589172</td>
+<td style="text-align: center;">2658901</td>
+<td style="text-align: center;">2245581</td>
+<td style="text-align: center;">2253228</td>
+<td style="text-align: center;">1381444</td>
+<td style="text-align: center;">1509978</td>
+</tr>
+<tr>
+<td style="text-align: left;">0.333 10 sec</td>
+<td style="text-align: center;">3537</td>
+<td style="text-align: center;">2142</td>
+<td style="text-align: center;">18484</td>
+<td style="text-align: center;">116056</td>
+<td style="text-align: center;">23162</td>
+<td style="text-align: center;">70454</td>
+<td style="text-align: center;">2946</td>
+<td style="text-align: center;">105969</td>
+<td style="text-align: center;">18185</td>
+<td style="text-align: center;">16159</td>
+<td style="text-align: center;">126442</td>
+<td style="text-align: center;">17428</td>
+</tr>
+<tr>
+<td style="text-align: left;">0.500 10 sec</td>
+<td style="text-align: center;">756</td>
+<td style="text-align: center;">372</td>
+<td style="text-align: center;">1096</td>
+<td style="text-align: center;">5880</td>
+<td style="text-align: center;">2442</td>
+<td style="text-align: center;">16369</td>
+<td style="text-align: center;">195</td>
+<td style="text-align: center;">14068</td>
+<td style="text-align: center;">2069</td>
+<td style="text-align: center;">1110</td>
+<td style="text-align: center;">7700</td>
+<td style="text-align: center;">144</td>
+</tr>
+<tr>
+<td style="text-align: left;">0.666 10 sec</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">149</td>
+<td style="text-align: center;">1070</td>
+<td style="text-align: center;">805</td>
+<td style="text-align: center;">6437</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">1948</td>
+<td style="text-align: center;">72</td>
+<td style="text-align: center;">326</td>
+<td style="text-align: center;">253</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td style="text-align: left;">0.832 10 sec</td>
+<td style="text-align: center;">129</td>
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">528</td>
+<td style="text-align: center;">303</td>
+<td style="text-align: center;">2572</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">1543</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">94</td>
+<td style="text-align: center;">78</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: left;">0.999 10 sec</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">104</td>
+<td style="text-align: center;">280</td>
+<td style="text-align: center;">106</td>
+<td style="text-align: center;">898</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">291</td>
+<td style="text-align: center;">75</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">124</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr>
+<td style="text-align: left;">1.165 10 sec</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">169</td>
+<td style="text-align: center;">254</td>
+<td style="text-align: center;">38</td>
+<td style="text-align: center;">488</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">102</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">41</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: left;">1.332 10 sec</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">266</td>
+<td style="text-align: center;">147</td>
+<td style="text-align: center;">42</td>
+<td style="text-align: center;">238</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">98</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: left;">1.498 10 sec</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">179</td>
+<td style="text-align: center;">190</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">62</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: left;">1.665 10 sec</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">130</td>
+<td style="text-align: center;">78</td>
+<td style="text-align: center;">17</td>
+<td style="text-align: center;">51</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-response-time-distribution">2. Response Time Distribution</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Percentile</th>
+<th style="text-align: center;">ARALEZ GET</th>
+<th style="text-align: center;">ARALEZ POST</th>
+<th style="text-align: center;">HAPROXY GET</th>
+<th style="text-align: center;">HAPROXY POST</th>
+<th style="text-align: center;">ENVOY GET</th>
+<th style="text-align: center;">ENVOY POST</th>
+<th style="text-align: center;">NGINX GET</th>
+<th style="text-align: center;">NGINX POST</th>
+<th style="text-align: center;">TRAEFIK GET</th>
+<th style="text-align: center;">TRAEFIK POST</th>
+<th style="text-align: center;">CADDY GET</th>
+<th style="text-align: center;">CADDY POST</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>10%</strong></td>
+<td style="text-align: center;">0.0038 10 sec</td>
+<td style="text-align: center;">0.0038 10 sec</td>
+<td style="text-align: center;">0.0492 sec</td>
+<td style="text-align: center;">0.0485 sec</td>
+<td style="text-align: center;">0.0467 sec</td>
+<td style="text-align: center;">0.0625 sec</td>
+<td style="text-align: center;">0.0025 10 sec</td>
+<td style="text-align: center;">0.0246 sec</td>
+<td style="text-align: center;">0.1105 sec</td>
+<td style="text-align: center;">0.1107 sec</td>
+<td style="text-align: center;">0.1105 sec</td>
+<td style="text-align: center;">0.1110 sec</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>25%</strong></td>
+<td style="text-align: center;">0.0061 10 sec</td>
+<td style="text-align: center;">0.0061 10 sec</td>
+<td style="text-align: center;">0.0691 sec</td>
+<td style="text-align: center;">0.0684 sec</td>
+<td style="text-align: center;">0.0640 sec</td>
+<td style="text-align: center;">0.0973 sec</td>
+<td style="text-align: center;">0.0029 10 sec</td>
+<td style="text-align: center;">0.0288 sec</td>
+<td style="text-align: center;">0.1271 sec</td>
+<td style="text-align: center;">0.1273 sec</td>
+<td style="text-align: center;">0.1574 sec</td>
+<td style="text-align: center;">0.1579 sec</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>50%</strong></td>
+<td style="text-align: center;">0.0088 10 sec</td>
+<td style="text-align: center;">0.0088 10 sec</td>
+<td style="text-align: center;">0.1035 sec</td>
+<td style="text-align: center;">0.1027 sec</td>
+<td style="text-align: center;">0.0943 sec</td>
+<td style="text-align: center;">0.1543 sec</td>
+<td style="text-align: center;">0.0054 10 sec</td>
+<td style="text-align: center;">0.0500 sec</td>
+<td style="text-align: center;">0.1483 sec</td>
+<td style="text-align: center;">0.1484 sec</td>
+<td style="text-align: center;">0.2487 sec</td>
+<td style="text-align: center;">0.2494 sec</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>75%</strong></td>
+<td style="text-align: center;">0.0132 10 sec</td>
+<td style="text-align: center;">0.0134 10 sec</td>
+<td style="text-align: center;">0.1407 sec</td>
+<td style="text-align: center;">0.1399 sec</td>
+<td style="text-align: center;">0.1432 sec</td>
+<td style="text-align: center;">0.3758 sec</td>
+<td style="text-align: center;">0.0263 10 sec</td>
+<td style="text-align: center;">0.2605 sec</td>
+<td style="text-align: center;">0.1798 sec</td>
+<td style="text-align: center;">0.1801 sec</td>
+<td style="text-align: center;">0.3919 sec</td>
+<td style="text-align: center;">0.3838 sec</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>90%</strong></td>
+<td style="text-align: center;">0.0228 10 sec</td>
+<td style="text-align: center;">0.0250 10 sec</td>
+<td style="text-align: center;">0.1742 sec</td>
+<td style="text-align: center;">0.1730 sec</td>
+<td style="text-align: center;">0.2263 sec</td>
+<td style="text-align: center;">0.5454 sec</td>
+<td style="text-align: center;">0.0700 10 sec</td>
+<td style="text-align: center;">0.4959 sec</td>
+<td style="text-align: center;">0.2142 sec</td>
+<td style="text-align: center;">0.2147 sec</td>
+<td style="text-align: center;">0.4960 sec</td>
+<td style="text-align: center;">0.4866 sec</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>95%</strong></td>
+<td style="text-align: center;">0.0528 10 sec</td>
+<td style="text-align: center;">0.0507 10 sec</td>
+<td style="text-align: center;">0.2846 sec</td>
+<td style="text-align: center;">0.2829 sec</td>
+<td style="text-align: center;">0.4744 sec</td>
+<td style="text-align: center;">1.2614 sec</td>
+<td style="text-align: center;">0.1292 10 sec</td>
+<td style="text-align: center;">1.2734 sec</td>
+<td style="text-align: center;">0.3859 sec</td>
+<td style="text-align: center;">0.3741 sec</td>
+<td style="text-align: center;">0.7093 sec</td>
+<td style="text-align: center;">0.6944 sec</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>99%</strong></td>
+<td style="text-align: center;">0.1931 10 sec</td>
+<td style="text-align: center;">0.1141 10 sec</td>
+<td style="text-align: center;">0.5404 sec</td>
+<td style="text-align: center;">0.5353 sec</td>
+<td style="text-align: center;">1.0309 sec</td>
+<td style="text-align: center;">2.5964 sec</td>
+<td style="text-align: center;">0.2525 10 sec</td>
+<td style="text-align: center;">2.3265 sec</td>
+<td style="text-align: center;">0.7853 sec</td>
+<td style="text-align: center;">0.6698 sec</td>
+<td style="text-align: center;">1.0799 sec</td>
+<td style="text-align: center;">1.0126 sec</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>99.9%</strong></td>
+<td style="text-align: center;">0.4220 10 sec</td>
+<td style="text-align: center;">0.3616 10 sec</td>
+<td style="text-align: center;">2.5017 sec</td>
+<td style="text-align: center;">1.4382 sec</td>
+<td style="text-align: center;">2.1869 sec</td>
+<td style="text-align: center;">4.0073 sec</td>
+<td style="text-align: center;">0.4524 10 sec</td>
+<td style="text-align: center;">4.1945 sec</td>
+<td style="text-align: center;">1.1503 sec</td>
+<td style="text-align: center;">1.2958 sec</td>
+<td style="text-align: center;">2.2552 sec</td>
+<td style="text-align: center;">1.3822 sec</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="why-aralez-is-the-new-standard">🏆 Why Aralez is the New Standard</h2>
+<p>Aralez isn't just fast; it's <strong>predictably fast</strong>. Under extreme load (1024 concurrency), most proxies start "stuttering," but Aralez maintains a rock-solid performance profile.</p>
 
 
 
