@@ -139,6 +139,7 @@
 # 🚀 High-Performance Proxy Benchmark Report
 
 ### 🥇 Aralez Performance Highlights:
+
 * **Tail Latency Dominance**: Aralez achieves a **p99 of 0.1931 10 sec**, outperforming Nginx (**0.2525 10 sec**) by more than **2x**.
 * **Zero Payload Penalty**: Unlike Envoy or Nginx, Aralez shows almost **identical** performance between GET and POST requests, proving its efficient buffer management.
 * **Median Stability**: A p50 of **0.0088 10 sec** ensures that the vast majority of users experience near-instant response times.
