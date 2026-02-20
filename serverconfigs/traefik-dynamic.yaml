@@ -1,0 +1,94 @@
+http:
+  routers:
+
+    # test.yoop.jpo (HTTP)
+    test-http:
+      rule: "Host(`test.yoop.jpo`)"
+      entryPoints:
+        - web
+      service: grafana
+      middlewares:
+        - proxy-headers
+
+    # test.yoop.jpo (HTTPS)
+    test-https:
+      rule: "Host(`test.yoop.jpo`)"
+      entryPoints:
+        - websecure
+      service: grafana
+      middlewares:
+        - proxy-headers
+        - security-headers
+      tls: {}
+
+    # test.foo.bar (HTTP)
+    foo-http:
+      rule: "Host(`test.foo.bar`)"
+      entryPoints:
+        - web
+      service: grafana
+      middlewares:
+        - proxy-headers
+
+    # test.foo.bar (HTTPS)
+    foo-https:
+      rule: "Host(`test.foo.bar`)"
+      entryPoints:
+        - websecure
+      service: grafana
+      middlewares:
+        - proxy-headers
+        - security-headers
+      tls: {}
+
+    # test.yoyo.bar (HTTP)
+    yoop-http:
+      rule: "Host(`test.yoyo.bar`)"
+      entryPoints:
+        - web
+      service: grafana
+      middlewares:
+        - proxy-headers
+
+    # test.yoyo.bar (HTTPS)
+    yoop-https:
+      rule: "Host(`test.yoyo.bar`)"
+      entryPoints:
+        - websecure
+      service: grafana
+      middlewares:
+        - proxy-headers
+        - security-headers
+      tls: {}
+
+  services:
+    grafana:
+      loadBalancer:
+        servers:
+          - url: "http://10.160.4.172:80"
+          - url: "http://10.160.4.147:80"
+          - url: "http://10.160.4.186:80"
+        passHostHeader: true
+
+  middlewares:
+    proxy-headers:
+      headers:
+        customRequestHeaders:
+          Y-Proxy-Server-Some: "Yaaaaaaaaaaaaaaa"
+          Y-Proxy-Server-From: "Aralez"
+          Y-Proxy-Server-Vers: "Aralezv98"
+
+    security-headers:
+      headers:
+        stsSeconds: 31536000
+        frameDeny: false
+        customFrameOptionsValue: "SAMEORIGIN"
+        contentTypeNosniff: true
+        browserXssFilter: true
+
+tls:
+  certificates:
+    - certFile: /opt/aralez/etc/certs/test.crt
+      keyFile: /opt/aralez/etc/certs/test.key
+
+

@@ -1,0 +1,17 @@
+threads: 12
+daemon: false
+upstream_keepalive_pool_size: 500
+pid_file: /tmp/aralez.pid
+error_log: /tmp/aralez_err.log
+upgrade_sock: /tmp/aralez.sock
+config_api_enabled: false
+config_address: 0.0.0.0:3000
+proxy_address_http: 0.0.0.0:6193
+proxy_address_tls: 0.0.0.0:6194
+proxy_certificates: /opt/aralez/etc/certs/
+proxy_tls_grade: a+
+upstreams_conf: /opt/aralez/etc/upstreams.yaml
+log_level: info
+hc_method: HEAD
+hc_interval: 2
+master_key: 910517d9-f9a1-48de-8826-dbadacbd84af-cb6f830e-ab16-47ec-9d8f-0090de732774 # Mater key for working with API server and JWT Secret

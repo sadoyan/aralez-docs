@@ -1,0 +1,27 @@
+entryPoints:
+  web:
+    address: ":9193"
+  websecure:
+    address: ":9194"
+  stats:
+    address: ":9195"
+  metrics:
+    address: ":9196"   # This will expose /metrics
+
+providers:
+  file:
+    filename: /opt/traefik/dynamic.yaml
+    watch: true
+
+api:
+  dashboard: true
+  insecure: true
+
+log:
+  level: INFO
+
+metrics:
+  prometheus:
+    entryPoint: metrics   # << This enables /metrics on port 9196
+
+

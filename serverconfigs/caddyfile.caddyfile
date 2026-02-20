@@ -1,0 +1,51 @@
+{
+    servers {
+        metrics
+    }
+}
+
+:9998 {
+    route /metrics {
+        metrics
+    }
+}
+
+# HTTPS (5194)
+https://test.yoop.jpo:5194,
+https://test.foo.bar:5194,
+https://test.yoyo.bar:5194 {
+
+tls /opt/aralez/etc/certs/test.crt /opt/aralez/etc/certs/test.key
+
+    reverse_proxy 10.160.4.172:80 10.160.4.147:80 10.160.4.186:80 {
+        lb_policy round_robin
+
+        header_up Host {http.request.host}
+        header_up Y-Proxy-Server-Some "Yaaaaaaaaaaaaaaa"
+        header_up Y-Proxy-Server-From "Aralez"
+        header_up Y-Proxy-Server-Vers "Aralezv98"
+
+        health_uri /
+        health_interval 10s
+    }
+}
+
+# HTTP (5193)
+http://test.yoop.jpo:5193,
+http://test.foo.bar:5193,
+http://test.yoyo.bar:5193 {
+
+    reverse_proxy 10.160.4.172:80 10.160.4.147:80 10.160.4.186:80 {
+        lb_policy round_robin
+
+        header_up Host {http.request.host}
+        header_up Y-Proxy-Server-Some "Yaaaaaaaaaaaaaaa"
+        header_up Y-Proxy-Server-From "Aralez"
+        header_up Y-Proxy-Server-Vers "Aralezv98"
+
+        health_uri /
+        health_interval 10s
+    }
+}
+
+

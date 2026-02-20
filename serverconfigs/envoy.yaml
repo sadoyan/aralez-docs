@@ -1,0 +1,125 @@
+static_resources:
+  listeners:
+    # --- HTTP Listener (4193) ---
+    - name: listener_4193
+      per_connection_buffer_limit_bytes: 1048576 # Moved here (1MB)
+      address:
+        socket_address: { address: 0.0.0.0, port_value: 4193 }
+      filter_chains:
+        - filters:
+            - name: envoy.filters.network.http_connection_manager
+              typed_config:
+                "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+                stat_prefix: ingress_http
+                upgrade_configs:
+                  - upgrade_type: websocket
+                route_config:
+                  name: local_route
+                  virtual_hosts:
+                    - name: grafana_vhosts
+                      domains: ["test.yoop.jpo:4193", "test.foo.bar:4193", "test.yoyo.bar:4193"]
+                      routes:
+                        - match: { prefix: "/" }
+                          route:
+                            cluster: grafana_cluster
+                      request_headers_to_add:
+                        - header: { key: "Y-Proxy-Server-Some", value: "Yaaaaaaaaaaaaaaa" }
+                        - header: { key: "Y-Proxy-Server-From", value: "Aralez" }
+                        - header: { key: "Y-Proxy-Server-Vers", value: "Aralezv98" }
+                http_filters:
+                  - name: envoy.filters.http.router
+                    typed_config:
+                      "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
+
+    # --- HTTPS Listener (4194) ---
+    - name: listener_4194
+      per_connection_buffer_limit_bytes: 1048576 # Moved here (1MB)
+      address:
+        socket_address: { address: 0.0.0.0, port_value: 4194 }
+      filter_chains:
+        - transport_socket:
+            name: envoy.transport_sockets.tls
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
+              common_tls_context:
+                tls_certificates:
+                  - certificate_chain: { filename: "/opt/aralez/etc/certs/test.crt" }
+                    private_key: { filename: "/opt/aralez/etc/certs/test.key" }
+          filters:
+            - name: envoy.filters.network.http_connection_manager
+              typed_config:
+                "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+                stat_prefix: ingress_https
+                upgrade_configs:
+                  - upgrade_type: websocket
+                route_config:
+                  name: local_route_ssl
+                  virtual_hosts:
+                    - name: grafana_vhosts_ssl
+                      domains: ["test.yoop.jpo:4194", "test.foo.bar:4194", "test.yoyo.bar:4194"]
+                      routes:
+                        - match: { prefix: "/" }
+                          route:
+                            cluster: grafana_cluster
+                      response_headers_to_add:
+                        - header: { key: "Strict-Transport-Security", value: "max-age=31536000" }
+                        - header: { key: "X-Frame-Options", value: "SAMEORIGIN" }
+                        - header: { key: "X-XSS-Protection", value: "1; mode=block" }
+                        - header: { key: "X-Content-Type-Options", value: "nosniff" }
+                      request_headers_to_add:
+                        - header: { key: "Y-Proxy-Server-Some", value: "Yaaaaaaaaaaaaaaa" }
+                        - header: { key: "Y-Proxy-Server-From", value: "Aralez" }
+                        - header: { key: "Y-Proxy-Server-Vers", value: "Aralezv98" }
+                http_filters:
+                  - name: envoy.filters.http.router
+                    typed_config:
+                      "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
+
+    # --- Admin Status Mock (4044) ---
+    - name: listener_4044
+      address:
+        socket_address: { address: 127.0.0.1, port_value: 4044 }
+      filter_chains:
+        - filters:
+            - name: envoy.filters.network.http_connection_manager
+              typed_config:
+                "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+                stat_prefix: stats_proxy
+                route_config:
+                  virtual_hosts:
+                    - name: admin_interface
+                      domains: ["*"]
+                      routes:
+                        - match: { prefix: "/nginx_status" }
+                          direct_response:
+                            status: 200
+                            body: { inline_string: "Active connections: 1\nserver accepts handled requests\n 1 1 1\nReading: 0 Writing: 1 Waiting: 0\n" }
+                http_filters:
+                  - name: envoy.filters.http.router
+                    typed_config:
+                      "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
+
+  clusters:
+    - name: grafana_cluster
+      per_connection_buffer_limit_bytes: 1048576 # Also set on the upstream side
+      connect_timeout: 0.25s
+      type: STATIC
+      lb_policy: ROUND_ROBIN
+      load_assignment:
+        cluster_name: grafana_cluster
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address: { address: 10.160.4.172, port_value: 80 }
+              - endpoint:
+                  address:
+                    socket_address: { address: 10.160.4.147, port_value: 80 }
+              - endpoint:
+                  address:
+                    socket_address: { address: 10.160.4.186, port_value: 80 }
+
+admin:
+  address:
+    socket_address: { address: 0.0.0.0, port_value: 9901 }
+
