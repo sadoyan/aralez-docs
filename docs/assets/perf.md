@@ -184,5 +184,3 @@ This chart illustrates the Requests Per Second (RPS) during sequential stress te
 | **99.9%** | 0.4220 10 sec | 0.3616 10 sec | 2.5017 sec | 1.4382 sec | 2.1869 sec | 4.0073 sec | 0.4524 10 sec | 4.1945 sec | 1.1503 sec | 1.2958 sec | 2.2552 sec | 1.3822 sec |
 
 ---
-## 🏆 Why Aralez is the New Standard
-Aralez isn't just fast; it's **predictably fast**. Under extreme load (2x1024 concurrency), most proxies start "stuttering," but Aralez maintains a rock-solid performance profile.
