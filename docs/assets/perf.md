@@ -1,13 +1,12 @@
 ## 🚀 Aralez performance benchmarks
 ---
 
-### 💡 Simple benchmark by [Oha](https://github.com/hatoo/oha)
 
-### **Reverse Proxy Mixed Load Benchmark**
 
-#### **Test Overview**
+### Methodology and Profile
+Benchmarks are performed by [Oha](https://github.com/hatoo/oha) HTTP benchmark tool. 
 
-**Proxies tested:**
+####Proxies tested:
 
 * Aralez Glibc
 * Aralez Musl
@@ -17,7 +16,7 @@
 * Traefik
 * Caddy
 
-**Load profile:**
+####Load profile:
 
 * Proxy servers running on same host with different ports
 * 4x Oha instances for parallel testing of GET/POST requests
@@ -34,7 +33,7 @@
 * No caching
 * Mixed routing and domain handling
 
-### Load Balancer Performance Benchmark Results
+### Benchmark Results
 
 Below are summary tables representing results of 1 from 4 concurrent running oha instances.
 **Success Rate** represents any successfull responses including 5xx and 4xx.
@@ -43,15 +42,13 @@ So the real success rates are lower for all servers.
 * Raw results can be found **[here](https://github.com/sadoyan/aralez-docs/tree/main/docs/images/stresstest/resuls)**.
 * Configuration files of all servers are **[here](https://github.com/sadoyan/aralez-docs/tree/main/docs/images/stresstest/configs)**
 
-### **Requests per second chart during test**
+### **Requests per second chart**
 
 ![Aralez](https://raw.githubusercontent.com/sadoyan/aralez-docs/refs/heads/main/docs/images/stresstest/grafana.png)
 
-# Load Balancer Benchmark Results
+### Summary of Results
 
-### **Summary of Results**
-
-#### 1024 Concurrent Connections
+#### 1024 Connections
 
 | Server       | success | average ms | average rps | p50 (ms) | p75 (ms) | p90 (ms) | p99 (ms)  | resp 2xx | resp 5xx | resp 4xx | timeout | conn error | closed |
 |--------------|---------|------------|-------------|----------|----------|----------|-----------|----------|----------|----------|---------|------------|--------| 
@@ -63,7 +60,7 @@ So the real success rates are lower for all servers.
 | Traefik      | 100.00% | 340.6176   | 3005.6584   | 288.9491 | 443.0434 | 667.1151 | 3518.5015 | 900769   | 0        | 0        | 0       | 0          | 0      |
 | Caddy        | 100.00% | 465.269    | 2201.6289   | 387.8206 | 623.1936 | 920.5608 | 1610.1037 | 659538   | 1        | 0        | 0       | 3          | 0      |
 
-#### 2048 Concurrent Connections
+#### 2048 Connections
 
 | Server       | success | average ms | average rps | p50 (ms)  | p75 (ms) | p90 (ms)  | p99 (ms)  | resp 2xx | resp 5xx | resp 4xx | timeout | conn error | closed |
 |--------------|---------|------------|-------------|-----------|----------|-----------|-----------|----------|----------|----------|---------|------------|--------| 
@@ -75,7 +72,7 @@ So the real success rates are lower for all servers.
 | Traefik      | 99.93%  | 972.9245   | 2099.5312   | 817.5549  | 1277.94  | 1826.3545 | 3537.438  | 627495   | 0        | 8        | 0       | 456        | 1      |
 | Caddy        | 99.90%  | 1235.6155  | 1650.8596   | 1110.2041 | 1642.775 | 2191.509  | 3671.2179 | 492795   | 4        | 0        | 511     | 4          | 0      |
 
-#### 4096 Concurrent Connections
+#### 4096 Connections
 
 | Server       | success | average ms | average rps | p50 (ms)  | p75 (ms)  | p90 (ms)  | p99 (ms)  | resp 2xx | resp 5xx | resp 4xx | timeout | conn error | closed |
 |--------------|---------|------------|-------------|-----------|-----------|-----------|-----------|----------|----------|----------|---------|------------|--------| 
@@ -87,7 +84,7 @@ So the real success rates are lower for all servers.
 | Traefik      | 98.57%  | 2081.6082  | 1923.429    | 1719.4499 | 2745.8877 | 3957.2772 | 7673.6517 | 564861   | 96       | 0        | 8189    | 15         | 0      |
 | Caddy        | 94.11%  | 2911.8452  | 3697.5715   | 2911.8452 | 3697.5715 | 4764.4534 | 7339.3418 | 359695   | 19       | 0        | 22531   | 1          | 0      |
 
-#### 8192 Concurrent Connections
+#### 8192 Connections
 
 | Server       | success | average ms | average rps | p50 (ms)  | p75 (ms)  | p90 (ms)  | p99 (ms)   | resp 2xx | resp 5xx | resp 4xx | timeout | conn error | closed |
 |--------------|---------|------------|-------------|-----------|-----------|-----------|------------|----------|----------|----------|---------|------------|--------| 
@@ -99,7 +96,7 @@ So the real success rates are lower for all servers.
 | Traefik      | 91.60%  | 4886.6063  | 1651.885    | 4051.8129 | 6156.2306 | 9065.899  | 18780.2409 | 437343   | 9345     | 0        | 40930   | 30         | 0      |
 | Caddy        | 73.62%  | 5635.9696  | 1489.0166   | 5217.8075 | 7159.8022 | 9142.491  | 27277.4433 | 296697   | 26342    | 0        | 115768  | 0          | 0      |
 
-#### 16384 Concurrent Connections
+#### 16384 Connections
 
 | Server       | success | average ms | average rps | p50 (ms)   | p75 (ms)   | p90 (ms)   | p99 (ms)    | resp 2xx | resp 5xx | resp 4xx | timeout | conn error | closed |
 |--------------|---------|------------|-------------|------------|------------|------------|-------------|----------|----------|----------|---------|------------|--------| 
@@ -111,7 +108,7 @@ So the real success rates are lower for all servers.
 | Traefik      | 44.44%  | 4711.9077  | 3278.2479   | 4507.2743  | 6075.6405  | 7802.0159  | 13300.4058  | 368231   | 61992    | 0        | 537829  | 26         | 0      |
 | Caddy        | 31.50%  | 8346.0683  | 2642.7568   | 5980.0388  | 8726.9127  | 16638.2492 | 41544.6009  | 185650   | 59164    | 0        | 532284  | 0          | 0      |
 
-#### 32768 Concurrent Connections
+#### 32768 Connections
 
 | Server       | success | average ms | average rps | p50 (ms)   | p75 (ms)   | p90 (ms)   | p99 (ms)   | resp 2xx | resp 5xx | resp 4xx | timeout | conn error | closed |
 |--------------|---------|------------|-------------|------------|------------|------------|------------|----------|----------|----------|---------|------------|--------| 
@@ -123,13 +120,13 @@ So the real success rates are lower for all servers.
 | Traefik      | 46.33%  | 4702.8135  | 5665.2674   | 3784.6281  | 5219.3121  | 7536.4557  | 25643.2011 | 378926   | 395945   | 0        | 896315  | 38         | 0      |
 | Caddy        | 46.21%  | 5589.7828  | 5597.0277   | 1645.9229  | 5798.7206  | 15067.8908 | 42540.0489 | 514763   | 247612   | 0        | 887458  | 0          | 0      |
 
-## 📊 Comparison charts
+## Comparison charts
 
 ![Latency](https://raw.githubusercontent.com/sadoyan/aralez-docs/refs/heads/main/docs/images/stresstest/latency.png)
 ![Requests Per Seond](https://raw.githubusercontent.com/sadoyan/aralez-docs/refs/heads/main/docs/images/stresstest/rps.png)
 ![Requests Per Seond](https://raw.githubusercontent.com/sadoyan/aralez-docs/refs/heads/main/docs/images/stresstest/successrate.png)
 
-### **High-Level Summary**
+## High-Level Summary
 
 **Aralez**
 
