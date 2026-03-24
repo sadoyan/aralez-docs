@@ -1,0 +1,20 @@
+{{ define "main" }}
+<div class="page-wrapper">
+  {{ partial "sidebar.html" . }}
+  <main class="main-content">
+    <div class="page-header">
+      <h1>{{ .Title }}</h1>
+    </div>
+    {{ .Content }}
+    <div class="feature-grid">
+      {{ range .Pages }}
+      <a href="{{ .RelPermalink }}" class="feature-card" style="text-decoration:none;color:inherit;">
+        <div class="icon">📄</div>
+        <h3>{{ .Title }}</h3>
+        <p>{{ with .Description }}{{ . }}{{ else }}{{ .Summary | truncate 100 }}{{ end }}</p>
+      </a>
+      {{ end }}
+    </div>
+  </main>
+</div>
+{{ end }}

@@ -1,0 +1,127 @@
+---
+title: "Aralez — Reverse Proxy built on Cloudflare's Pingora"
+description: "High-performance Rust reverse proxy with zero-config TLS, gRPC, WebSocket, Consul & Kubernetes"
+---
+
+## What is Aralez?
+
+**Aralez = Արալեզ** — Named after the legendary Armenian guardian spirit, a winged dog-like creature that descends upon fallen heroes to lick their wounds and resurrect them.
+
+Built on **Rust**, on top of **Cloudflare's Pingora engine**, Aralez delivers world-class performance, security and scalability — right out of the box.
+
+**Support the project:** [![Buy Me A Coffee](https://img.shields.io/badge/☕-Buy%20me%20a%20coffee-orange)](https://www.buymeacoffee.com/sadoyan)
+
+
+---
+
+## 🔧 Key Features
+
+<div class="feature-grid">
+  <div class="feature-card">
+    <div class="icon">📡</div>
+    <h3>Remote Config API</h3>
+    <p>Upstreams can be updated live via API — no restart required.</p>
+  </div>
+  <div class="feature-card">
+    <div class="icon">🔄</div>
+    <h3>Dynamic Config Reloads</h3>
+    <p>Upstreams are automatically reloaded on config file change — no restart required.</p>
+  </div>
+  <div class="feature-card">
+    <div class="icon">🔒</div>
+    <h3>TLS Termination</h3>
+    <p>Automatic certificate loading from folder, without a restart.</p>
+  </div>
+  <div class="feature-card">
+    <div class="icon">🔮</div>
+    <h3>Zero-Config Protocols</h3>
+    <p>Automatic WebSocket, gRPC, HTTP/2 and SSL upstream detection — zero configuration needed.</p>
+  </div>
+  <div class="feature-card">
+    <div class="icon">🛡️</div>
+    <h3>Built-in Authentication</h3>
+    <p>Basic Auth, API Key via <code>x-api-key</code> header, and JWT verification with token issuance.</p>
+  </div>
+  <div class="feature-card">
+    <div class="icon">⚖️</div>
+    <h3>Load Balancing</h3>
+    <p>Round-robin, failover with health checks, and sticky sessions via cookies.</p>
+  </div>
+  <div class="feature-card">
+    <div class="icon">📈</div>
+    <h3>Prometheus Metrics</h3>
+    <p>Built-in metrics endpoint for monitoring, alerting, and performance analysis.</p>
+  </div>
+  <div class="feature-card">
+    <div class="icon">⏱️</div>
+    <h3>Built-in Rate Limiter</h3>
+    <p>Per virtualhost and per-path rate limiting. Path limits override global limits.</p>
+  </div>
+  <div class="feature-card">
+    <div class="icon">☸️</div>
+    <h3>Kubernetes & Consul</h3>
+    <p>Dynamic pod discovery and health-checked routing via Consul and Kubernetes integration.</p>
+  </div>
+  <div class="feature-card">
+    <div class="icon">🦀</div>
+    <h3>Memory Safe</h3>
+    <p>Created purely in Rust with Pingora and tokio for async I/O and high performance.</p>
+  </div>
+</div>
+
+---
+
+## 📁 File Structure
+
+```
+.
+├── main.yaml           # Main configuration loaded at startup
+├── upstreams.yaml      # Watched config with upstream mappings
+├── etc/
+│   ├── server.crt      # TLS certificate (required if using TLS)
+│   └── key.pem         # TLS private key
+```
+
+---
+
+## 🔄 Hot Reload
+
+- Changes to `upstreams.yaml` are applied immediately.
+- No need to restart the proxy — just save the file.
+- If `consul` provider is chosen, upstreams will be periodically updated from Consul's API.
+
+---
+
+## 🔐 TLS Support
+
+To enable TLS for a proxy server (currently only OpenSSL is supported):
+
+1. Set `proxy_address_tls` in `main.yaml`
+2. Provide `tls_certificate` and `tls_key_file`
+
+---
+
+## 📡 Remote Config API
+
+Push new `upstreams.yaml` over HTTP to `config_address` (`:3000` by default). Useful for CI/CD automation or remote config updates. The URL parameter `key=MASTERKEY` is required — its value matches `master_key` in `main.yaml`.
+
+```bash
+curl -XPOST --data-binary @./etc/upstreams.txt 127.0.0.1:3000/conf?key=${MASTERKEY}
+```
+
+---
+
+## 📃 License
+
+[Apache License Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+
+---
+
+## 🧠 Notes
+
+- Uses Pingora under the hood for efficiency and flexibility.
+- Designed for edge proxying, internal routing, or hybrid cloud scenarios.
+- Transparent, fully automatic WebSocket upgrade support.
+- Transparent, fully automatic gRPC proxy.
+- Sticky session support.
+- HTTP/2 ready.

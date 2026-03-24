@@ -1,0 +1,10 @@
+<aside class="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Documentation</div>
+    <nav class="sidebar-nav">
+      {{ range .Site.Menus.main }}
+      <a href="{{ .URL }}"{{ if $.Page.IsMenuCurrent "main" . }} class="active"{{ end }}>{{ .Name }}</a>
+      {{ end }}
+    </nav>
+  </div>
+</aside>

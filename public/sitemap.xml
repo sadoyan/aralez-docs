@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>//localhost:1313/docs/quickstart/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/config/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/api/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/auth/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/perf/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/compare/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/metrics/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/kubernetes/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/autossl/</loc>
+  </url><url>
+    <loc>//localhost:1313/</loc>
+  </url><url>
+    <loc>//localhost:1313/categories/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/</loc>
+  </url><url>
+    <loc>//localhost:1313/tags/</loc>
+  </url>
+</urlset>

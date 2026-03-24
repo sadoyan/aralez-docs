@@ -1,0 +1,68 @@
+#baseURL = "https://sadoyan.github.io"
+baseURL = "/aralez-docs/"
+canonifyurls = true
+languageCode = "en-us"
+title = "Aralez — Reverse Proxy built on Cloudflare's Pingora"
+
+[markup]
+  [markup.highlight]
+    style = "github"
+    lineNos = false
+    noClasses = false
+  [markup.goldmark.renderer]
+    unsafe = true
+
+[params]
+  description = "High-performance Rust reverse proxy with zero-config TLS, gRPC, WebSocket, Consul & Kubernetes support"
+  github = "https://github.com/sadoyan/aralez"
+  logo = "/images/logo.png"
+
+[[menu.main]]
+  name = "Home"
+  url = "/"
+  weight = 1
+
+[[menu.main]]
+  name = "Quick Start"
+  url = "/docs/quickstart/"
+  weight = 2
+
+[[menu.main]]
+  name = "Config"
+  url = "/docs/config/"
+  weight = 3
+
+[[menu.main]]
+  name = "API"
+  url = "/docs/api/"
+  weight = 4
+
+[[menu.main]]
+  name = "Comparison"
+  url = "/docs/compare/"
+  weight = 5
+
+[[menu.main]]
+  name = "Authentication"
+  url = "/docs/auth/"
+  weight = 6
+
+[[menu.main]]
+  name = "Benchmarks"
+  url = "/docs/perf/"
+  weight = 7
+
+[[menu.main]]
+  name = "Prometheus Metrics"
+  url = "/docs/metrics/"
+  weight = 8
+
+[[menu.main]]
+  name = "Kubernetes Ingress"
+  url = "/docs/kubernetes/"
+  weight = 9
+
+[[menu.main]]
+  name = "Manage Certificates"
+  url = "/docs/autossl/"
+  weight = 10
