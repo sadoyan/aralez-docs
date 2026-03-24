@@ -1,0 +1,96 @@
+<!doctype html><html lang=en-us><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Manage Certificates — Aralez — Reverse Proxy built on Cloudflare's Pingora</title><meta name=description content="Obtain and auto-renew SSL/TLS certificates using Lego and Let's Encrypt with Aralez"><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel=stylesheet><link rel=stylesheet href=/css/main.css></head><body><header class=site-header><a href=/ class=header-brand><img src=/images/logo.png alt="Aralez logo">
+<span class=brand-name>Aralez</span></a><nav class=header-nav><a href=/>Home</a>
+<a href=/docs/quickstart/>Quick Start</a>
+<a href=/docs/config/>Config</a>
+<a href=/docs/api/>API</a>
+<a href=/docs/compare/>Comparison</a>
+<a href=/docs/auth/>Authentication</a>
+<a href=/docs/perf/>Benchmarks</a>
+<a href=/docs/metrics/>Prometheus Metrics</a>
+<a href=/docs/kubernetes/>Kubernetes Ingress</a>
+<a href=/docs/autossl/>Manage Certificates</a></nav><div class=header-right><a href=https://github.com/sadoyan/aralez class=header-github target=_blank rel=noopener><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+GitHub
+</a><button class=hamburger id=aralez-hamburger aria-label="Open navigation menu" aria-expanded=false>
+<span></span><span></span><span></span></button></div></header><div class=drawer-overlay id=aralez-overlay></div><nav class=mobile-drawer id=aralez-drawer aria-label="Mobile navigation"><div class=drawer-header><span class=drawer-title>Aralez Docs</span>
+<button class=drawer-close id=aralez-drawer-close aria-label="Close menu">
+<svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path d="M4.293 4.293a1 1 0 011.414.0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"/></svg></button></div><div class=drawer-section-title>Documentation</div><a href=/ class=drawer-link>Home
+</a><a href=/docs/quickstart/ class=drawer-link>Quick Start
+</a><a href=/docs/config/ class=drawer-link>Config
+</a><a href=/docs/api/ class=drawer-link>API
+</a><a href=/docs/compare/ class=drawer-link>Comparison
+</a><a href=/docs/auth/ class=drawer-link>Authentication
+</a><a href=/docs/perf/ class=drawer-link>Benchmarks
+</a><a href=/docs/metrics/ class=drawer-link>Prometheus Metrics
+</a><a href=/docs/kubernetes/ class=drawer-link>Kubernetes Ingress
+</a><a href=/docs/autossl/ class=drawer-link>Manage Certificates</a><div class=drawer-footer><a href=https://github.com/sadoyan/aralez target=_blank rel=noopener class=drawer-github><svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+View on GitHub</a></div></nav><script>(function(){var e=document.getElementById("aralez-hamburger"),t=document.getElementById("aralez-drawer"),s=document.getElementById("aralez-overlay"),o=document.getElementById("aralez-drawer-close");function i(){t.classList.add("open"),s.classList.add("open"),e.classList.add("open"),e.setAttribute("aria-expanded","true"),document.body.style.overflow="hidden"}function n(){t.classList.remove("open"),s.classList.remove("open"),e.classList.remove("open"),e.setAttribute("aria-expanded","false"),document.body.style.overflow=""}e.addEventListener("click",function(){t.classList.contains("open")?n():i()}),o.addEventListener("click",n),s.addEventListener("click",n),t.querySelectorAll(".drawer-link").forEach(function(e){e.addEventListener("click",n)})})()</script><div class=page-wrapper><aside class=sidebar><div class=sidebar-section><div class=sidebar-section-title>Documentation</div><nav class=sidebar-nav><a href=/>Home</a>
+<a href=/docs/quickstart/>Quick Start</a>
+<a href=/docs/config/>Config</a>
+<a href=/docs/api/>API</a>
+<a href=/docs/compare/>Comparison</a>
+<a href=/docs/auth/>Authentication</a>
+<a href=/docs/perf/>Benchmarks</a>
+<a href=/docs/metrics/>Prometheus Metrics</a>
+<a href=/docs/kubernetes/>Kubernetes Ingress</a>
+<a href=/docs/autossl/>Manage Certificates</a></nav></div></aside><main class=main-content><div class=page-header><h1>Manage Certificates</h1><p class=page-desc>Obtain and auto-renew SSL/TLS certificates using Lego and Let's Encrypt with Aralez</p></div><h2 id=-obtain-and-renew-ssltls-certificates-with-lego>🔐 Obtain and Renew SSL/TLS Certificates with <a href=https://go-acme.github.io/lego/>Lego</a></h2><p>Securing your applications with HTTPS is not just a best practice – it&rsquo;s <strong>essential</strong>! 🚀</p><p>With <strong>Lego</strong>, an ACME client and companion of Let&rsquo;s Encrypt, you can easily obtain and auto-renew SSL/TLS certificates for your domains. This guide will walk you through preparing <strong>Aralez</strong> for ACME challenges and integrating certificates smoothly. 🌍🔑</p><hr><h2 id=-step-1-prepare-aralez-for-acme-challenge>⚙️ Step 1: Prepare Aralez for ACME Challenge</h2><p>In order to respond to certificate validation requests, you need to expose the path <code>/.well-known/acme-challenge</code> in your upstream configuration. This allows <strong>Let&rsquo;s Encrypt</strong> (or another ACME CA) to verify that you own the domain.</p><p>Edit <code>main.yaml</code> and set the correct folder for <code>proxy_certificates</code>:</p><pre tabindex=0><code>proxy_certificates: /path/to/certificates/for/aralez/
+</code></pre><blockquote><p>Basic settings in <code>main.yaml</code> require a restart of Aralez.</p></blockquote><p>Edit <code>upstreams.yaml</code> with a sample configuration:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>myhost.mydomain.com</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>paths</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=s2>&#34;/&#34;</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>headers</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=s2>&#34;X-Some-Thing:Yaaaaaaaaaaaaaaa&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>servers</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=s2>&#34;127.0.0.1:8000&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=s2>&#34;127.0.0.2:8000&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=s2>&#34;/.well-known/acme-challenge&#34;</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>healthcheck</span><span class=p>:</span><span class=w> </span><span class=kc>false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>servers</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span>- <span class=s2>&#34;127.0.0.1:8899&#34;</span><span class=w>
+</span></span></span></code></pre></div><p>✨ <strong>Important Notes:</strong></p><ul><li><code>healthcheck: false</code> ensures Aralez does not remove the ephemeral upstreams (temporary validation servers) from the proxy pool.</li><li>Once saved, Aralez watches and auto-reloads <code>upstreams.yaml</code> 🔄 — no manual restart needed!</li></ul><hr><h2 id=-step-2-download-and-install-lego>📥 Step 2: Download and Install Lego</h2><ol><li>Visit the official <a href=https://github.com/go-acme/lego/releases>releases page</a>.</li><li>Download the precompiled binary for your OS.</li><li>Extract it (untar if necessary).</li><li>Make the binary executable: <code>chmod +x lego</code></li><li>Move it into your <code>$PATH</code>: <code>sudo mv lego /usr/local/bin/</code></li></ol><hr><h2 id=-step-3-request-certificates>📜 Step 3: Request Certificates</h2><p>Use Lego to request SSL certificates for one or more domains:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=nb>cd</span> /path/to/lego/root/folder
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>lego --key-type rsa2048 <span class=se>\
+</span></span></span><span class=line><span class=cl>  --domains<span class=o>=</span><span class=s2>&#34;site1.example.com&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>  --domains<span class=o>=</span><span class=s2>&#34;site2.example.com&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>  --domains<span class=o>=</span><span class=s2>&#34;site3.example.com&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>  --email <span class=s2>&#34;your-email@example.com&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>  --accept-tos <span class=se>\
+</span></span></span><span class=line><span class=cl>  --http.port<span class=o>=</span>127.0.0.1:8899 --http run
+</span></span></code></pre></div><h3 id=-what-happens-here>🔎 What happens here?</h3><table><thead><tr><th>Flag</th><th>Description</th></tr></thead><tbody><tr><td><code>--key-type</code></td><td>Type of cryptographic key (RSA 2048)</td></tr><tr><td><code>--domains</code></td><td>One or multiple domains to secure</td></tr><tr><td><code>--email</code></td><td>Contact email (used by Let&rsquo;s Encrypt)</td></tr><tr><td><code>--http.port</code></td><td>Local port Lego binds for the HTTP challenge</td></tr><tr><td><code>--accept-tos</code></td><td>Accept Let&rsquo;s Encrypt terms of service</td></tr></tbody></table><p>Certificates will be created in <code>./.lego/certificates/</code>. 🗂️</p><hr><h2 id=-step-4-make-certificates-usable-for-aralez>🔗 Step 4: Make Certificates Usable for Aralez</h2><p>Combine and copy the certificates into the path where Aralez expects them:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>cat ./.lego/certificates/site1.example.com*.crt &gt; /path/to/certificates/for/aralez/example.com.crt
+</span></span><span class=line><span class=cl>cat ./.lego/certificates/site1.example.com.key &gt; /path/to/certificates/for/aralez/example.com.key
+</span></span></code></pre></div><blockquote><p>💡 <strong>Pro tip:</strong> You can automate this with Lego&rsquo;s built-in hook system using <code>--run-hook</code>. See the <a href=https://go-acme.github.io/lego/usage/cli/obtain-a-certificate/index.html>Lego CLI Docs</a> for details.</p></blockquote><hr><h2 id=-step-5-automatic-reload-with-aralez>🎉 Step 5: Automatic Reload with Aralez</h2><p>✨ <strong>Aralez will automatically detect changes of certificates and reload on the fly. No downtime</strong></p><p><strong>💡 Naming convention:</strong> Aralez expects certificates and keys to follow a specific format:</p><ol><li>Certificate files must have the <code>.crt</code> extension.</li><li>Private key files must have the <code>.key</code> extension.</li><li>Matching <code>.crt</code> and <code>.key</code> files must share the same filename prefix.</li></ol><p><strong>Example:</strong></p><pre tabindex=0><code>example.com.crt
+example.com.key
+</code></pre><p>Aralez scans the certificate and key files, then matches them in memory by content, ensuring the correct pairs are always loaded together.</p><hr><h2 id=-step-6-renewing-certificates>🔁 Step 6: Renewing Certificates</h2><p>Create a wrapper bash script and add it to crontab:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>cd</span> /path/to/lego/root/folder
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>lego --key-type rsa2048 <span class=se>\
+</span></span></span><span class=line><span class=cl>  --domains<span class=o>=</span><span class=s2>&#34;site1.example.com&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>  --domains<span class=o>=</span><span class=s2>&#34;site2.example.com&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>  --domains<span class=o>=</span><span class=s2>&#34;site3.example.com&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>  --email <span class=s2>&#34;your-email@example.com&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>  --accept-tos <span class=se>\
+</span></span></span><span class=line><span class=cl>  --http.port<span class=o>=</span>127.0.0.1:8899 --http <span class=nv>$1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>cat ./.lego/certificates/site1.example.com*.crt &gt; /path/to/certificates/for/aralez/example.com.crt
+</span></span><span class=line><span class=cl>cat ./.lego/certificates/site1.example.com.key &gt; /path/to/certificates/for/aralez/example.com.key
+</span></span></code></pre></div><p>Add a crontab entry to run daily at 9am:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=m>0</span> <span class=m>9</span> * * * /path/to/lego.sh renew
+</span></span></code></pre></div><hr><h2 id=-using-zerossl-instead-of-lets-encrypt>⚙️ Using ZeroSSL Instead of Let&rsquo;s Encrypt</h2><ol><li>Create an account at ZeroSSL.</li><li>Login and go to <a href=https://app.zerossl.com/developer>Developer</a>.</li><li>Generate and save your <code>KID</code> and <code>HMAC</code>.</li></ol><p><strong>Create a wrapper script <code>lego.sh</code>:</strong></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>cd</span> /path/to/lego/root/folder
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>lego --key-type rsa2048 <span class=se>\
+</span></span></span><span class=line><span class=cl>    --domains<span class=o>=</span><span class=s2>&#34;site1.example.com&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>    --domains<span class=o>=</span><span class=s2>&#34;site2.example.com&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>    --email <span class=s2>&#34;your-email@example.com&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>    --accept-tos <span class=se>\
+</span></span></span><span class=line><span class=cl>    --server <span class=s2>&#34;https://acme.zerossl.com/v2/DV90&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>    --eab --kid <span class=s2>&#34;</span><span class=nv>$YOUR_KID</span><span class=s2>&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>    --hmac <span class=s2>&#34;</span><span class=nv>$YOUR_HMAC</span><span class=s2>&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>    --http.port<span class=o>=</span>127.0.0.1:8899 --http <span class=nv>$1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>cat ./.lego/certificates/site1.example.com*.crt &gt; /path/to/certificates/for/aralez/example.com.crt
+</span></span><span class=line><span class=cl>cat ./.lego/certificates/site1.example.com.key &gt; /path/to/certificates/for/aralez/example.com.key
+</span></span></code></pre></div><table><thead><tr><th>Flag</th><th>Description</th></tr></thead><tbody><tr><td><code>--server</code></td><td>URL to ZeroSSL server</td></tr><tr><td><code>--eab</code></td><td>EAB copied from ZeroSSL developer section</td></tr><tr><td><code>--hmac</code></td><td>HMAC copied from ZeroSSL developer section</td></tr></tbody></table><p><strong>Obtain the certificate:</strong></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>./lego.sh run
+</span></span></code></pre></div><p><strong>Renew the certificate:</strong></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-shell data-lang=shell><span class=line><span class=cl>./lego.sh renew
+</span></span></code></pre></div></main></div><footer class=site-footer><span>© 2026 Aralez — Built on <a href=https://github.com/cloudflare/pingora target=_blank rel=noopener>Cloudflare Pingora</a></span>
+<span><a href=https://github.com/sadoyan/aralez target=_blank rel=noopener>GitHub</a> ·
+<a href=https://www.apache.org/licenses/LICENSE-2.0 target=_blank rel=noopener>Apache 2.0 License</a></span></footer></body></html>
