@@ -111,7 +111,47 @@ myhost.mydomain.com:
 - All requests require JWT token authentication.
 
 ---
+Since Version v.0.86.1 upstream config can be split to multiple files. Aralez will scan `conf.d` subdirectory in configuration directory and include all `yaml` files. 
+Naming of files is not matter, it just needs to have extension `.yaml` . The content of file is similar to `upstreams.yaml` file with some minor differences .
 
+1. This is per host config file , so no global parameters whould be included 
+2. `hostname` is the top level item in `.yaml` file 
+3. Each file can contain one or multiple hosts. 
+4. All valid host level parameters from `upstreams.yaml` are also valid here. 
+5. In case of conflicting configuration parameters split file wins.
+6. If multiple split files contains the same host, the last applied wins. 
+7. Files are applied in alphabetical order. 
+
+## Example: Split file 
+
+```yaml
+some.example.com:
+  paths:
+    "/":
+      rate_limit: 100
+      to_https: false
+      server_headers:
+        - "Y-Proxy-Server-From:Aralez"
+      client_headers:
+        - "Access-Control-Allow-Origin:*"
+        - "Access-Control-Allow-Methods:POST, GET, OPTIONS"
+        - "Access-Control-Max-Age:86400"
+        - "Strict-Transport-Security:max-age=31536000; includeSubDomains; preload"
+      authorization:
+        type: "basic"
+        creds: "admin:admin"
+      servers:
+        - "127.0.0.1:8000"
+        - "127.0.0.2:8000"
+other.example.com:
+  paths:
+    "/":
+      redirect_to: "https://some.example.com:6194"
+      healthcheck: false
+      servers:
+        - "127.0.0.3:8000"
+```
+---
 ## Example: Kubernetes & Consul Provider
 
 ```yaml

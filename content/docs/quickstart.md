@@ -10,13 +10,15 @@ Download the prebuilt binary for your architecture from the [releases section](h
 
 ### Available Binaries
 
-| File Name | Description |
-|---|---|
-| `aralez-x86_64-musl.gz` | Static Linux x86_64 binary, without any system dependency |
-| `aralez-x86_64-glibc.gz` | Dynamic Linux x86_64 binary, with minimal system dependencies |
-| `aralez-aarch64-musl.gz` | Static Linux ARM64 binary, without any system dependency |
-| `aralez-aarch64-glibc.gz` | Dynamic Linux ARM64 binary, with minimal system dependencies |
-| `sadoyan/aralez` | Docker image on Debian 13 slim ([Docker Hub](https://hub.docker.com/r/sadoyan/aralez)) |
+| File Name                       | Description                                                              |
+|---------------------------------|--------------------------------------------------------------------------|
+| `aralez-x86_64-musl.gz`         | Static Linux x86_64 binary, without any system dependency                |
+| `aralez-x86_64-glibc.gz`        | Dynamic Linux x86_64 binary, with minimal system dependencies            |
+| `aralez-x86_64-compat-musl.gz`  | Static Linux x86_64 binary, compatible with old pre Haswell CPUs         |
+| `aralez-x86_64-compat-glibc.gz` | Dynamic Linux x86_64 binary, compatible with old pre Haswell CPUs        |
+| `aralez-aarch64-musl.gz`        | Static Linux ARM64 binary, without any system dependency                 |
+| `aralez-aarch64-glibc.gz`       | Dynamic Linux ARM64 binary, with minimal system dependencies             |
+| `sadoyan/aralez`                | Docker image on Debian 13 slim (https://hub.docker.com/r/sadoyan/aralez) |
 
 ---
 

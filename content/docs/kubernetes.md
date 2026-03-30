@@ -96,22 +96,22 @@ headers:
   - "Strict-Transport-Security:max-age=31536000; includeSubDomains; preload"
 kubernetes:
   services:
-    - hostname: "vt-webapi-service"
+    - hostname: "webapi-service"
       path: "/"
-      upstream: "vt-webapi-service"
-    - hostname: "vt-webapi-service"
-      upstream: "vt-console-service"
+      upstream: "webapi-service"
+    - hostname: "webapi-service"
+      upstream: "console-service"
       path: "/one"
       headers:
         - "X-Some-Thing:Yaaaaaaaaaaaaaaa"
         - "X-Proxy-From:Aralez"
       rate_limit: 100
       to_https: false
-    - hostname: "vt-webapi-service"
-      upstream: "vt-rambulik-service"
+    - hostname: "webapi-service"
+      upstream: "rambulik-service"
       path: "/two"
-    - hostname: "vt-websocket-service"
-      upstream: "vt-websocket-service"
+    - hostname: "websocket-service"
+      upstream: "websocket-service"
       path: "/"
   tokenpath: "/var/run/secrets/kubernetes.io/serviceaccount/token"
 ```
