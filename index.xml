@@ -18,6 +18,14 @@
  &lt;td&gt;Dynamic Linux x86_64 binary, with minimal system dependencies&lt;/td&gt;
  &lt;/tr&gt;
  &lt;tr&gt;
+ &lt;td&gt;&lt;code&gt;aralez-x86_64-compat-musl.gz&lt;/code&gt;&lt;/td&gt;
+ &lt;td&gt;Static Linux x86_64 binary, compatible with old pre Haswell CPUs&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
+ &lt;td&gt;&lt;code&gt;aralez-x86_64-compat-glibc.gz&lt;/code&gt;&lt;/td&gt;
+ &lt;td&gt;Dynamic Linux x86_64 binary, compatible with old pre Haswell CPUs&lt;/td&gt;
+ &lt;/tr&gt;
+ &lt;tr&gt;
  &lt;td&gt;&lt;code&gt;aralez-aarch64-musl.gz&lt;/code&gt;&lt;/td&gt;
  &lt;td&gt;Static Linux ARM64 binary, without any system dependency&lt;/td&gt;
  &lt;/tr&gt;
@@ -27,7 +35,7 @@
  &lt;/tr&gt;
  &lt;tr&gt;
  &lt;td&gt;&lt;code&gt;sadoyan/aralez&lt;/code&gt;&lt;/td&gt;
- &lt;td&gt;Docker image on Debian 13 slim (&lt;a href="https://hub.docker.com/r/sadoyan/aralez"&gt;Docker Hub&lt;/a&gt;)&lt;/td&gt;
+ &lt;td&gt;Docker image on Debian 13 slim (&lt;a href="https://hub.docker.com/r/sadoyan/aralez"&gt;https://hub.docker.com/r/sadoyan/aralez&lt;/a&gt;)&lt;/td&gt;
  &lt;/tr&gt;
  &lt;/tbody&gt;
 &lt;/table&gt;
