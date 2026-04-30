@@ -19,7 +19,7 @@ to_https: false
 rate_limit: 100
 authorization:
   type: "basic"
-  creds: "root:toor"
+  data: "root:toor"
 upstreams:
   web.example.com:
     paths:
@@ -33,7 +33,7 @@ upstreams:
         to_https: false
         authorization:
           type: "basic"
-          creds: "admin:admin"
+          data: "admin:admin"
         servers:
           - "127.0.0.1:8000"
           - "127.0.0.2:8000"
@@ -45,9 +45,10 @@ upstreams:
 
 Only one method can be active at a time:
 
-- **`basic`** — Standard HTTP Basic Authentication
-- **`apikey`** — Authentication via `x-api-key` header, which must match the value in config
-- **`jwt`** — JWT authentication via `araleztoken=` URL parameter or `Authorization: Bearer <token>` header
+- **`basic`** — Standard HTTP Basic Authentication. `data` must be `user:pass`
+- **`apikey`** — Authentication via `x-api-key` header, which must match the value in config. `data` must be the actual `api_key` 
+- **`jwt`** — JWT authentication via `araleztoken=` URL parameter or `Authorization: Bearer <token>` header. `data` must be the `masterkey`
+- **`forward`** — Zero trust forward authentication. `data` must be the full URL to authentication server including `http://`, `https://` preffix
 
 ---
 
@@ -59,7 +60,7 @@ To obtain a JWT token, send a **generate** request to the built-in API server's 
 |---|---|
 | `master_key` | Must match `masterkey` in `main.yaml` and `upstreams.yaml` |
 | `owner` | Placeholder — can be anything |
-| `valid` | Token validity in minutes |
+| `exp` | Token expity in minutes |
 
 ### Generate a JWT Token
 
@@ -67,7 +68,7 @@ To obtain a JWT token, send a **generate** request to the built-in API server's 
 PAYLOAD='{
     "master_key": "910517d9-f9a1-48de-8826-dbadacbd84af-cb6f830e-ab16-47ec-9d8f-0090de732774",
     "owner": "valod",
-    "valid": 10
+    "exp": 10
 }'
 
 TOK=`curl -s -XPOST -H "Content-Type: application/json" -d "$PAYLOAD" http://127.0.0.1:3000/jwt | cut -d '"' -f4`
@@ -102,4 +103,10 @@ curl -H "x-api-key: ${APIKEY}" --header 'Host: myip.mydomain.com' http://127.0.0
 
 ```bash
 curl -u username:password -H 'Host: myip.mydomain.com' http://127.0.0.1:6193/
+```
+
+## Forward Auth
+
+```bash
+curl -H 'Host: myip.mydomain.com' --cookie "YOUR_AUTH_COOKIE" http://127.0.0.1:6193/
 ```

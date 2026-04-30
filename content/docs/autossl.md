@@ -1,197 +1,170 @@
 ---
 title: "Manage Certificates"
-description: "Obtain and auto-renew SSL/TLS certificates using Lego and Let's Encrypt with Aralez"
+description: "Obtain and auto-renew SSL/TLS certificates with Aralez"
 weight: 10
 ---
+## 🔐 Native Let's Encrypt Integration
 
-## 🔐 Obtain and Renew SSL/TLS Certificates with [Lego](https://go-acme.github.io/lego/)
+Since version **v0.92.4**, Aralez supports automatic ordering and
+renewal of SSL/TLS certificates using Let's Encrypt via the HTTP-01
+challenge.
 
-Securing your applications with HTTPS is not just a best practice – it's **essential**! 🚀
+### Configuration
 
-With **Lego**, an ACME client and companion of Let's Encrypt, you can easily obtain and auto-renew SSL/TLS certificates for your domains. This guide will walk you through preparing **Aralez** for ACME challenges and integrating certificates smoothly. 🌍🔑
+Aralez includes a built-in API server that responds to HTTP-01
+challenges. This endpoint must be publicly accessible for your domain.
 
----
+Update your `upstreams.yaml`:
 
-## ⚙️ Step 1: Prepare Aralez for ACME Challenge
-
-In order to respond to certificate validation requests, you need to expose the path `/.well-known/acme-challenge` in your upstream configuration. This allows **Let's Encrypt** (or another ACME CA) to verify that you own the domain.
-
-Edit `main.yaml` and set the correct folder for `proxy_certificates`:
-
+``` yaml
+your.domain.com:
+  paths:
+    "/":
+      servers:
+        - "192.168.1.1:8000"
+        - "192.168.1.2:8000"
+        - "192.168.1.3:8000"
+    "/.well-known/acme-challenge":
+      servers:
+        - "127.0.0.1:3000"
 ```
-proxy_certificates: /path/to/certificates/for/aralez/
+
+This ensures Let's Encrypt can reach:
+
+    http://your.domain.com/.well-known/acme-challenge/<token>
+
+------------------------------------------------------------------------
+
+## 📜 Register and Obtain Certificates
+
+### Register (run once)
+
+``` bash
+curl -H 'x-api-key: MASTER_KEY_FROM_MAIN_CONFIG' http://127.0.0.1:3000/acme_create
 ```
 
-> Basic settings in `main.yaml` require a restart of Aralez.
+### Request a Certificate
 
-Edit `upstreams.yaml` with a sample configuration:
+``` bash
+curl -H 'x-api-key: MASTER_KEY_FROM_MAIN_CONFIG' http://127.0.0.1:3000/acme_order/your.domain.com
+```
 
-```yaml
+### Generated Files
+
+-   `acme_credentials.json` -- ACME account credentials
+-   `domains.json` -- list of managed domains
+
+Certificates are stored in:
+
+    CONFIG_DIR/autoconfigs/
+
+Aralez automatically reloads certificates when they are updated. Renewal
+is triggered \~30 days before expiration.
+
+------------------------------------------------------------------------
+
+## 🔐 Using Lego (Advanced / DNS Support)
+
+Lego is an external ACME client that supports additional providers and
+DNS challenges.
+
+### Step 1: Configure Aralez
+
+In `main.yaml`:
+
+    proxy_configs: /path/to/config/folder/
+
+In `upstreams.yaml`:
+
+``` yaml
 myhost.mydomain.com:
   paths:
     "/":
-      headers:
-        - "X-Some-Thing:Yaaaaaaaaaaaaaaa"
       servers:
         - "127.0.0.1:8000"
-        - "127.0.0.2:8000"
     "/.well-known/acme-challenge":
       healthcheck: false
       servers:
         - "127.0.0.1:8899"
 ```
 
-✨ **Important Notes:**
+------------------------------------------------------------------------
 
-- `healthcheck: false` ensures Aralez does not remove the ephemeral upstreams (temporary validation servers) from the proxy pool.
-- Once saved, Aralez watches and auto-reloads `upstreams.yaml` 🔄 — no manual restart needed!
+### Step 2: Install Lego
 
----
+Download from: https://github.com/go-acme/lego/releases
 
-## 📥 Step 2: Download and Install Lego
-
-1. Visit the official [releases page](https://github.com/go-acme/lego/releases).
-2. Download the precompiled binary for your OS.
-3. Extract it (untar if necessary).
-4. Make the binary executable: `chmod +x lego`
-5. Move it into your `$PATH`: `sudo mv lego /usr/local/bin/`
-
----
-
-## 📜 Step 3: Request Certificates
-
-Use Lego to request SSL certificates for one or more domains:
-
-```shell
-cd /path/to/lego/root/folder
-
-lego --key-type rsa2048 \
-  --domains="site1.example.com" \
-  --domains="site2.example.com" \
-  --domains="site3.example.com" \
-  --email "your-email@example.com" \
-  --accept-tos \
-  --http.port=127.0.0.1:8899 --http run
+``` bash
+chmod +x lego
+sudo mv lego /usr/local/bin/
 ```
 
-### 🔎 What happens here?
+------------------------------------------------------------------------
 
-| Flag | Description |
-|---|---|
-| `--key-type` | Type of cryptographic key (RSA 2048) |
-| `--domains` | One or multiple domains to secure |
-| `--email` | Contact email (used by Let's Encrypt) |
-| `--http.port` | Local port Lego binds for the HTTP challenge |
-| `--accept-tos` | Accept Let's Encrypt terms of service |
+### Step 3: Request Certificates
 
-Certificates will be created in `./.lego/certificates/`. 🗂️
-
----
-
-## 🔗 Step 4: Make Certificates Usable for Aralez
-
-Combine and copy the certificates into the path where Aralez expects them:
-
-```shell
-cat ./.lego/certificates/site1.example.com*.crt > /path/to/certificates/for/aralez/example.com.crt
-cat ./.lego/certificates/site1.example.com.key > /path/to/certificates/for/aralez/example.com.key
+``` bash
+lego   --key-type rsa2048   --domains="site1.example.com"   --email="your@email.com"   --accept-tos   --http.port=127.0.0.1:8899   --http run
 ```
 
-> 💡 **Pro tip:** You can automate this with Lego's built-in hook system using `--run-hook`. See the [Lego CLI Docs](https://go-acme.github.io/lego/usage/cli/obtain-a-certificate/index.html) for details.
+Certificates will be stored in:
 
----
+    ./.lego/certificates/
 
-## 🎉 Step 5: Automatic Reload with Aralez
+------------------------------------------------------------------------
 
-✨ **Aralez will automatically detect changes of certificates and reload on the fly. No downtime**
+### Step 4: Prepare Certificates for Aralez
 
-**💡 Naming convention:** Aralez expects certificates and keys to follow a specific format:
-
-1. Certificate files must have the `.crt` extension.
-2. Private key files must have the `.key` extension.
-3. Matching `.crt` and `.key` files must share the same filename prefix.
-
-**Example:**
-
-```
-example.com.crt
-example.com.key
+``` bash
+cat ./.lego/certificates/site1.example.com*.crt > /path/to/certs/example.com.crt
+cat ./.lego/certificates/site1.example.com.key > /path/to/certs/example.com.key
 ```
 
-Aralez scans the certificate and key files, then matches them in memory by content, ensuring the correct pairs are always loaded together.
+------------------------------------------------------------------------
 
----
+### Step 5: Auto Reload
 
-## 🔁 Step 6: Renewing Certificates
+Aralez automatically reloads certificates without restart.
 
-Create a wrapper bash script and add it to crontab:
+Expected naming:
 
-```shell
+    example.com.crt
+    example.com.key
+
+------------------------------------------------------------------------
+
+### Step 6: Renewal Script
+
+``` bash
 #!/bin/bash
 
-cd /path/to/lego/root/folder
+lego --http renew
 
-lego --key-type rsa2048 \
-  --domains="site1.example.com" \
-  --domains="site2.example.com" \
-  --domains="site3.example.com" \
-  --email "your-email@example.com" \
-  --accept-tos \
-  --http.port=127.0.0.1:8899 --http $1
-
-cat ./.lego/certificates/site1.example.com*.crt > /path/to/certificates/for/aralez/example.com.crt
-cat ./.lego/certificates/site1.example.com.key > /path/to/certificates/for/aralez/example.com.key
+cat ./.lego/certificates/site1.example.com*.crt > /path/to/certs/example.com.crt
+cat ./.lego/certificates/site1.example.com.key > /path/to/certs/example.com.key
 ```
 
-Add a crontab entry to run daily at 9am:
+Add to cron:
 
-```shell
-0 9 * * * /path/to/lego.sh renew
+``` bash
+0 9 * * * /path/to/script.sh
 ```
 
----
+------------------------------------------------------------------------
 
-## ⚙️ Using ZeroSSL Instead of Let's Encrypt
+## 🔁 Using ZeroSSL
 
-1. Create an account at ZeroSSL.
-2. Login and go to [Developer](https://app.zerossl.com/developer).
-3. Generate and save your `KID` and `HMAC`.
+Replace ACME server:
 
-**Create a wrapper script `lego.sh`:**
-
-```shell
-#!/bin/bash
-
-cd /path/to/lego/root/folder
-
-lego --key-type rsa2048 \
-    --domains="site1.example.com" \
-    --domains="site2.example.com" \
-    --email "your-email@example.com" \
-    --accept-tos \
-    --server "https://acme.zerossl.com/v2/DV90" \
-    --eab --kid "$YOUR_KID" \
-    --hmac "$YOUR_HMAC" \
-    --http.port=127.0.0.1:8899 --http $1
-
-cat ./.lego/certificates/site1.example.com*.crt > /path/to/certificates/for/aralez/example.com.crt
-cat ./.lego/certificates/site1.example.com.key > /path/to/certificates/for/aralez/example.com.key
+``` bash
+lego   --server "https://acme.zerossl.com/v2/DV90"   --eab   --kid "$KID"   --hmac "$HMAC"   --http run
 ```
 
-| Flag | Description |
-|---|---|
-| `--server` | URL to ZeroSSL server |
-| `--eab` | EAB copied from ZeroSSL developer section |
-| `--hmac` | HMAC copied from ZeroSSL developer section |
+------------------------------------------------------------------------
 
-**Obtain the certificate:**
+## ✅ Summary
 
-```shell
-./lego.sh run
-```
-
-**Renew the certificate:**
-
-```shell
-./lego.sh renew
-```
+-   Use built-in ACME for simplicity
+-   Use Lego for flexibility (DNS, multi-provider)
+-   Aralez supports hot reload of certificates
+-   HTTP-01 is the default and recommended approach
