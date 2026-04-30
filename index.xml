@@ -492,9 +492,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
 &lt;h2 id="step-2-define-rbac-permissions"&gt;Step 2: Define RBAC Permissions&lt;/h2&gt;
 &lt;p&gt;Aralez requires read-only access to Kubernetes resources within a namespace.&lt;/p&gt;</description></item><item><title>Manage Certificates</title><link>/aralez-docs/docs/autossl/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/aralez-docs/docs/autossl/</guid><description>&lt;h2 id="-native-with-lets-encrypt"&gt;🔐 Native with Let&amp;rsquo;s Encrypt&lt;/h2&gt;
-&lt;p&gt;Since version v.0.92.4 Aralez supports ordering and renewal of SSL certificates from Let&amp;rsquo;s Encrypt via HTTP-01 challenge .
-It&amp;rsquo;s still needed to make some manual configuration on iorder to make it works, but this is minimal :&lt;/p&gt;
-&lt;p&gt;Aralez&amp;rsquo;s built-in API servers will respond to HTTP-01 challenge, but this needs to be espoused to public network.&lt;/p&gt;
+&lt;p&gt;Since version v.0.92.4 Aralez supports ordering and renewal of SSL certificates from Let&amp;rsquo;s Encrypt with HTTP-01 challenge .
+The configuration is very simple.&lt;/p&gt;
+&lt;p&gt;Aralez&amp;rsquo;s built-in API servers will respond to HTTP-01 challenge, but this needs to be exposed to public for your domain.&lt;/p&gt;
 &lt;p&gt;As any other HTTP upsream it can be configured in &lt;code&gt;upstreams.yaml&lt;/code&gt; file.
-In order to complete HTTP-01 challenge Let&amp;rsquo;s Encrypt servers must be able to call &lt;code&gt;http://your.domain.com/.well-known/acme-challenge&lt;/code&gt;.&lt;br&gt;
-In &lt;code&gt;upstreams.yaml&lt;/code&gt; configure &lt;code&gt;/.well-known/acme-challenge&lt;/code&gt; as any other path, were built in API server&amp;rsquo;s ip:port is set as - server&lt;/p&gt;</description></item></channel></rss>
+In order to complete HTTP-01 challenge Let&amp;rsquo;s Encrypt servers must be able to call &lt;code&gt;http://your.domain.com/.well-known/acme-challenge&lt;/code&gt;.&lt;/p&gt;</description></item></channel></rss>
