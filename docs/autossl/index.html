@@ -34,7 +34,10 @@ View on GitHub</a></div></nav><script>(function(){var e=document.getElementById(
 <a href=/aralez-docs/docs/kubernetes/>Kubernetes Ingress</a>
 <a href=/aralez-docs/docs/autossl/>Manage Certificates</a></nav></div></aside><main class=main-content><div class=page-header><h1>Manage Certificates</h1><p class=page-desc>Obtain and auto-renew SSL/TLS certificates with Aralez</p></div><h2 id=-native-lets-encrypt-integration>🔐 Native Let&rsquo;s Encrypt Integration</h2><p>Since version <strong>v0.92.4</strong>, Aralez supports automatic ordering and
 renewal of SSL/TLS certificates using Let&rsquo;s Encrypt via the HTTP-01
-challenge.</p><h3 id=configuration>Configuration</h3><p>Aralez includes a built-in API server that responds to HTTP-01
+challenge.</p><h3 id=requirements>Requirements</h3><p>Make sure that <code>proxy_configs/certificates</code> directory exists and writeable by user running Aralez.
+For first run and binding to TLS address ate least one certificate/key pair is required.
+Make sure that <code>proxy_configs/certificates</code> contains any even self-signed certificate, key pair.
+Later when at least one certificate is obtained these can be deleted.</p><h3 id=configuration>Configuration</h3><p>Aralez includes a built-in API server that responds to HTTP-01
 challenges. This endpoint must be publicly accessible for your domain.</p><p>Update your <code>upstreams.yaml</code>:</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>your.domain.com</span><span class=p>:</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>paths</span><span class=p>:</span><span class=w>
 </span></span></span><span class=line><span class=cl><span class=w>    </span><span class=s2>&#34;/&#34;</span><span class=p>:</span><span class=w>
