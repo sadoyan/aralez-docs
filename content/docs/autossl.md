@@ -9,6 +9,13 @@ Since version **v0.92.4**, Aralez supports automatic ordering and
 renewal of SSL/TLS certificates using Let's Encrypt via the HTTP-01
 challenge.
 
+### Requirements
+
+Make sure that `proxy_configs/certificates` directory exists and writeable by user running Aralez.
+For first run and binding to TLS address ate least one certificate/key pair is required. 
+Make sure that `proxy_configs/certificates` contains any even self-signed certificate, key pair. 
+Later  when at least one certificate is obtained these can be deleted.    
+
 ### Configuration
 
 Aralez includes a built-in API server that responds to HTTP-01
