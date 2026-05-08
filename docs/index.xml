@@ -108,16 +108,6 @@
  &lt;td&gt;HTTP API address for pushing upstreams.yaml from remote location&lt;/td&gt;
  &lt;/tr&gt;
  &lt;tr&gt;
- &lt;td&gt;&lt;strong&gt;config_tls_address&lt;/strong&gt;&lt;/td&gt;
- &lt;td&gt;0.0.0.0:3001&lt;/td&gt;
- &lt;td&gt;HTTPS API address for pushing upstreams.yaml from remote location&lt;/td&gt;
- &lt;/tr&gt;
- &lt;tr&gt;
- &lt;td&gt;&lt;strong&gt;config_tls_certificate&lt;/strong&gt;&lt;/td&gt;
- &lt;td&gt;etc/server.crt&lt;/td&gt;
- &lt;td&gt;Certificate file path for API&lt;/td&gt;
- &lt;/tr&gt;
- &lt;tr&gt;
  &lt;td&gt;&lt;strong&gt;proxy_tls_grade&lt;/strong&gt;&lt;/td&gt;
  &lt;td&gt;high, medium, unsafe&lt;/td&gt;
  &lt;td&gt;Grade of TLS ciphers. &lt;code&gt;high&lt;/code&gt; matches Qualys SSL Labs A+ (defaults to &lt;code&gt;medium&lt;/code&gt;)&lt;/td&gt;
@@ -277,7 +267,7 @@
 &lt;/ul&gt;
 &lt;hr&gt;
 &lt;h2 id="benchmark-results"&gt;Benchmark Results&lt;/h2&gt;
-&lt;p&gt;Results shown are from 1 of 4 concurrent Oha instances. &lt;strong&gt;Success Rate&lt;/strong&gt; includes all responses (2xx, 4xx, 5xx); real success rates are lower for all servers.&lt;/p&gt;</description></item><item><title>Feature Comparison</title><link>/aralez-docs/docs/compare/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/aralez-docs/docs/compare/</guid><description>&lt;h3 id="-feature-comparison"&gt;🧩 Feature Comparison&lt;/h3&gt;
+&lt;p&gt;Results shown are from 1 of 4 concurrent Oha instances. &lt;strong&gt;Success Rate&lt;/strong&gt; includes all responses (2xx, 4xx, 5xx); real success rates are lower for all servers.&lt;/p&gt;</description></item><item><title>Feature Comparison</title><link>/aralez-docs/docs/compare/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/aralez-docs/docs/compare/</guid><description>&lt;h3 id="feature-comparison"&gt;Feature Comparison&lt;/h3&gt;
 &lt;table&gt;
  &lt;thead&gt;
  &lt;tr&gt;
@@ -491,12 +481,19 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;aralez-sa&lt;/span&gt;&lt;span class="w"&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
 &lt;h2 id="step-2-define-rbac-permissions"&gt;Step 2: Define RBAC Permissions&lt;/h2&gt;
-&lt;p&gt;Aralez requires read-only access to Kubernetes resources within a namespace.&lt;/p&gt;</description></item><item><title>Manage Certificates</title><link>/aralez-docs/docs/autossl/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/aralez-docs/docs/autossl/</guid><description>&lt;h2 id="-native-lets-encrypt-integration"&gt;🔐 Native Let&amp;rsquo;s Encrypt Integration&lt;/h2&gt;
+&lt;p&gt;Aralez requires read-only access to Kubernetes resources within a namespace.&lt;/p&gt;</description></item><item><title>Manage Certificates</title><link>/aralez-docs/docs/autossl/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/aralez-docs/docs/autossl/</guid><description>&lt;h2 id="tls-support"&gt;TLS Support&lt;/h2&gt;
+&lt;p&gt;To enable TLS for the proxy server.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Set &lt;code&gt;proxy_address_tls&lt;/code&gt; in &lt;code&gt;main.yaml&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Provide at least on &lt;code&gt;tls_certificate/tls_key_file&lt;/code&gt; pair.
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;First crt/key pair is required to create the TLS listener.&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;This pair can be anything, even self-signed with dummy domain.&lt;/li&gt;
+&lt;li&gt;After getting normal certificate it can be deleted&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="native-lets-encrypt-integration"&gt;Native Let&amp;rsquo;s Encrypt Integration&lt;/h2&gt;
 &lt;p&gt;Since version &lt;strong&gt;v0.92.4&lt;/strong&gt;, Aralez supports automatic ordering and
 renewal of SSL/TLS certificates using Let&amp;rsquo;s Encrypt via the HTTP-01
-challenge.&lt;/p&gt;
-&lt;h3 id="requirements"&gt;Requirements&lt;/h3&gt;
-&lt;p&gt;Make sure that &lt;code&gt;proxy_configs/certificates&lt;/code&gt; directory exists and writeable by user running Aralez.
-For first run and binding to TLS address ate least one certificate/key pair is required.
-Make sure that &lt;code&gt;proxy_configs/certificates&lt;/code&gt; contains any even self-signed certificate, key pair.
-Later when at least one certificate is obtained these can be deleted.&lt;/p&gt;</description></item></channel></rss>
+challenge.&lt;/p&gt;</description></item></channel></rss>
