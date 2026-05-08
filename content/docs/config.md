@@ -16,8 +16,6 @@ weight: 2
 | **pid_file**                     | /tmp/aralez.pid      | Path to PID file                                                                               |
 | **error_log**                    | /tmp/aralez_err.log  | Path to error log file                                                                         |
 | **config_address**               | 0.0.0.0:3000         | HTTP API address for pushing upstreams.yaml from remote location                               |
-| **config_tls_address**           | 0.0.0.0:3001         | HTTPS API address for pushing upstreams.yaml from remote location                              |
-| **config_tls_certificate**       | etc/server.crt       | Certificate file path for API                                                                  |
 | **proxy_tls_grade**              | high, medium, unsafe | Grade of TLS ciphers. `high` matches Qualys SSL Labs A+ (defaults to `medium`)                 |
 | **config_tls_key_file**          | etc/key.pem          | Private Key file path                                                                          |
 | **proxy_address_http**           | 0.0.0.0:6193         | Aralez HTTP bind address                                                                       |
@@ -59,16 +57,6 @@ client_headers:
   - "Access-Control-Allow-Origin:*"
   - "Access-Control-Allow-Methods:POST, GET, OPTIONS"
   - "Access-Control-Max-Age:86400"
-authorization:
-  type: "jwt"
-  data: "910517d9-f9a1-48de-8826-dbadacbd84af-cb6f830e-ab16-47ec-9d8f-0090de732774"
-redir.mydomain.com:
-  paths:
-    "/":
-      redirect_to: "https://myhost.mydomain.com:6194"
-      servers:
-        - "127.0.0.1:8000"
-        - "127.0.0.2:8000"
 myhost.mydomain.com:
   paths:
     "/":
@@ -85,6 +73,9 @@ myhost.mydomain.com:
         - "127.0.0.2:8000"
     "/foo":
       to_https: true
+      authorization:
+        type: "jwt"
+        data: "266463d1-210a-4787-9a81-4aacb37a8723"
       client_headers:
         - "X-Another-Header:Hohohohoho"
       servers:
@@ -98,17 +89,26 @@ myhost.mydomain.com:
 
 **This means:**
 
-- Sticky sessions are disabled globally.
-- HTTP to HTTPS redirect is disabled globally, but can be overridden per upstream with `to_https`.
-- All upstreams receive custom headers: `X-Forwarded-Proto:https` and `X-Forwarded-Port:443`.
-- Requests to each hosted domain are limited to 10 requests/second per virtualhost (per requester IP + virtualhost). Exceeding returns `429 Too Many Requests`.
-- Requests to `myhost.mydomain.com/` are limited to 20 req/sec and proxied to `127.0.0.1` and `127.0.0.2`.
-- Plain HTTP to `myhost.mydomain.com/foo` gets a 301 redirect to the configured TLS port.
-- Requests to `myhost.mydomain.com/foo` are proxied to `127.0.0.4` and `127.0.0.5`.
-- Requests to `redir.mydomain.com/ANY/PATH` are 301 redirected  to `myhost.mydomain.com/ANY/PATH`.  
-- SSL/TLS for upstreams is detected automatically. Self-signed certificates are silently accepted.
-- Global CORS headers are injected to all upstreams.
-- All requests require JWT token authentication.
+- Sticky sessions are disabled globally. This setting applies to all upstreams. If enabled all requests will be 301 redirected to HTTPS.
+- HTTP to HTTPS redirect disabled globally, but can be overridden by `to_https` setting per upstream.
+- All upstreams will receive custom headers : `X-Forwarded-Proto:https` and `X-Forwarded-Port:443`
+- Additionally, myhost.mydomain.com with path `/` will receive custom headers : `X-Another-Header:Hohohohoho` and `X-Something-Else:Foobar`
+- Requests to each hosted domains will be limited to 10 requests per second per virtualhost.
+    - Requests limits are calculated per requester ip plus requested virtualhost.
+    - If the requester exceeds the limit it will receive `429 Too Many Requests` error.
+    - Optional. Rate limiter will be disabled if the parameter is entirely removed from config.
+- Requests to `myhost.mydomain.com/` will be limited to 20 requests per second.
+- Requests to `myhost.mydomain.com/` will be proxied to `127.0.0.1` and `127.0.0.2`.
+- Plain HTTP to `myhost.mydomain.com/foo` will get 301 redirect to configured TLS port of Aralez.
+- `myhost.mydomain.com/foo` will require authentication with JWT token, signed by `266463d1-210a-4787-9a81-4aacb37a8723`.
+- Requests to `myhost.mydomain.com/foo` will be proxied to `127.0.0.4` and `127.0.0.5`.
+- Requests to `myhost.mydomain.com/.well-known/acme-challenge` will be proxied to `127.0.0.1:8001`, but healthcheks are disabled.
+- SSL/TLS for upstreams is detected automatically, no need to set any config parameter.
+    - Assuming the `127.0.0.5:8443` is SSL protected. The inner traffic will use TLS.
+    - Self-signed certificates are silently accepted.
+- Global headers (CORS for this case) will be injected to all upstreams.
+- Additional headers will be injected into the request for `myhost.mydomain.com`.
+- You can choose any path, deep nested paths are supported, the best match chosen.
 
 ---
 Since Version v.0.86.1 upstream config can be split to multiple files. Aralez will scan `conf.d` subdirectory in configuration directory and include all `yaml` files. 

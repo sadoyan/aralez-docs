@@ -4,7 +4,7 @@ description: "How Aralez compares to Nginx, HAProxy, Traefik, Caddy and Envoy"
 weight: 5
 ---
 
-### 🧩 Feature Comparison
+### Feature Comparison
 
 | Feature / Proxy | **Aralez** | **Nginx** | **HAProxy** | **Traefik** | **Caddy** | **Envoy** |
 |------------------------------------|:-----------------:|:----------:|:------------:|:--------------------------------:|:----------:|:---------------:|
@@ -32,7 +32,7 @@ weight: 5
 ⚙️ **Manual / Config-based** — Requires explicit configuration or modules
 ❌ **No** — Not supported
 
-### 💡 Interpretation
+### Interpretation
 
 Aralez aims to combine the **simplicity of NGINX**, the **observability of Envoy**, and the **dynamic features of Traefik**, all in a modern, lightweight Rust codebase.
 
@@ -46,7 +46,7 @@ Where most proxies require external tooling or complex configuration for dynamic
 
 In short, Aralez is designed for developers and operators who want **a fast, self-contained reverse proxy** that "just works," while still being flexible enough to scale into a service-mesh-like architecture.
 
-### ⚡ Zero-Config Features
+### Zero-Config Features
 
 Aralez is designed to **just work out of the box**, minimizing setup and manual configuration. With Aralez, you get:
 

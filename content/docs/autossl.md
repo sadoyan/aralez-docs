@@ -3,7 +3,17 @@ title: "Manage Certificates"
 description: "Obtain and auto-renew SSL/TLS certificates with Aralez"
 weight: 10
 ---
-## 🔐 Native Let's Encrypt Integration
+## TLS Support
+
+To enable TLS for the proxy server.
+
+- Set `proxy_address_tls` in `main.yaml`
+- Provide at least on  `tls_certificate/tls_key_file` pair.
+    - **First crt/key pair is required to create the TLS listener.**
+    - This pair can be anything, even self-signed with dummy domain.
+    - After getting normal certificate it can be deleted
+
+## Native Let's Encrypt Integration
 
 Since version **v0.92.4**, Aralez supports automatic ordering and
 renewal of SSL/TLS certificates using Let's Encrypt via the HTTP-01
@@ -42,7 +52,7 @@ This ensures Let's Encrypt can reach:
 
 ------------------------------------------------------------------------
 
-## 📜 Register and Obtain Certificates
+## Register and Obtain Certificates
 
 ### Register (run once)
 
@@ -70,7 +80,7 @@ is triggered \~30 days before expiration.
 
 ------------------------------------------------------------------------
 
-## 🔐 Using Lego (Advanced / DNS Support)
+## Using Lego (Advanced with DNS-01 challenge)
 
 Lego is an external ACME client that supports additional providers and
 DNS challenges.
@@ -159,7 +169,7 @@ Add to cron:
 
 ------------------------------------------------------------------------
 
-## 🔁 Using ZeroSSL
+## Using ZeroSSL
 
 Replace ACME server:
 
@@ -169,7 +179,8 @@ lego   --server "https://acme.zerossl.com/v2/DV90"   --eab   --kid "$KID"   --hm
 
 ------------------------------------------------------------------------
 
-## ✅ Summary
+## 
+Summary
 
 -   Use built-in ACME for simplicity
 -   Use Lego for flexibility (DNS, multi-provider)
