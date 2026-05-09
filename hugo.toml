@@ -1,5 +1,6 @@
 #baseURL = "https://sadoyan.github.io"
-baseURL = "/aralez-docs/"
+#baseURL = "/aralez-docs/"
+baseURL = "/"
 canonifyurls = true
 languageCode = "en-us"
 title = "Aralez — Reverse Proxy built on Cloudflare's Pingora"
