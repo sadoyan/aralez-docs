@@ -10,6 +10,16 @@ Push a new `upstreams.yaml` over HTTP to `config_address` (`:3000` by default). 
 
 ```bash
 curl -XPOST --data-binary @./etc/upstreams.txt 127.0.0.1:3000/conf?key=${MASTERKEY}
+   or 
+curl -XPOST --data-binary @/tmp/upstreams.yaml -H "x-api-key: ${MASTERKEY}"  127.0.0.1:3000/conf
+```
+If url parameter `?save` exists, Aralez will overwrite local `upstreams.yaml` file with versions received from API. 
+Otherwise, new pushed upstreams configration is ephemeral and will work till next restart.  
+
+**Example**
+
+```bash
+curl -XPOST --data-binary @/tmp/upstreams.yaml -H "x-api-key: ${MASTERKEY}"  127.0.0.1:3000/conf?save
 ```
 
 ---

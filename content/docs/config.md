@@ -85,6 +85,11 @@ myhost.mydomain.com:
       healthcheck: false
       servers:
         - "127.0.0.1:8001"
+DEFAULT:
+  paths:
+    "/":
+      servers:
+        - "127.0.0.1:3000"
 ```
 
 **This means:**
@@ -109,6 +114,8 @@ myhost.mydomain.com:
 - Global headers (CORS for this case) will be injected to all upstreams.
 - Additional headers will be injected into the request for `myhost.mydomain.com`.
 - You can choose any path, deep nested paths are supported, the best match chosen.
+- `DEFAULT` catch up everything else and proxy to `127.0.0.1:3000`
+  - This is a special upstream and in order to do the catch-up jub it must be **DEFAULT** all capitals 
 
 ---
 Since Version v.0.86.1 upstream config can be split to multiple files. Aralez will scan `conf.d` subdirectory in configuration directory and include all `yaml` files. 
