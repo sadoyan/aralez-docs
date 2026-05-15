@@ -6,29 +6,30 @@ weight: 2
 
 ## `main.yaml` — Startup Parameters
 
-| Key                              | Example Value        | Description                                                                                    |
-|----------------------------------|----------------------|------------------------------------------------------------------------------------------------|
-| **threads**                      | 12                   | Number of running daemon threads. Optional, defaults to 1                                      |
-| **runuser**                      | aralez               | Optional. Username for running aralez after dropping root privileges (requires launch as root) |
-| **rungroup**                     | aralez               | Optional. Group for running aralez after dropping root privileges (requires launch as root)    |
-| **daemon**                       | false                | Run in background (boolean)                                                                    |
-| **upstream_keepalive_pool_size** | 500                  | Pool size for upstream keepalive connections                                                   |
-| **pid_file**                     | /tmp/aralez.pid      | Path to PID file                                                                               |
-| **error_log**                    | /tmp/aralez_err.log  | Path to error log file                                                                         |
-| **config_address**               | 0.0.0.0:3000         | HTTP API address for pushing upstreams.yaml from remote location                               |
-| **proxy_tls_grade**              | high, medium, unsafe | Grade of TLS ciphers. `high` matches Qualys SSL Labs A+ (defaults to `medium`)                 |
-| **config_tls_key_file**          | etc/key.pem          | Private Key file path                                                                          |
-| **proxy_address_http**           | 0.0.0.0:6193         | Aralez HTTP bind address                                                                       |
-| **proxy_address_tls**            | 0.0.0.0:6194         | Aralez HTTPS bind address (Optional)                                                           |
-| **proxy_configs**                | etc/certs/           | Direcotry containing configuration files, must be writeable by user running aralez             |
-| **upstreams_conf**               | etc/upstreams.yaml   | Location of the upstreams file                                                                 |
-| **log_level**                    | info                 | Log level: `info`, `warn`, `error`, `debug`, `trace`, `off`                                    |
-| **hc_method**                    | HEAD                 | Healthcheck method: HEAD, GET, POST (UPPERCASE)                                                |
-| **hc_interval**                  | 2                    | Interval for health checks in seconds                                                          |
-| **master_key**                   | 5aeff7f9-...         | Master key for API server and JWT Secret generation                                            |
-| **file_server_folder**           | /some/local/folder   | Optional. Local folder to serve                                                                |
-| **file_server_address**          | 127.0.0.1:3002       | Optional. Local address for file server                                                        |
-| **config_api_enabled**           | true                 | Enable/disable remote config push capability                                                   |
+| Key                              | Example Value            | Description                                                                                     |
+|----------------------------------|--------------------------|-------------------------------------------------------------------------------------------------|
+| **threads**                      | 12                       | Number of running daemon threads. Optional, defaults to 1                                       |
+| **runuser**                      | aralez                   | Optional. Username for running aralez after dropping root privileges (requires launch as root)  |
+| **rungroup**                     | aralez                   | Optional. Group for running aralez after dropping root privileges (requires launch as root)     |
+| **daemon**                       | false                    | Run in background (boolean)                                                                     |
+| **upstream_keepalive_pool_size** | 500                      | Pool size for upstream keepalive connections                                                    |
+| **pid_file**                     | /tmp/aralez.pid          | Path to PID file                                                                                |
+| **error_log**                    | /tmp/aralez_err.log      | Path to error log file                                                                          |
+| **config_address**               | 0.0.0.0:3000             | HTTP API address for pushing upstreams.yaml from remote location                                |
+| **proxy_tls_grade**              | high, medium, unsafe     | Grade of TLS ciphers. `high` matches Qualys SSL Labs A+ (defaults to `medium`)                  |
+| **config_tls_key_file**          | etc/key.pem              | Private Key file path                                                                           |
+| **proxy_address_http**           | 0.0.0.0:6193             | Aralez HTTP bind address                                                                        |
+| **proxy_address_tls**            | 0.0.0.0:6194             | Aralez HTTPS bind address (Optional)                                                            |
+| **proxy_configs**                | etc/certs/               | Direcotry containing configuration files, must be writeable by user running aralez              |
+| **upstreams_conf**               | etc/upstreams.yaml       | Location of the upstreams file                                                                  |
+| **log_level**                    | info                     | Log level: `info`, `warn`, `error`, `debug`, `trace`, `off`                                     |
+| **log_file**                     | /full/path/to/aralez.log | Optional, the location of log file. If thi entry does not exist logs will be emitted to stdout. |
+| **hc_method**                    | HEAD                     | Healthcheck method: HEAD, GET, POST (UPPERCASE)                                                 |
+| **hc_interval**                  | 2                        | Interval for health checks in seconds                                                           |
+| **master_key**                   | 5aeff7f9-...             | Master key for API server and JWT Secret generation                                             |
+| **file_server_folder**           | /some/local/folder       | Optional. Local folder to serve                                                                 |
+| **file_server_address**          | 127.0.0.1:3002           | Optional. Local address for file server                                                         |
+| **config_api_enabled**           | true                     | Enable/disable remote config push capability                                                    |
 
 ---
 
@@ -115,22 +116,22 @@ DEFAULT:
 - Additional headers will be injected into the request for `myhost.mydomain.com`.
 - You can choose any path, deep nested paths are supported, the best match chosen.
 - `DEFAULT` catch up everything else and proxy to `127.0.0.1:3000`
-  - This is a special upstream and in order to do the catch-up jub it must be **DEFAULT** all capitals 
+    - This is a special upstream and in order to do the catch-up jub it must be **DEFAULT** all capitals
 
 ---
-Since Version v.0.86.1 upstream config can be split to multiple files. Aralez will scan `conf.d` subdirectory in configuration directory and include all `yaml` files. 
+Since Version v.0.86.1 upstream config can be split to multiple files. Aralez will scan `conf.d` subdirectory in configuration directory and include all `yaml` files.
 Naming of files is not matter, it just needs to have extension `.yaml` . The content of file is similar to `upstreams.yaml` file with some minor differences .
 
-1. This is per host config file , so no global parameters whould be included 
-2. `hostname` is the top level item in `.yaml` file 
-3. Each file can contain one or multiple hosts. 
-4. All valid host level parameters from `upstreams.yaml` are also valid here. 
+1. This is per host config file , so no global parameters whould be included
+2. `hostname` is the top level item in `.yaml` file
+3. Each file can contain one or multiple hosts.
+4. All valid host level parameters from `upstreams.yaml` are also valid here.
 5. In case of conflicting configuration parameters split file wins.
-6. If multiple split files contains the same host, the last applied wins. 
-7. Files are applied in alphabetical order. 
-8. Split files are read only is there is at least one configured upstream in main `upstreams.yaml` . If `upstreams.yaml` contains no upstreams at all, split files will be ignored.    
+6. If multiple split files contains the same host, the last applied wins.
+7. Files are applied in alphabetical order.
+8. Split files are read only is there is at least one configured upstream in main `upstreams.yaml` . If `upstreams.yaml` contains no upstreams at all, split files will be ignored.
 
-## Example: Split file 
+## Example: Split file
 
 ```yaml
 some.example.com:
@@ -159,7 +160,9 @@ other.example.com:
       servers:
         - "127.0.0.3:8000"
 ```
+
 ---
+
 ## Example: Kubernetes & Consul Provider
 
 ```yaml
@@ -227,25 +230,27 @@ Where `hostname` is the `Host` header to access the service and `upstream` is th
 
 ### Optional Fields
 
-| Field | Description |
-|---|---|
-| **path** | URL path to proxy to upstreams |
-| **client_headers** | List of additional response headers |
+| Field              | Description                                      |
+|--------------------|--------------------------------------------------|
+| **path**           | URL path to proxy to upstreams                   |
+| **client_headers** | List of additional response headers              |
 | **server_headers** | List of additional request headers for upstreams |
-| **rate_limit** | Rate limiter, number of requests per second |
-| **to_https** | Redirect to HTTPS |
+| **rate_limit**     | Rate limiter, number of requests per second      |
+| **to_https**       | Redirect to HTTPS                                |
 
 ### Consul-only
 
 ```yaml
 token: "8e2db809-..."
 ```
+
 Consul auth token — mandatory if Consul auth is enabled.
 
 ```yaml
 servers:
   - "http://consul1:8500"
 ```
+
 List of Consul servers — **mandatory for Consul**.
 
 ### Kubernetes-only
@@ -253,10 +258,12 @@ List of Consul servers — **mandatory for Consul**.
 ```yaml
 tokenpath: "/opt/Rust/Projects/asyncweb/etc/kubetoken.txt"
 ```
+
 For development only. Defaults to `/var/run/secrets/kubernetes.io/serviceaccount/token`. Remove for production.
 
 ```yaml
 servers:
   - "172.16.0.11:5443"
 ```
+
 Defaults to environment variables `KUBERNETES_SERVICE_HOST` and `KUBERNETES_SERVICE_PORT_HTTPS`. For development only — delete for production use.
