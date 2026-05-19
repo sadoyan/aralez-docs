@@ -58,8 +58,12 @@ aralez-xxx-yyy -c main.yaml
 
 ```shell
 docker run -d \
-  -v /local/path/to/config:/etc/aralez:ro \
+  -v /local/path/to/config:/etc/aralez:rw \
   -p 80:80 \
   -p 443:443 \
   sadoyan/aralez
 ```
+
+`/etc/aralez/certificates` in container should contain at least one crt/key pair. This can be self-signed dummy certificate. Aralez need a certificate to bind to TLS port.  
+Make sure you have created `/local/path/to/config/certificates` and installed this certificate before starting Aralez. 
+  
