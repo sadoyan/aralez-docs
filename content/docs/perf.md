@@ -29,8 +29,8 @@ Benchmarks are performed by [Oha](https://github.com/hatoo/oha) HTTP benchmark t
 
 Results shown are from 1 of 4 concurrent Oha instances. **Success Rate** includes all responses (2xx, 4xx, 5xx); real success rates are lower for all servers.
 
-- Raw results: [GitHub](https://github.com/sadoyan/aralez-docs/tree/main/public/images/stresstest/resuls)
-- Config files: [GitHub](https://github.com/sadoyan/aralez-docs/tree/main/public/images/stresstest/configs)
+- Raw results: [GitHub](https://github.com/sadoyan/aralez-docs/tree/main/static/images/stresstest/resuls)
+- Config files: [GitHub](https://github.com/sadoyan/aralez-docs/tree/main/static/images/stresstest/configs)
 
 ### Requests per Second Chart
 
