@@ -97,7 +97,7 @@ DEFAULT:
 
 **This means:**
 
-- Sticky sessions are enabled globally. This setting applies to all upstreams. If enabled the value withh be set as .
+- Sticky sessions are enabled globally. This setting applies to all upstreams. If enabled the value withh be set for `Max-Age=` cookie.
 - HTTP to HTTPS redirect disabled globally, but can be overridden by `to_https` setting per upstream.
 - All upstreams will receive custom headers : `X-Forwarded-Proto:https` and `X-Forwarded-Port:443`
 - Additionally, myhost.mydomain.com with path `/` will receive custom headers : `X-Another-Header:Hohohohoho` and `X-Something-Else:Foobar`

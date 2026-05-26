@@ -1,0 +1,374 @@
+====================
+======= GET =======
+====================
+======= ARALEZ OPENSSL =======
+Summary:
+  Success rate:	59.99%
+  Total:	300514.4924 ms
+  Slowest:	187798.4940 ms
+  Fastest:	0.8586 ms
+  Average:	3335.3788 ms
+  Requests/sec:	4183.5021
+
+  Total data:	2.58 GiB
+  Size/request:	3.68 KiB
+  Size/sec:	8.80 MiB
+
+Response time histogram:
+       0.859 ms [1]      |
+   18780.622 ms [703106] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+   37560.386 ms [9108]   |
+   56340.149 ms [11889]  |
+   75119.913 ms [5010]   |
+   93899.676 ms [4957]   |
+  112679.440 ms [580]    |
+  131459.203 ms [0]      |
+  150238.967 ms [58]     |
+  169018.731 ms [0]      |
+  187798.494 ms [29]     |
+
+Response time distribution:
+  10.00% in 49.0577 ms
+  25.00% in 130.1337 ms
+  50.00% in 357.3617 ms
+  75.00% in 1445.2127 ms
+  90.00% in 4194.7812 ms
+  95.00% in 15636.6835 ms
+  99.00% in 63139.2577 ms
+  99.90% in 93332.0096 ms
+  99.99% in 136393.1995 ms
+
+
+Details (average, fastest, slowest):
+  DNS+dialup:	18579.7699 ms, 1211.1187 ms, 59092.4312 ms
+  DNS-lookup:	0.0108 ms, 0.0038 ms, 0.3742 ms
+
+Status code distribution:
+  [200] 725898 responses
+  [502] 8840 responses
+
+Error distribution:
+  [443770] timeout
+  [46148] Address not available (os error 99)
+  [32508] aborted due to deadline
+  [16] operation was canceled
+  [13] connection closed before message completed
+  [10] connection error
+======= ARALEZ BORRING =======
+Summary:
+  Success rate:	31.28%
+  Total:	300615.5608 ms
+  Slowest:	201426.6067 ms
+  Fastest:	291.1611 ms
+  Average:	8874.4400 ms
+  Requests/sec:	2350.5403
+
+  Total data:	756.55 MiB
+  Size/request:	3.63 KiB
+  Size/sec:	2.52 MiB
+
+Response time histogram:
+     291.161 ms [1]      |
+   20404.706 ms [196334] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+   40518.250 ms [10297]  |■
+   60631.795 ms [4667]   |
+   80745.339 ms [1576]   |
+  100858.884 ms [464]    |
+  120972.428 ms [233]    |
+  141085.973 ms [15]     |
+  161199.518 ms [12]     |
+  181313.062 ms [0]      |
+  201426.607 ms [8]      |
+
+Response time distribution:
+  10.00% in 3795.0880 ms
+  25.00% in 5022.1934 ms
+  50.00% in 5884.3538 ms
+  75.00% in 7326.8025 ms
+  90.00% in 15136.7665 ms
+  95.00% in 26982.1581 ms
+  99.00% in 61566.7300 ms
+  99.90% in 102755.7133 ms
+  99.99% in 140585.8707 ms
+
+
+Details (average, fastest, slowest):
+  DNS+dialup:	14446.2665 ms, 1271.7104 ms, 67188.3817 ms
+  DNS-lookup:	0.0104 ms, 0.0036 ms, 0.9135 ms
+
+Status code distribution:
+  [200] 207375 responses
+  [502] 6232 responses
+
+Error distribution:
+  [425054] timeout
+  [44170] Address not available (os error 99)
+  [23729] aborted due to deadline
+  [27] connection closed before message completed
+  [20] operation was canceled
+  [2] connection error
+======= HAPROXY =======
+Summary:
+  Success rate:	5.45%
+  Total:	300742.3577 ms
+  Slowest:	208895.0664 ms
+  Fastest:	218.5292 ms
+  Average:	59102.3654 ms
+  Requests/sec:	1111.6558
+
+  Total data:	26.62 MiB
+  Size/request:	1.60 KiB
+  Size/sec:	90.65 KiB
+
+Response time histogram:
+     218.529 ms [1]    |
+   21086.183 ms [3316] |■■■■■■■■■■■■■■■■■
+   41953.837 ms [3748] |■■■■■■■■■■■■■■■■■■■
+   62821.490 ms [1428] |■■■■■■■
+   83689.144 ms [1376] |■■■■■■■
+  104556.798 ms [6122] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  125424.452 ms [316]  |■
+  146292.105 ms [758]  |■■■
+  167159.759 ms [5]    |
+  188027.413 ms [0]    |
+  208895.066 ms [2]    |
+
+Response time distribution:
+  10.00% in 7918.5093 ms
+  25.00% in 25562.5595 ms
+  50.00% in 65221.8051 ms
+  75.00% in 89368.3278 ms
+  90.00% in 98131.4941 ms
+  95.00% in 117602.0395 ms
+  99.00% in 137964.3547 ms
+  99.90% in 142591.1104 ms
+  99.99% in 208891.5413 ms
+
+
+Details (average, fastest, slowest):
+  DNS+dialup:	32033.8096 ms, 8008.9642 ms, 60507.2964 ms
+  DNS-lookup:	0.0097 ms, 0.0038 ms, 0.3266 ms
+
+Status code distribution:
+  [503] 9842 responses
+  [200] 7025 responses
+  [408] 205 responses
+
+Error distribution:
+  [164635] timeout
+  [130956] Address not available (os error 99)
+  [21107] aborted due to deadline
+  [364] operation was canceled
+  [188] connection error
+======= ENVOY =======
+Summary:
+  Success rate:	11.46%
+  Total:	300495.3152 ms
+  Slowest:	176344.9678 ms
+  Fastest:	5709.8172 ms
+  Average:	22939.6252 ms
+  Requests/sec:	2163.6544
+
+  Total data:	30.67 MiB
+  Size/request:	450 B
+  Size/sec:	104.51 KiB
+
+Response time histogram:
+    5709.817 ms [1]     |
+   22773.332 ms [47873] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+   39836.847 ms [17679] |■■■■■■■■■■■
+   56900.362 ms [3858]  |■■
+   73963.877 ms [1436]  |
+   91027.392 ms [38]    |
+  108090.908 ms [15]    |
+  125154.423 ms [49]    |
+  142217.938 ms [60]    |
+  159281.453 ms [128]   |
+  176344.968 ms [269]   |
+
+Response time distribution:
+  10.00% in 12144.3514 ms
+  25.00% in 15126.9976 ms
+  50.00% in 19409.5816 ms
+  75.00% in 24695.6572 ms
+  90.00% in 34964.0716 ms
+  95.00% in 50225.5125 ms
+  99.00% in 67046.4716 ms
+  99.90% in 168892.4930 ms
+  99.99% in 175606.8644 ms
+
+
+Details (average, fastest, slowest):
+  DNS+dialup:	13507.5918 ms, 5636.0059 ms, 26961.0207 ms
+  DNS-lookup:	0.0101 ms, 0.0036 ms, 0.7540 ms
+
+Status code distribution:
+  [404] 54027 responses
+  [503] 9145 responses
+  [200] 8183 responses
+  [504] 51 responses
+
+Error distribution:
+  [545544] timeout
+  [26824] aborted due to deadline
+  [6394] Address not available (os error 99)
+======= NGINX =======
+Summary:
+  Success rate:	16.51%
+  Total:	300499.6186 ms
+  Slowest:	182919.3503 ms
+  Fastest:	505.1339 ms
+  Average:	14349.8099 ms
+  Requests/sec:	2215.0411
+
+  Total data:	96.83 MiB
+  Size/request:	967 B
+  Size/sec:	329.97 KiB
+
+Response time histogram:
+     505.134 ms [1]     |
+   18746.556 ms [86803] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+   36987.977 ms [9898]  |■■■
+   55229.399 ms [1758]  |
+   73470.820 ms [3805]  |■
+   91712.242 ms [2022]  |
+  109953.664 ms [159]   |
+  128195.085 ms [468]   |
+  146436.507 ms [63]    |
+  164677.929 ms [1]     |
+  182919.350 ms [18]    |
+
+Response time distribution:
+  10.00% in 3158.7968 ms
+  25.00% in 4995.7491 ms
+  50.00% in 8619.5979 ms
+  75.00% in 14321.5555 ms
+  90.00% in 26602.2330 ms
+  95.00% in 66103.7491 ms
+  99.00% in 86455.6642 ms
+  99.90% in 127548.2424 ms
+  99.99% in 168567.8509 ms
+
+
+Details (average, fastest, slowest):
+  DNS+dialup:	6368.7402 ms, 0.1878 ms, 37358.0339 ms
+  DNS-lookup:	0.0093 ms, 0.0037 ms, 1.5579 ms
+
+Status code distribution:
+  [502] 81606 responses
+  [200] 23390 responses
+
+Error distribution:
+  [356445] timeout
+  [94790] tls handshake eof
+  [39842] Address not available (os error 99)
+  [29483] aborted due to deadline
+  [20377] connection error
+  [10562] Connection reset by peer (os error 104)
+  [6313] connection closed before message completed
+  [2811] operation was canceled
+======= TRAEFIK =======
+Summary:
+  Success rate:	33.47%
+  Total:	300427.2451 ms
+  Slowest:	181952.8608 ms
+  Fastest:	0.3286 ms
+  Average:	6643.9010 ms
+  Requests/sec:	3373.2893
+
+  Total data:	375.88 MiB
+  Size/request:	1.17 KiB
+  Size/sec:	1.25 MiB
+
+Response time histogram:
+       0.329 ms [1]      |
+   18195.582 ms [318870] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+   36390.835 ms [1389]   |
+   54586.088 ms [2193]   |
+   72781.341 ms [3808]   |
+   90976.595 ms [714]    |
+  109171.848 ms [596]    |
+  127367.101 ms [161]    |
+  145562.354 ms [197]    |
+  163757.608 ms [247]    |
+  181952.861 ms [126]    |
+
+Response time distribution:
+  10.00% in 12.8857 ms
+  25.00% in 3425.4019 ms
+  50.00% in 5012.1060 ms
+  75.00% in 7640.1461 ms
+  90.00% in 9430.4353 ms
+  95.00% in 11644.3260 ms
+  99.00% in 66725.9633 ms
+  99.90% in 151208.8007 ms
+  99.99% in 176413.8654 ms
+
+
+Details (average, fastest, slowest):
+  DNS+dialup:	14676.2909 ms, 3528.8015 ms, 37561.1497 ms
+  DNS-lookup:	0.0098 ms, 0.0040 ms, 0.4315 ms
+
+Status code distribution:
+  [502] 225741 responses
+  [200] 102561 responses
+
+Error distribution:
+  [634099] timeout
+  [32512] aborted due to deadline
+  [18497] Address not available (os error 99)
+  [18] connection error
+======= CADDY =======
+Summary:
+  Success rate:	26.07%
+  Total:	300420.4092 ms
+  Slowest:	126195.2755 ms
+  Fastest:	0.4020 ms
+  Average:	12155.7724 ms
+  Requests/sec:	3033.2427
+
+  Total data:	414.17 MiB
+  Size/request:	1.85 KiB
+  Size/sec:	1.38 MiB
+
+Response time histogram:
+       0.402 ms [1]      |
+   12619.889 ms [153267] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+   25239.377 ms [44519]  |■■■■■■■■■
+   37858.864 ms [13787]  |■■
+   50478.351 ms [8528]   |■
+   63097.839 ms [3849]   |
+   75717.326 ms [3662]   |
+   88336.813 ms [1195]   |
+  100956.301 ms [184]    |
+  113575.788 ms [41]     |
+  126195.275 ms [27]     |
+
+Response time distribution:
+  10.00% in 190.3289 ms
+  25.00% in 2582.8284 ms
+  50.00% in 7240.2067 ms
+  75.00% in 15701.6400 ms
+  90.00% in 29195.0140 ms
+  95.00% in 45024.6040 ms
+  99.00% in 72853.5795 ms
+  99.90% in 89792.6266 ms
+  99.99% in 114014.8624 ms
+
+
+Details (average, fastest, slowest):
+  DNS+dialup:	18270.0792 ms, 2334.2264 ms, 47706.9173 ms
+  DNS-lookup:	0.0101 ms, 0.0040 ms, 0.6341 ms
+
+Status code distribution:
+  [200] 113711 responses
+  [502] 106773 responses
+  [503] 8576 responses
+
+Error distribution:
+  [628270] timeout
+  [32449] aborted due to deadline
+  [21469] Address not available (os error 99)
+====================
+======= DONE =======
+====================
