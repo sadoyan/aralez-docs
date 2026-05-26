@@ -1,0 +1,38 @@
+provider: "file"
+sticky_sessions: false
+to_https: false
+server_headers:
+  - "Connection:keep-alive"
+#  - "Y-Proxy-Server-Some:Yaaaaaaaaaaaaaaa"
+#  - "Y-Proxy-Server-From:Aralez"
+#  - "Y-Proxy-Server-Vers:Aralez v0.89"
+client_headers:
+  - "connection:keep-alive"
+#  - "X-Hopar-From:Hopaaaaaaaaaaaar"
+#  - "X-Proxy-Some:X-Proxy-Somebody"
+upstreams:
+  test.dom.bar:
+    paths:
+      "/":
+        to_https: false
+        servers:
+          - "10.160.4.172:80"
+          - "10.160.4.147:80"
+          - "10.160.4.186:80"
+  test.foo.bar:
+    paths:
+      "/":
+        to_https: false
+        servers:
+          - "10.160.4.172:80"
+          - "10.160.4.147:80"
+          - "10.160.4.186:80"
+  test.yoop.jpo:
+    paths:
+      "/":
+        to_https: false
+        servers:
+          - "10.160.4.172:80"
+          - "10.160.4.147:80"
+          - "10.160.4.186:80"
+

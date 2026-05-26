@@ -29,12 +29,12 @@ Benchmarks are performed by [Oha](https://github.com/hatoo/oha) HTTP benchmark t
 
 Results shown are from 1 of 4 concurrent Oha instances. **Success Rate** includes all responses (2xx, 4xx, 5xx); real success rates are lower for all servers.
 
-- Raw results: [GitHub](https://github.com/sadoyan/aralez-docs/tree/main/docs/images/stresstest/resuls)
-- Config files: [GitHub](https://github.com/sadoyan/aralez-docs/tree/main/docs/images/stresstest/configs)
+- Raw results: [GitHub](https://github.com/sadoyan/aralez-docs/tree/main/public/images/stresstest/resuls)
+- Config files: [GitHub](https://github.com/sadoyan/aralez-docs/tree/main/public/images/stresstest/configs)
 
 ### Requests per Second Chart
 
-![Grafana Dashboard](https://raw.githubusercontent.com/sadoyan/aralez-docs/refs/heads/main/docs/images/stresstest/grafana.png)
+![Grafana Dashboard](https://aralez.rs/images/stresstest/grafana.png)
 
 ---
 
@@ -114,11 +114,11 @@ Results shown are from 1 of 4 concurrent Oha instances. **Success Rate** include
 
 ## Comparison Charts
 
-![Latency Comparison](https://raw.githubusercontent.com/sadoyan/aralez-docs/refs/heads/main/docs/images/stresstest/latency.png)
+![Latency Comparison](https://aralez.rs/images/stresstest/latency.png)
 
-![Requests per Second](https://raw.githubusercontent.com/sadoyan/aralez-docs/refs/heads/main/docs/images/stresstest/rps.png)
+![Requests per Second](https://aralez.rs/images/stresstest/rps.png)
 
-![Success Rate](https://raw.githubusercontent.com/sadoyan/aralez-docs/refs/heads/main/docs/images/stresstest/successrate.png)
+![Success Rate](https://aralez.rs/images/stresstest/successrate.png)
 
 ---
 

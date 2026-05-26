@@ -1,0 +1,359 @@
+====================
+======= POST =======
+====================
+======= ARALEZ OPENSSL =======
+Summary:
+  Success rate:	99.54%
+  Total:	300117.1304 ms
+  Slowest:	61838.5313 ms
+  Fastest:	0.5111 ms
+  Average:	714.9515 ms
+  Requests/sec:	5551.6624
+
+  Total data:	5.88 GiB
+  Size/request:	3.73 KiB
+  Size/sec:	20.06 MiB
+
+Response time histogram:
+      0.511 ms [1]       |
+   6184.313 ms [1648770] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  12368.115 ms [4983]    |
+  18551.917 ms [631]     |
+  24735.719 ms [12]      |
+  30919.521 ms [87]      |
+  37103.323 ms [4]       |
+  43287.125 ms [0]       |
+  49470.927 ms [1]       |
+  55654.729 ms [3]       |
+  61838.531 ms [14]      |
+
+Response time distribution:
+  10.00% in 44.8104 ms
+  25.00% in 176.0973 ms
+  50.00% in 643.9289 ms
+  75.00% in 914.6006 ms
+  90.00% in 1462.5255 ms
+  95.00% in 1744.7422 ms
+  99.00% in 3545.2299 ms
+  99.90% in 8008.1168 ms
+  99.99% in 15776.1960 ms
+
+
+Details (average, fastest, slowest):
+  DNS+dialup:	617.9786 ms, 0.1709 ms, 4147.1404 ms
+  DNS-lookup:	0.0121 ms, 0.0041 ms, 1.3156 ms
+
+Status code distribution:
+  [200] 1653036 responses
+  [502] 1470 responses
+
+Error distribution:
+  [7453] timeout
+  [4023] aborted due to deadline
+  [167] connection error
+======= ARALEZ BORRING =======
+Summary:
+  Success rate:	99.14%
+  Total:	300097.8814 ms
+  Slowest:	7841.2349 ms
+  Fastest:	0.7990 ms
+  Average:	772.0005 ms
+  Requests/sec:	5069.6826
+
+  Total data:	5.35 GiB
+  Size/request:	3.73 KiB
+  Size/sec:	18.26 MiB
+
+Response time histogram:
+     0.799 ms [1]      |
+   784.843 ms [739234] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  1568.886 ms [634933] |■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  2352.930 ms [121822] |■■■■■
+  3136.973 ms [5838]   |
+  3921.017 ms [1331]   |
+  4705.061 ms [961]    |
+  5489.104 ms [248]    |
+  6273.148 ms [5]      |
+  7057.191 ms [3]      |
+  7841.235 ms [3]      |
+
+Response time distribution:
+  10.00% in 115.9470 ms
+  25.00% in 241.3013 ms
+  50.00% in 790.3593 ms
+  75.00% in 1002.2698 ms
+  90.00% in 1543.5676 ms
+  95.00% in 1652.6863 ms
+  99.00% in 2025.1174 ms
+  99.90% in 3629.9540 ms
+  99.99% in 4877.3427 ms
+
+
+Details (average, fastest, slowest):
+  DNS+dialup:	571.4353 ms, 0.1747 ms, 5016.9058 ms
+  DNS-lookup:	0.0103 ms, 0.0041 ms, 1.7202 ms
+
+Status code distribution:
+  [200] 1504373 responses
+  [502] 6 responses
+
+Error distribution:
+  [12994] timeout
+  [4028] aborted due to deadline
+======= HAPROXY =======
+Summary:
+  Success rate:	99.94%
+  Total:	300142.8111 ms
+  Slowest:	30629.8294 ms
+  Fastest:	7.6459 ms
+  Average:	758.2621 ms
+  Requests/sec:	5385.1665
+
+  Total data:	5.73 GiB
+  Size/request:	3.73 KiB
+  Size/sec:	19.55 MiB
+
+Response time histogram:
+      7.646 ms [1]       |
+   3069.864 ms [1602964] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+   6132.083 ms [5098]    |
+   9194.301 ms [3012]    |
+  12256.519 ms [83]      |
+  15318.738 ms [80]      |
+  18380.956 ms [25]      |
+  21443.174 ms [0]       |
+  24505.393 ms [0]       |
+  27567.611 ms [0]       |
+  30629.829 ms [8]       |
+
+Response time distribution:
+  10.00% in 547.8916 ms
+  25.00% in 586.1790 ms
+  50.00% in 642.3769 ms
+  75.00% in 789.0288 ms
+  90.00% in 1049.1150 ms
+  95.00% in 1371.1292 ms
+  99.00% in 2166.3590 ms
+  99.90% in 7445.9893 ms
+  99.99% in 9256.7083 ms
+
+
+Details (average, fastest, slowest):
+  DNS+dialup:	1831.3826 ms, 0.2230 ms, 4993.5301 ms
+  DNS-lookup:	0.0097 ms, 0.0044 ms, 0.4694 ms
+
+Status code distribution:
+  [200] 1611271 responses
+
+Error distribution:
+  [4018] aborted due to deadline
+  [1021] timeout
+  [6] connection closed before message completed
+  [3] connection error
+======= ENVOY =======
+Summary:
+  Success rate:	99.99%
+  Total:	300142.7062 ms
+  Slowest:	16714.8374 ms
+  Fastest:	3.8763 ms
+  Average:	1109.1196 ms
+  Requests/sec:	3694.3960
+
+  Total data:	3.29 GiB
+  Size/request:	3.12 KiB
+  Size/sec:	11.24 MiB
+
+Response time histogram:
+      3.876 ms [1]      |
+   1674.972 ms [939514] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+   3346.069 ms [152143] |■■■■■
+   5017.165 ms [9309]   |
+   6688.261 ms [2960]   |
+   8359.357 ms [764]    |
+  10030.453 ms [40]     |
+  11701.549 ms [11]     |
+  13372.645 ms [6]      |
+  15043.741 ms [5]      |
+  16714.837 ms [6]      |
+
+Response time distribution:
+  10.00% in 368.5186 ms
+  25.00% in 671.0523 ms
+  50.00% in 990.6764 ms
+  75.00% in 1399.2273 ms
+  90.00% in 1898.1962 ms
+  95.00% in 2293.9413 ms
+  99.00% in 3504.0064 ms
+  99.90% in 6220.0171 ms
+  99.99% in 7937.7598 ms
+
+
+Details (average, fastest, slowest):
+  DNS+dialup:	528.1871 ms, 0.1462 ms, 4996.9753 ms
+  DNS-lookup:	0.0120 ms, 0.0039 ms, 1.0769 ms
+
+Status code distribution:
+  [200] 925971 responses
+  [404] 178044 responses
+  [503] 740 responses
+  [504] 4 responses
+
+Error distribution:
+  [4027] aborted due to deadline
+  [60] timeout
+======= NGINX =======
+Summary:
+  Success rate:	99.97%
+  Total:	300123.0712 ms
+  Slowest:	67891.5390 ms
+  Fastest:	0.2362 ms
+  Average:	323.5027 ms
+  Requests/sec:	12149.0327
+
+  Total data:	6.93 GiB
+  Size/request:	2.00 KiB
+  Size/sec:	23.64 MiB
+
+Response time histogram:
+      0.236 ms [1]       |
+   6789.367 ms [3619233] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+  13578.497 ms [14311]   |
+  20367.627 ms [4441]    |
+  27156.757 ms [172]     |
+  33945.888 ms [1710]    |
+  40735.018 ms [13]      |
+  47524.148 ms [15]      |
+  54313.278 ms [26]      |
+  61102.409 ms [1007]    |
+  67891.539 ms [60]      |
+
+Response time distribution:
+  10.00% in 11.1634 ms
+  25.00% in 19.1119 ms
+  50.00% in 51.5151 ms
+  75.00% in 256.5136 ms
+  90.00% in 582.4621 ms
+  95.00% in 1010.5900 ms
+  99.00% in 3744.6661 ms
+  99.90% in 15064.7597 ms
+  99.99% in 59842.6454 ms
+
+
+Details (average, fastest, slowest):
+  DNS+dialup:	1135.0875 ms, 0.2200 ms, 4928.0562 ms
+  DNS-lookup:	0.0127 ms, 0.0040 ms, 0.2453 ms
+
+Status code distribution:
+  [200] 1878704 responses
+  [502] 1761940 responses
+  [504] 345 responses
+
+Error distribution:
+  [4059] aborted due to deadline
+  [526] timeout
+  [461] connection error
+  [170] connection closed before message completed
+======= TRAEFIK =======
+Summary:
+  Success rate:	98.57%
+  Total:	300116.6100 ms
+  Slowest:	214361.4868 ms
+  Fastest:	1.0065 ms
+  Average:	2081.6082 ms
+  Requests/sec:	1923.4290
+
+  Total data:	2.01 GiB
+  Size/request:	3.73 KiB
+  Size/sec:	6.85 MiB
+
+Response time histogram:
+       1.007 ms [1]      |
+   21437.055 ms [564712] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+   42873.103 ms [192]    |
+   64309.151 ms [33]     |
+   85745.199 ms [1]      |
+  107181.247 ms [10]     |
+  128617.295 ms [5]      |
+  150053.343 ms [0]      |
+  171489.391 ms [0]      |
+  192925.439 ms [0]      |
+  214361.487 ms [3]      |
+
+Response time distribution:
+  10.00% in 520.8067 ms
+  25.00% in 997.8825 ms
+  50.00% in 1719.4499 ms
+  75.00% in 2745.8877 ms
+  90.00% in 3957.2772 ms
+  95.00% in 4939.6828 ms
+  99.00% in 7673.6517 ms
+  99.90% in 15272.1918 ms
+  99.99% in 32275.2603 ms
+
+
+Details (average, fastest, slowest):
+  DNS+dialup:	2007.4967 ms, 0.1685 ms, 5043.6033 ms
+  DNS-lookup:	0.0106 ms, 0.0040 ms, 0.6051 ms
+
+Status code distribution:
+  [200] 564861 responses
+  [504] 95 responses
+  [502] 1 responses
+
+Error distribution:
+  [8189] timeout
+  [4092] aborted due to deadline
+  [15] connection error
+======= CADDY =======
+Summary:
+  Success rate:	94.11%
+  Total:	300074.7228 ms
+  Slowest:	18184.3137 ms
+  Fastest:	1.1255 ms
+  Average:	3074.9942 ms
+  Requests/sec:	1287.4727
+
+  Total data:	1.28 GiB
+  Size/request:	3.73 KiB
+  Size/sec:	4.37 MiB
+
+Response time histogram:
+      1.126 ms [1]      |
+   1819.444 ms [53705]  |■■■■■■■■
+   3637.763 ms [211340] |■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■
+   5456.082 ms [72885]  |■■■■■■■■■■■
+   7274.401 ms [18030]  |■■
+   9092.720 ms [3307]   |
+  10911.038 ms [217]    |
+  12729.357 ms [79]     |
+  14547.676 ms [125]    |
+  16365.995 ms [18]     |
+  18184.314 ms [7]      |
+
+Response time distribution:
+  10.00% in 1539.7763 ms
+  25.00% in 2209.0601 ms
+  50.00% in 2911.8452 ms
+  75.00% in 3697.5715 ms
+  90.00% in 4764.4534 ms
+  95.00% in 5731.6076 ms
+  99.00% in 7339.3418 ms
+  99.90% in 9519.8137 ms
+  99.99% in 13296.3680 ms
+
+
+Details (average, fastest, slowest):
+  DNS+dialup:	598.8405 ms, 0.1522 ms, 4991.1745 ms
+  DNS-lookup:	0.0091 ms, 0.0040 ms, 0.1308 ms
+
+Status code distribution:
+  [200] 359695 responses
+  [502] 19 responses
+
+Error distribution:
+  [22531] timeout
+  [4092] aborted due to deadline
+  [1] error reading a body from connection
+====================
+======= DONE =======
+====================
