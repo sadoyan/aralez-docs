@@ -73,6 +73,7 @@ WORKDIR /etc/aralez
 
 ENTRYPOINT ["/usr/local/bin/aralez", "-c", "/etc/aralez/main.yaml"]
 ```
+Run: 
 
 ```shell
 docker run -d \
