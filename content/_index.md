@@ -9,7 +9,7 @@ description: "High-performance Rust reverse proxy with zero-config TLS, gRPC, We
 
 Built on **Rust**, on top of **Cloudflare's Pingora engine**, Aralez delivers world-class performance, security and scalability — right out of the box.
 
-**Support the project:** [![Buy Me A Coffee](https://img.shields.io/badge/☕-Buy%20me%20a%20coffee-orange)](https://www.buymeacoffee.com/sadoyan)
+[//]: # (**Support the project:** [![Buy Me A Coffee]&#40;https://img.shields.io/badge/☕-Buy%20me%20a%20coffee-orange&#41;]&#40;https://www.buymeacoffee.com/sadoyan&#41;)
 
 
 ---

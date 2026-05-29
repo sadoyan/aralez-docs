@@ -25,7 +25,14 @@ rate(aralez_requests_total[5m])
 
 ---
 
-### 2. `aralez_errors_total`
+### 2. `aralez_active_sessions`
+
+- **Type**: `Gauge`
+- **Purpose**: Current number of active sessions.
+
+---
+
+### 3. `aralez_errors_total`
 
 - **Type**: `Counter`
 - **Purpose**: Count of requests that resulted in an error.
@@ -36,7 +43,7 @@ rate(aralez_errors_total[5m])
 
 ---
 
-### 3. `aralez_responses_total{status="200"}`
+### 4. `aralez_responses_total{status="200"}`
 
 - **Type**: `CounterVec`
 - **Purpose**: Count of responses by HTTP status code.
@@ -49,7 +56,7 @@ Useful for alerting on 5xx errors.
 
 ---
 
-### 4. `aralez_response_latency_seconds`
+### 5. `aralez_response_latency_seconds`
 
 - **Type**: `Histogram`
 - **Purpose**: Tracks response latency in seconds.

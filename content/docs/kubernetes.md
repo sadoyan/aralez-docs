@@ -73,22 +73,22 @@ config_api_enabled: false
 config_address: 127.0.0.1:3000
 proxy_address_http: 0.0.0.0:80
 proxy_address_tls: 0.0.0.0:443
-proxy_certificates: /etc/aralez/certs
+proxy_configs: /etc/aralez
 proxy_tls_grade: high
-upstreams_conf: /etc/aralez/config/upstreams.yml
+upstreams_conf: /etc/aralez/upstreams.yml
 log_level: info
 hc_method: HEAD
 hc_interval: 2
-master_key: 910517d9-f9a1-48de-8826-dbadacbd84af-cb6f830e-ab16-47ec-9d8f-0090de732774
 ```
 
 **upstreams.yml example:**
 
 ```yaml
 provider: "kubernetes"
-sticky_sessions: false
 to_https: false
+sticky_sessions: 86000
 rate_limit: 100
+x4xx_limit: 100
 headers:
   - "Access-Control-Allow-Origin:*"
   - "Access-Control-Allow-Methods:POST, GET, OPTIONS"
@@ -105,7 +105,7 @@ kubernetes:
       headers:
         - "X-Some-Thing:Yaaaaaaaaaaaaaaa"
         - "X-Proxy-From:Aralez"
-      rate_limit: 100
+      rate_limit: 50
       to_https: false
     - hostname: "webapi-service"
       upstream: "rambulik-service"

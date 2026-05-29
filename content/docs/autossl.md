@@ -57,13 +57,13 @@ This ensures Let's Encrypt can reach:
 ### Register (run once)
 
 ``` bash
-curl -H 'x-api-key: MASTER_KEY_FROM_MAIN_CONFIG' http://127.0.0.1:3000/acme_create
+curl http://127.0.0.1:3000/acme_create
 ```
 
 ### Request a Certificate
 
 ``` bash
-curl -H 'x-api-key: MASTER_KEY_FROM_MAIN_CONFIG' http://127.0.0.1:3000/acme_order/your.domain.com
+curl http://127.0.0.1:3000/acme_order/your.domain.com
 ```
 
 ### Generated Files
