@@ -50,7 +50,7 @@ wget https://raw.githubusercontent.com/sadoyan/aralez/refs/heads/main/etc/upstre
 
 ```shell
 mkdir /local/path/to/config/certificates
-chown aralez:aralez /local/path/to/config/certificates
+chown -R aralez:aralez /local/path/to/config
 cd /local/path/to/config/certificates
 openssl req -x509 -newkey rsa:4096 \
 	-keyout dummy.key -out dummy.crt -sha256 -days 3650 -nodes \
