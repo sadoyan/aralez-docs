@@ -46,7 +46,17 @@ wget https://raw.githubusercontent.com/sadoyan/aralez/refs/heads/main/etc/upstre
 
 4. Edit to match your needs.
 
-5. **Run it:**
+5. Create certificates for first run  
+
+```shell
+mkdir /local/path/to/config/certificates
+chown aralez:aralez /local/path/to/config/certificates
+cd /local/path/to/config/certificates
+openssl req -x509 -newkey rsa:4096 \
+	-keyout dummy.key -out dummy.crt -sha256 -days 3650 -nodes \
+	-subj "/C=XX/ST=StateName/L=CityName/O=CompanyName/OU=CompanySectionName/CN=CommonNameOrHostname"
+```
+6. **Run it:**
 
 ```shell
 aralez-xxx-yyy -c main.yaml
@@ -85,4 +95,4 @@ docker run -d \
 
 `/etc/aralez/certificates` in container should contain at least one crt/key pair. This can be self-signed dummy certificate. Aralez need a certificate to bind to TLS port.  
 Make sure you have created `/local/path/to/config/certificates` and installed this certificate before starting Aralez. 
-  
+
