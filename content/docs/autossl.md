@@ -8,7 +8,7 @@ weight: 10
 To enable TLS for the proxy server.
 
 - Set `proxy_address_tls` in `main.yaml`
-- Provide at least on  `tls_certificate/tls_key_file` pair.
+- Provide at least one `tls_certificate/tls_key_file` pair.
     - **First crt/key pair is required to create the TLS listener.**
     - This pair can be anything, even self-signed with dummy domain.
     - After getting normal certificate it can be deleted
