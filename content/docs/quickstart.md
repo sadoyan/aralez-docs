@@ -86,11 +86,10 @@ ENTRYPOINT ["/usr/local/bin/aralez", "-c", "/etc/aralez/main.yaml"]
 Run: 
 
 ```shell
-docker run -d \
-  -v /local/path/to/config:/etc/aralez:rw \
-  -p 80:80 \
-  -p 443:443 \
-  sadoyan/aralez
+docker run -d -v /path/to/config:/etc/aralez:rw -p 80:80 -p 443:443 sadoyan/aralez
+docker run -d -v /path/to/config:/etc/aralez:rw -p 80:80 -p 443:443 sadoyan/aralez:compat
+docker run -d -v /path/to/config:/etc/aralez:rw -p 80:80 -p 443:443 ghcr.io/sadoyan/aralez:latest
+docker run -d -v /path/to/config:/etc/aralez:rw -p 80:80 -p 443:443 ghcr.io/sadoyan/aralez:compat
 ```
 
 `/etc/aralez/certificates` in container should contain at least one crt/key pair. This can be self-signed dummy certificate. Aralez need a certificate to bind to TLS port.  
