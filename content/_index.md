@@ -87,6 +87,18 @@ To enable TLS for a proxy server (currently only OpenSSL is supported):
 2. Provide `tls_certificate` and `tls_key_file`
 
 ---
+## Caching
+
+Provides local, in memory LRU cache for content delivery acceleration.
+
+Disabled by default. To enable set `cache_size_mb` and `cache_ttl` in `main.yaml`. **Restart is required**.  
+
+`cache_ttl` is the default TTL if `Cache-Control` are not present.  If upstream sets `Cache-Control`, the `cache_ttl` is ignored. 
+`no-cache`, `no-store`, `private` control headers are respected, pages with these headers won't be cached. 
+
+**Works only for `GET` requests with `200` responses.**
+
+---
 
 ## Remote Config API
 

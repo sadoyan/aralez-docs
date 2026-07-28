@@ -31,6 +31,19 @@ weight: 2
 | **tcp_keepalive_idle**           | 60                                        | Optional. Seconds of inactivity before the kernel starts sending keepalive probes to a downstream client                                                              |
 | **tcp_keepalive_interval**       | 10 (Default if tcp_keepalive_idle is set) | Optional. Seconds between individual keepalive probes if the client does not respond                                                                                  |
 | **tcp_keepalive_count**          | 5 (Default if tcp_keepalive_idle is set)  | Optional. Number of unanswered probes before the kernel declares the connection dead and closes it                                                                    |
+| **cache_size_mb**                | 50                                        | Optional. Enable internal cache with size in megabytes of value. Cache is entirely disabled when this line is commented out.                                          |
+| **cache_ttl**                    | 10                                        | Optional. Set Default TTL in seconds for cached items, works if cache control headers are not set via upstream. Defaults to 60 if cache_size_mb is set.               |
+
+When **cache_size_mb** is set **cache_ttl** will have default value of 60 seconds.
+**cache_ttl** honors `Cache-Control` headers from upstream. If upstream sets  these headers, it will be taken by Aralez as caching TTL. `Cache-Control no-store` or `Cache-Control private` will effectively disable caching for these URLs.
+These headers are mutually exclusive, any will work, but only one should be set at upstream side.  
+
+```ini
+Cache-Control max-age=300;
+Cache-Control s-maxage=600;
+Cache-Control no-store;
+Cache-Control private;
+```
 
 ---
 
