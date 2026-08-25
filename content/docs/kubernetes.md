@@ -170,11 +170,11 @@ spec:
               subPath: main.yaml
               readOnly: true
             - name: upstreams-config
-              mountPath: /etc/aralez/config/upstreams.yml
+              mountPath: /etc/aralez/upstreams.yml
               subPath: upstreams.yml
               readOnly: true
             - name: tls-certs
-              mountPath: /etc/aralez/certs
+              mountPath: /etc/aralez/certificates
               readOnly: true
       volumes:
         - name: main-config
