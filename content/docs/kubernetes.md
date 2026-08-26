@@ -29,13 +29,39 @@ Aralez requires read-only access to Kubernetes resources within a namespace.
 
 ```yaml
 apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
+kind: ClusterRole
 metadata:
   name: aralez-role
 rules:
-  - apiGroups: [ "" ]
-    resources: [ "pods", "endpoints", "services" ]
-    verbs: [ "get", "list", "watch" ]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses", "ingressclasses"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: ["networking.k8s.io"]
+    resources: ["ingresses/status"]
+    verbs: ["get", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["endpoints", "secrets", "services"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["nodes"]
+    verbs: ["get", "list"]
+```
+
+**ClusterRole (scoped to a single namespace):**
+
+```yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: aralez-ingress
+subjects:
+  - kind: ServiceAccount
+    name: aralez-sa
+    namespace: default
+roleRef:
+  kind: ClusterRole
+  name: aralez-role
+  apiGroup: rbac.authorization.k8s.io
 ```
 
 **RoleBinding (attach Role to the ServiceAccount):**
@@ -84,36 +110,20 @@ hc_interval: 2
 **upstreams.yml example:**
 
 ```yaml
-provider: "kubernetes"
+# The file under watch and hot reload, changes are applied immediately, no need to restart or reload.
+provider: "kubernetes" # "file" "consul" "kubernetes"
+sticky_sessions: 172000
 to_https: false
-sticky_sessions: 86000
-rate_limit: 100
-x4xx_limit: 100
-headers:
-  - "Access-Control-Allow-Origin:*"
-  - "Access-Control-Allow-Methods:POST, GET, OPTIONS"
-  - "Access-Control-Max-Age:86400"
-  - "Strict-Transport-Security:max-age=31536000; includeSubDomains; preload"
+rate_limit: 500000
+x4xx_limit: 100000
+server_headers:
+  - "X-Forwarded-Proto:https"
+  - "X-Forwarded-Port:443"
+client_headers:
+  - "X-Global-Client:Yooooooo"
 kubernetes:
-  services:
-    - hostname: "webapi-service"
-      path: "/"
-      upstream: "webapi-service"
-    - hostname: "webapi-service"
-      upstream: "console-service"
-      path: "/one"
-      headers:
-        - "X-Some-Thing:Yaaaaaaaaaaaaaaa"
-        - "X-Proxy-From:Aralez"
-      rate_limit: 50
-      to_https: false
-    - hostname: "webapi-service"
-      upstream: "rambulik-service"
-      path: "/two"
-    - hostname: "websocket-service"
-      upstream: "websocket-service"
-      path: "/"
-  tokenpath: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+  servers:
+    - "127.0.0.1:6443" # Gets KUBERNETES_SERVICE_HOST : KUBERNETES_SERVICE_PORT_HTTPS env variables.
 ```
 
 **Apply ConfigMaps:**
@@ -210,33 +220,85 @@ spec:
       targetPort: 443
 ```
 
----
+### Example webserver from Nginx which will be load balanced via Aralez
 
-## Step 4: Expose Aralez
-
-**ClusterIP (internal access only):**
-
+**1. Define the IngressClass so Kubernetes knows "aralez" is a valid controller**
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: IngressClass
+metadata:
+  name: aralez
+spec:
+  controller: aralez.proxy/ingress-controller
+```
+**2. Example Nginx service**
 ```yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: aralez
-  namespace: default
+  name: svc-nginx
 spec:
   selector:
-    app: aralez
+    app: svc-nginx
   ports:
-    - port: 80
+    - protocol: TCP
+      port: 80
       targetPort: 80
 ```
-
-**NodePort or LoadBalancer (external access):**
-
+**3  Define your Ingress resource targeting Aralez**
 ```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wss-service-v2
+  namespace: default
+  annotations:
+    # These custom annotations are parsed by Aralez
+    aralez.rs/rate_limit: "50"
+    aralez.rs/x4xx_limit: "10"
+    aralez.rs/client_headers: '["X-Some-Client:Some Custom Header", "X-Example-Client:An Example Header"]'
+    aralez.rs/server_headers: '["X-Some-Server:Some Custom Header", "X-Example-Server:An Example Header"]'
 spec:
-  type: NodePort   # Use LoadBalancer if running in a cloud environment
+  ingressClassName: aralez  # Matches the IngressClass metadata
+  rules:
+    - host: wss-service-v2.blabla.com
+      http:
+        paths:
+          - path: /ws
+            pathType: Prefix
+            backend:
+              service:
+                name: svc-nginx
+                port:
+                  number: 80
 ```
-
+**4  Deploy Nginx**
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: svc-nginx
+  labels:
+    app: svc-nginx
+spec:
+  selector:
+    matchLabels:
+      app: svc-nginx
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: svc-nginx
+    spec:
+      containers:
+      - name: svc-nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+```
 ---
-
 Aralez is now running inside your Kubernetes cluster with the right permissions and is accessible through a Kubernetes Service.
+Ity will get from Kubernetes API service all matchings with `ingressClassName`, internally construct the routing logic and expose ports.
+`hosts` matching `wss-service-v2.blabla.com` will be routed to pods of `svc-nginx` service, additional settings from `annotations:` will be applied.  
+
+Here are all [**Example YAML**](https://github.com/sadoyan/aralez/tree/main/etc/kubernetes): files 

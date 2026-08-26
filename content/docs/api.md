@@ -29,7 +29,7 @@ curl -XPOST --data-binary @/tmp/upstreams.yaml 127.0.0.1:3000/conf?save
 ### Get upstreams with current live status
 
 ```bash
-curl 127.0.0.1:3000/staus?live
+curl 127.0.0.1:3000/status?live
 ```
 
 Example output:

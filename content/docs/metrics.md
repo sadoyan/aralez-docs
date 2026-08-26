@@ -12,97 +12,121 @@ Prometheus metrics are exposed at `http://config_address/metrics` — by default
 
 ---
 
-## Metrics Reference
+## Metric Summary Table
 
-### 1. `aralez_requests_total`
-
-- **Type**: `Counter`
-- **Purpose**: Total requests served by Aralez.
-
-```promql
-rate(aralez_requests_total[5m])
-```
-
----
-
-### 2. `aralez_active_sessions`
-
-- **Type**: `Gauge`
-- **Purpose**: Current number of active sessions.
-
----
-
-### 3. `aralez_errors_total`
-
-- **Type**: `Counter`
-- **Purpose**: Count of requests that resulted in an error.
-
-```promql
-rate(aralez_errors_total[5m])
-```
+| Metric Name                        | Type            | Unit    | Description                                                          |
+|:-----------------------------------|:----------------|:--------|:---------------------------------------------------------------------|
+| `aralez_active_sessions`           | Gauge           | Count   | Current number of active user/client sessions.                       |
+| `aralez_cache_evicted_bytes_total` | Gauge           | Bytes   | Total memory size of data evicted from the cache.                    |
+| `aralez_cache_evicted_items_total` | Gauge           | Count   | Total number of individual items evicted from the cache.             |
+| `aralez_cache_items`               | Gauge           | Count   | Current total number of items stored in the cache.                   |
+| `aralez_cache_size_bytes`          | Gauge           | Bytes   | Current memory consumption of the cache in bytes.                    |
+| `aralez_logging_errors`            | Gauge / Counter | Count   | Total count of logging error events recorded.                        |
+| `aralez_memory_bytes`              | Gauge           | Bytes   | Total memory currently allocated by the process in bytes.            |
+| `aralez_open_files`                | Gauge           | Count   | Number of open file descriptors currently held by the application.   |
+| `aralez_requests_by_method_total`  | Counter         | Count   | Total HTTP requests processed, partitioned by HTTP method.           |
+| `aralez_requests_by_upstream`      | Counter         | Count   | Total HTTP requests routed, partitioned by targeted upstream server. |
+| `aralez_requests_by_version_total` | Counter         | Count   | Total HTTP requests received, partitioned by HTTP protocol version.  |
+| `aralez_requests_total`            | Counter         | Count   | Aggregate count of all HTTP requests handled by Aralez.              |
+| `aralez_response_latency_seconds`  | Histogram       | Seconds | Distribution of HTTP response latency in seconds.                    |
+| `aralez_responses_total`           | Counter         | Count   | Total HTTP responses returned, partitioned by HTTP status code.      |
 
 ---
 
-### 4. `aralez_responses_total{status="200"}`
+## Detailed Metric Breakdown
 
-- **Type**: `CounterVec`
-- **Purpose**: Count of responses by HTTP status code.
+### 1. Request & Response Metrics
 
-```promql
-rate(aralez_responses_total{status=~"5.."}[5m]) > 0
-```
+#### `aralez_requests_total`
 
-Useful for alerting on 5xx errors.
+* **Type:** Counter
+* **Description:** Tracks the cumulative number of HTTP requests processed by the Aralez application since process start.
+* **Usage:** Calculate overall throughput using PromQL: `rate(aralez_requests_total[5m])`.
+
+#### `aralez_requests_by_method_total`
+
+* **Type:** Counter
+* **Labels:**
+    * `method`: The HTTP request method (e.g., `GET`, `POST`, `PUT`, `HEAD`).
+* **Description:** Tracks request traffic broken down by HTTP protocol verb.
+
+#### `aralez_requests_by_version_total`
+
+* **Type:** Counter
+* **Labels:**
+    * `version`: The HTTP protocol version used (e.g., `HTTP/1.1`, `HTTP/2.0`).
+* **Description:** Breakdown of request volume by protocol version.
+
+#### `aralez_requests_by_upstream`
+
+* **Type:** Counter
+* **Labels:**
+    * `upstream`: Hostname or IP of the destination upstream server (e.g., `localhost`, `apt.netangels.net`).
+* **Description:** Tracks traffic distribution across upstream backend dependencies.
+
+#### `aralez_responses_total`
+
+* **Type:** Counter
+* **Labels:**
+    * `status`: HTTP response status code (e.g., `200`, `502`).
+* **Description:** Total responses generated, grouped by HTTP response code.
+* **Usage:** Useful for calculating error rates (e.g., ratio of `5xx` responses to total responses).
+
+#### `aralez_response_latency_seconds`
+
+* **Type:** Histogram
+* **Associated Metrics:**
+    * `aralez_response_latency_seconds_bucket{le="..."}`: Count of requests completed within the specified latency threshold (`le` = less than or equal to seconds).
+    * `aralez_response_latency_seconds_sum`: Cumulative total of all response latencies in seconds.
+    * `aralez_response_latency_seconds_count`: Total number of measured requests (matches `aralez_requests_total`).
+* **Description:** Measures request execution duration to calculate percentiles (p50, p95, p99).
+* **Usage:** Calculate 95th percentile latency over 5 minutes:
+  `histogram_quantile(0.95, sum(rate(aralez_response_latency_seconds_bucket[5m])) by (le))`
 
 ---
 
-### 5. `aralez_response_latency_seconds`
+### 2. Cache Metrics
 
-- **Type**: `Histogram`
-- **Purpose**: Tracks response latency in seconds.
+#### `aralez_cache_items`
 
-Example bucket output:
+* **Type:** Gauge
+* **Description:** Instantaneous measurement of the number of items currently held in memory cache.
 
-```prometheus
-aralez_response_latency_seconds_bucket{le="0.01"}  15
-aralez_response_latency_seconds_bucket{le="0.1"}   120
-aralez_response_latency_seconds_bucket{le="0.25"}  245
-aralez_response_latency_seconds_bucket{le="0.5"}   500
-...
-aralez_response_latency_seconds_count  1023
-aralez_response_latency_seconds_sum    42.6
-```
+#### `aralez_cache_size_bytes`
 
-| Metric | Meaning |
-|---|---|
-| `bucket{le="0.1"} 120` | 120 requests completed in ≤ 100ms |
-| `bucket{le="0.25"} 245` | 245 requests completed in ≤ 250ms |
-| `count` | Total number of observations (total responses measured) |
-| `sum` | Total time of all responses, in seconds |
+* **Type:** Gauge
+* **Description:** Current memory consumption of the active cache in bytes.
 
-**`le`** means "less than or equal to". `count` is the total observations. `sum` is the total response time in seconds.
+#### `aralez_cache_evicted_items_total`
 
-**95th percentile latency:**
+* **Type:** Gauge *(Behaves as Counter)*
+* **Description:** Cumulative number of objects removed from the cache due to memory limits or eviction policies.
 
-```promql
-histogram_quantile(0.95, rate(aralez_response_latency_seconds_bucket[5m]))
-```
+#### `aralez_cache_evicted_bytes_total`
 
-**Average latency:**
-
-```promql
-rate(aralez_response_latency_seconds_sum[5m]) / rate(aralez_response_latency_seconds_count[5m])
-```
+* **Type:** Gauge *(Behaves as Counter)*
+* **Description:** Cumulative size (in bytes) of all objects evicted from the cache.
 
 ---
 
-## Summary
+### 3. System & Session Metrics
 
-| Metric Name | Type | What it Tells You |
-|---|---|---|
-| `aralez_requests_total` | Counter | Total requests served |
-| `aralez_errors_total` | Counter | Number of failed requests |
-| `aralez_responses_total{status="200"}` | CounterVec | Response status breakdown |
-| `aralez_response_latency_seconds` | Histogram | How fast responses are |
+#### `aralez_active_sessions`
 
-> Metrics are registered after the first served request.
+* **Type:** Gauge
+* **Description:** Real-time count of currently connected or active client sessions.
+
+#### `aralez_memory_bytes`
+
+* **Type:** Gauge
+* **Description:** Current memory allocated by the application process (in bytes).
+
+#### `aralez_open_files`
+
+* **Type:** Gauge
+* **Description:** Number of open file handles currently used by the process. Monitor to prevent hitting operating system file descriptor limits (`ulimit`).
+
+#### `aralez_logging_errors`
+
+* **Type:** Gauge
+* **Description:** Count of error events logged by the application system.
