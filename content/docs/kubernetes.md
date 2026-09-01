@@ -4,7 +4,9 @@ description: "Running Aralez inside a Kubernetes cluster as a lightweight ingres
 weight: 7
 ---
 
-This guide walks you through setting up Aralez inside a Kubernetes cluster as a lightweight service mesh. We'll create the necessary **ServiceAccount**, apply the right **RBAC roles**, and deploy Aralez as a Kubernetes Deployment with an exposed Service.
+Sett up Aralez inside as a Kubernetes ingress controller. 
+
+Create the necessary **ServiceAccount**, apply the right **RBAC roles**, and deploy Aralez as a Kubernetes Deployment with an exposed Service.
 
 ---
 

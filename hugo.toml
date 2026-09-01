@@ -59,11 +59,16 @@ title = "Aralez — Reverse Proxy built on Cloudflare's Pingora"
   weight = 8
 
 [[menu.main]]
-  name = "Kubernetes Ingress"
+  name = "Kubernetes"
   url = "/docs/kubernetes/"
   weight = 9
 
 [[menu.main]]
+  name = "Consul"
+  url = "/docs/consul/"
+  weight = 10
+
+[[menu.main]]
   name = "Manage Certificates"
   url = "/docs/autossl/"
-  weight = 10
+  weight = 11
