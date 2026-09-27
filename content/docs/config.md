@@ -23,6 +23,7 @@ weight: 2
 | **access_log**                   | access                                                                                                                                        | Configure access logging. Values: `access, error`                                                                                                                     |
 | **log_level**                    | info                                                                                                                                          | Log level: `info`, `warn`, `error`, `debug`, `trace`, `off`                                                                                                           |
 | **log_file**                     | /tmp/aralez.log, 20, 5, compress                                                                                                              | Optional, the location of log file, file size in megabytes, number of log files to keep, compress files .valueas are separated by comma. Defaults to None, 100, 5, No |
+| **log_structured**               | elasticsearch                                                                                                                                 | Optional, enable/disable structured logging with desired backend log server. Backend name must match exactly module name.                                             |
 | **log_pattern**                  | See log4rs official [documentation](https://docs.rs/log4rs/latest/log4rs/encode/pattern/struct.PatternEncoderDeserializer.html#configuration) | Optional log pattern, defaults to "{d(%Y-%m-%d %H:%M:%S)} {l} - {m}{n}".                                                                                              |
 | **hc_method**                    | HEAD                                                                                                                                          | Healthcheck method: HEAD, GET, POST (UPPERCASE)                                                                                                                       |
 | **hc_interval**                  | 2                                                                                                                                             | Interval for health checks in seconds                                                                                                                                 |
@@ -290,3 +291,30 @@ servers:
 ```
 
 Defaults to environment variables `KUBERNETES_SERVICE_HOST` and `KUBERNETES_SERVICE_PORT_HTTPS`. For development only — delete for production use.
+
+### Structured logging
+
+**ElasticSearch**
+
+To enable logging to ElasticSearch set `log_structured: elasticsearch` in `main.yaml`. Changes in `main.yaml` requires restart to apply 
+Configurations parameters for ElasticSearch servers are taken from  OS environment. 
+
+**These variables must be set.** 
+
+- **LOG_ELASTIC_HOSTS** : URLs of Elasticsearch seed hosts, Aralez will take these hosts to construct ES client for all member hosts internally. 
+- **LOG_ELASTIC_USER** : Username for ElasticSearch authentication. 
+- **LOG_ELASTIC_PASSWORD** : Password for ElasticSearch authentication.
+- **LOG_ELASTIC_INDEX** :  Index to send longs to. 
+- **LOG_ELASTIC_FLUSH_DURATION** : How long Aralez should keep logs in memory before flushing to ElasticSearch in bulk index api 
+- **LOG_ELASTIC_BATCH_LEN** : How many messages Aralez should keep logs in memory before flushing to ElasticSearch in bulk index api, in seconds. 
+
+The followings defaults fo all parameters:
+
+```bash
+LOG_ELASTIC_HOSTS = http://127.0.0.1:9200 
+LOG_ELASTIC_USER = elastic
+LOG_ELASTIC_PASSWORD = elastic
+LOG_ELASTIC_INDEX = aralez-logs
+LOG_ELASTIC_FLUSH_DURATION = 2 
+LOG_ELASTIC_BATCH_LEN = 200 
+```
