@@ -43,146 +43,178 @@ your.domain.com:
         - "192.168.1.3:8000"
     "/.well-known/acme-challenge":
       servers:
-        - "127.0.0.1:3000"
+        - "127.0.0.1:3000" # The address:port of internal API server
 ```
 
 This ensures Let's Encrypt can reach:
 
-    http://your.domain.com/.well-known/acme-challenge/<token>
+```
+http://your.domain.com/.well-known/acme-challenge/<token>
+````
 
-------------------------------------------------------------------------
+Aralez will create CONF_DIR/autoconfig folder with following files
+
+```
+acme_credentials.json
+domains.json
+```
+These are autocreated files, never manually edit it. 
+
+Helthy content of `etc/autoconfigs/acme_credentials.json` should look like this: 
+
+```json
+{
+  "id": "https://acme-v02.api.letsencrypt.org/acme/acct/YOUR_ID",
+  "key_pkcs8": "YOUR_KEY",
+  "directory": "https://acme-v02.api.letsencrypt.org/directory"
+}
+```
+File `etc/autoconfigs/domains.json` contains The list of ACME enable hosts . 
+
+```json
+[
+  "host1.example.com",
+  "host2.example.com",
+  "host1.example.net",
+  "host2.example.net"
+]
+```
+
+Healthy structure of `etc` should look like this: 
+
+
+```bash
+etc/
+├── autoconfigs
+│   ├── acme_credentials.json
+│   └── domains.json
+├── certificates
+│   ├── host1.example.com.crt
+│   ├── host1.example.com.key
+│   ├── host2.example.com.crt
+│   ├── host2.example.com.key
+│   ├── host1.example.net.crt
+│   ├── host1.example.net.key
+│   ├── host2.example.com.crt
+│   └── host2.example.com.key
+├── main.yaml
+└── upstreams.yaml
+
+```
 
 ## Register and Obtain Certificates
 
-### Register (run once)
+### Register 
+
+On the first run of Aralez at first time execute the following in your command prompt.  
 
 ``` bash
 curl http://127.0.0.1:3000/acme_create
 ```
+This will create your account at Let's Encrypt and save credentials in  `etc/autoconfigs/domains.json`
+This should be run only once on a fresh Aralez installation. 
 
 ### Request a Certificate
 
-``` bash
-curl http://127.0.0.1:3000/acme_order/your.domain.com
-```
-
-### Generated Files
-
--   `acme_credentials.json` -- ACME account credentials
--   `domains.json` -- list of managed domains
-
-Certificates are stored in:
-
-    CONFIG_DIR/autoconfigs/
-
-Aralez automatically reloads certificates when they are updated. Renewal
-is triggered \~30 days before expiration.
-
-------------------------------------------------------------------------
-
-## Using Lego (Advanced with DNS-01 challenge)
-
-Lego is an external ACME client that supports additional providers and
-DNS challenges.
-
-### Step 1: Configure Aralez
-
-In `main.yaml`:
-
-    proxy_configs: /path/to/config/folder/
-
-In `upstreams.yaml`:
-
-``` yaml
-myhost.mydomain.com:
-  paths:
-    "/":
-      servers:
-        - "127.0.0.1:8000"
-    "/.well-known/acme-challenge":
-      healthcheck: false
-      servers:
-        - "127.0.0.1:8899"
-```
-
-------------------------------------------------------------------------
-
-### Step 2: Install Lego
-
-Download from: https://github.com/go-acme/lego/releases
+For each of your domains run 
 
 ``` bash
-chmod +x lego
-sudo mv lego /usr/local/bin/
+curl http://127.0.0.1:3000/acme_order/host1.example.com
+curl http://127.0.0.1:3000/acme_order/host2.example.com
+curl http://127.0.0.1:3000/acme_order/host1.example.net
+curl http://127.0.0.1:3000/acme_order/host2.example.net
+```
+
+This will issue initial certificates and store as 
+```
+├── certificates
+│   ├── host1.example.com.crt
+│   ├── host1.example.com.key
+│   ├── host2.example.com.crt
+│   ├── host2.example.com.key
+│   ├── host1.example.net.crt
+│   ├── host1.example.net.key
+│   ├── host2.example.com.crt
+│   └── host2.example.com.key
+```
+
+Renewal of certificates will be performed automatically. 
+
+You need to run `curl http://127.0.0.1:3000/acme_order/DOMAIN` only once to issues the certificates.   
+
+### File system permissions
+
+Make sure the user running Aralez have write permission to config directory.  
+
+Aralez automatically reloads certificates when they are updated. The renewal is triggered \~30 days before expiration.
+
+## DNS-01 challenge
+
+Starting from version 0.94.2 Aralez supports ACME DNS-01 challenge. Support for different provider will be added granularly. 
+At the moment of this document Cloudflare DNS is supported Example is on process.
+
+To enable DNS-01 challenge in `main.yaml` add key `acme_dns_provider` with value of a provider plugin name. 
+```yaml
+acme_dns_provider: cloudflare
+```
+
+Ordering and renewing of certificates is processed the same was as with HTTP-01 challenge. 
+
+### Creating and adding new provider plugins
+
+- Create a plugin file inside `src/tls/acme/dns/`, `like src/tls/acme/dns/example.rs`
+- Add file name to `src/tls/acme/dns/mod.rs` like `pub mod example`;
+- Enable in `main.yaml`
+
+### Inside example.rs file
+
+Imports.
+
+```rust
+use crate::tls::acme::lookup::lookup_wait;
+use crate::tls::acme::types::{DnsBackendPlugin, DnsProvider};
+```
+
+Create and initialize your plugin struct with method new():
+```rust
+pub struct ExampleProvider {
+    pub hosted_zone_id: String,
+}
+
+impl ExampleProvider {
+    pub fn new() -> Self {
+        Self {
+            hosted_zone_id: std::env::var("HOSTED_ZONE_ID").unwrap_or_default(),
+        }
+    }
+}
+```
+
+Implement trait `DnsProvider` for your provider.  
+```rust
+#[async_trait::async_trait]
+impl DnsProvider for ExampleProvider {
+    async fn create_txt_record(&self, _domain: &str, _name: &str, _value: &str) -> Result<String, Box<dyn std::error::Error + Send + Sync>> {
+        todo!()
+    }
+    async fn delete_txt_record(&self, _record_id: &str, _record_name: &str) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+        todo!()
+    }
+}
+```
+
+Submit to inventory
+```rust
+inventory::submit! {
+    DnsBackendPlugin {
+        name: "route53",
+        factory: || Box::new(ExampleProvider::new()),
+    }
+}
+```
+Now you can use new plugin just by editing `main.yaml` and setting it as prevered `acme_dns_provider`
+```yaml
+acme_dns_provider: example
 ```
 
 ------------------------------------------------------------------------
-
-### Step 3: Request Certificates
-
-``` bash
-lego   --key-type rsa2048   --domains="site1.example.com"   --email="your@email.com"   --accept-tos   --http.port=127.0.0.1:8899   --http run
-```
-
-Certificates will be stored in:
-
-    ./.lego/certificates/
-
-------------------------------------------------------------------------
-
-### Step 4: Prepare Certificates for Aralez
-
-``` bash
-cat ./.lego/certificates/site1.example.com*.crt > /path/to/certs/example.com.crt
-cat ./.lego/certificates/site1.example.com.key > /path/to/certs/example.com.key
-```
-
-------------------------------------------------------------------------
-
-### Step 5: Auto Reload
-
-Aralez automatically reloads certificates without restart.
-
-Expected naming:
-
-    example.com.crt
-    example.com.key
-
-------------------------------------------------------------------------
-
-### Step 6: Renewal Script
-
-``` bash
-#!/bin/bash
-
-lego --http renew
-
-cat ./.lego/certificates/site1.example.com*.crt > /path/to/certs/example.com.crt
-cat ./.lego/certificates/site1.example.com.key > /path/to/certs/example.com.key
-```
-
-Add to cron:
-
-``` bash
-0 9 * * * /path/to/script.sh
-```
-
-------------------------------------------------------------------------
-
-## Using ZeroSSL
-
-Replace ACME server:
-
-``` bash
-lego   --server "https://acme.zerossl.com/v2/DV90"   --eab   --kid "$KID"   --hmac "$HMAC"   --http run
-```
-
-------------------------------------------------------------------------
-
-## 
-Summary
-
--   Use built-in ACME for simplicity
--   Use Lego for flexibility (DNS, multi-provider)
--   Aralez supports hot reload of certificates
--   HTTP-01 is the default and recommended approach
