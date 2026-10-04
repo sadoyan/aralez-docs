@@ -150,8 +150,9 @@ Aralez automatically reloads certificates when they are updated. The renewal is 
 
 ## DNS-01 challenge
 
-Starting from version 0.94.2 Aralez supports ACME DNS-01 challenge. Support for different provider will be added granularly. 
-At the moment of this document Cloudflare DNS is supported Example is on process.
+Starting from version 0.94.2 Aralez supports ACME DNS-01 challenge. 
+Support for different provider will be added granularly. 
+At the moment of this document (version 0.94.2) only Cloudflare DNS is supported.
 
 To enable DNS-01 challenge in `main.yaml` add key `acme_dns_provider` with value of a provider plugin name. 
 ```yaml
@@ -162,9 +163,9 @@ Ordering and renewing of certificates is processed the same was as with HTTP-01 
 
 ### Creating and adding new provider plugins
 
-- Create a plugin file inside `src/tls/acme/dns/`, `like src/tls/acme/dns/example.rs`
-- Add file name to `src/tls/acme/dns/mod.rs` like `pub mod example`;
-- Enable in `main.yaml`
+- Create a plugin file inside `src/tls/acme/dns/`, -> `src/tls/acme/dns/example.rs`
+- Add file name to `src/tls/acme/dns/mod.rs` -> `pub mod example`;
+- Enable in `main.yaml` -> `acme_dns_provider: example`
 
 ### Inside example.rs file
 
