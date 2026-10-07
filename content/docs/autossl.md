@@ -159,9 +159,17 @@ To enable DNS-01 challenge in `main.yaml` add key `acme_dns_provider` with value
 acme_dns_provider: cloudflare
 ```
 
+Cloudflare plugin requires `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ZONE_ID` environment variables. 
+
+```shell
+export CLOUDFLARE_API_TOKEN="YOUR_TOKEN_HERE"
+export CLOUDFLARE_ZONE_ID="YOUR_ZONE_ID_HERE"
+```
+Restart Aralez to read these enviroment variables . 
+
 Ordering and renewing of certificates is processed the same was as with HTTP-01 challenge. 
 
-### Creating and adding new provider plugins
+## Developing custom DNS-01 challenge plugins.
 
 - Create a plugin file inside `src/tls/acme/dns/`, -> `src/tls/acme/dns/example.rs`
 - Add file name to `src/tls/acme/dns/mod.rs` -> `pub mod example`;
@@ -208,11 +216,28 @@ Submit to inventory
 ```rust
 inventory::submit! {
     DnsBackendPlugin {
-        name: "route53",
+        name: "example",
         factory: || Box::new(ExampleProvider::new()),
     }
 }
 ```
+
+Waiting for propagated TXT
+
+include function below after creating TXT records in `create_txt_records` to enable lookup loop and wait till TXT records are queryable. 
+It accepts the following parameters :
+
+1. name: the txt record to lookup 
+2. Optionally DNS server to query. 
+3. Timeout in seconds. 
+4. Expected value for query 
+
+`lookup_wait` will start lookups in loops fot TXT record `name`.  If `value` matches real value or timeout exceeds the loop will exit.  
+
+```rust
+lookup_wait(name, Some("1.1.1.1"), 60, value).await;
+```
+
 Now you can use new plugin just by editing `main.yaml` and setting it as prevered `acme_dns_provider`
 ```yaml
 acme_dns_provider: example

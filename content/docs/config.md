@@ -142,6 +142,25 @@ DEFAULT:
 - `DEFAULT` catch up everything else and proxy to `127.0.0.1:3000`
     - This is a special upstream and in order to do the catch-up jub it must be **DEFAULT** all capitals
 
+**Special note if healthcheks are disabled.** 
+
+Aralez internally detects upstreams TLS, H2, gRPS status during healtchecks. With disabled healtchecks `is_http2` and `is_ssl` defaults to false. 
+Fix these settings manually in accordance tou your upstreams server's protocols inside `upstreams.yaml` 
+
+**Example**
+
+```yaml
+  www.yourdomain.com:
+    paths:
+      "/":
+        healthcheck: false
+        is_http2: true
+        is_ssl: true
+        servers:
+          - "127.0.0.1:443"
+```
+- To enable gRPC proxy set `is_http2: true` . 
+
 ---
 Since Version v.0.86.1 upstream config can be split to multiple files. Aralez will scan `conf.d` subdirectory in configuration directory and include all `yaml` files.
 Naming of files is not matter, it just needs to have extension `.yaml` . The content of file is similar to `upstreams.yaml` file with some minor differences .
