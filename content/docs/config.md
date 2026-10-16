@@ -35,7 +35,18 @@ weight: 2
 | **tcp_keepalive_count**          | 5 (Default if tcp_keepalive_idle is set)                                                                                                      | Optional. Number of unanswered probes before the kernel declares the connection dead and closes it                                                                    |
 | **cache_size_mb**                | 50                                                                                                                                            | Optional. Enable internal cache with size in megabytes of value. Cache is entirely disabled when this line is commented out.                                          |
 | **cache_ttl**                    | 10                                                                                                                                            | Optional. Set Default TTL in seconds for cached items, works if cache control headers are not set via upstream. Defaults to 60 if cache_size_mb is set.               |
+| **cluster_member**               | `master` or `worker`                                                                                                                          | Optional. Run node on master or worker node.                                                                                                                          |
+| **worker_nodes**                 | http://IP1:PORT, http://IP1:PORT                                                                                                        | Comma seprated list of worker nodes. Required if running on master mode.                                                                                              |
 
+### Cluster Modes
+- `master` Master node don't serves the live traffic. It runs the health checks and updates worker nodes.  
+- `worker` Worker nodes hadles the traffic, but iy have completely turned off health checks. These nodes receives upstreams full status from master node. 
+- Environment variable `MASTER_KEY` with the same value is required for both `master` and `worker` nodes. 
+
+Cluster mode is designed for high loaded career proxy farms where hundreds, 
+or thousands of upstreams are configures and there is needto offload heavy health checks and type detections to dedicated servers. 
+
+### Cache
 When **cache_size_mb** is set **cache_ttl** will have default value of 60 seconds.
 **cache_ttl** honors `Cache-Control` headers from upstream. If upstream sets these headers, it will be taken by Aralez as caching TTL. `Cache-Control no-store` or
 `Cache-Control private` will effectively disable caching for these URLs.
@@ -142,10 +153,10 @@ DEFAULT:
 - `DEFAULT` catch up everything else and proxy to `127.0.0.1:3000`
     - This is a special upstream and in order to do the catch-up jub it must be **DEFAULT** all capitals
 
-**Special note if healthcheks are disabled.** 
+**Special note if healthcheks are disabled.**
 
-Aralez internally detects upstreams TLS, H2, gRPS status during healtchecks. With disabled healtchecks `is_http2` and `is_ssl` defaults to false. 
-Fix these settings manually in accordance tou your upstreams server's protocols inside `upstreams.yaml` 
+Aralez internally detects upstreams TLS, H2, gRPS status during healtchecks. With disabled healtchecks `is_http2` and `is_ssl` defaults to false.
+Fix these settings manually in accordance tou your upstreams server's protocols inside `upstreams.yaml`
 
 **Example**
 
@@ -159,7 +170,8 @@ Fix these settings manually in accordance tou your upstreams server's protocols 
         servers:
           - "127.0.0.1:443"
 ```
-- To enable gRPC proxy set `is_http2: true` . 
+
+- To enable gRPC proxy set `is_http2: true` .
 
 ---
 Since Version v.0.86.1 upstream config can be split to multiple files. Aralez will scan `conf.d` subdirectory in configuration directory and include all `yaml` files.
@@ -315,17 +327,17 @@ Defaults to environment variables `KUBERNETES_SERVICE_HOST` and `KUBERNETES_SERV
 
 **ElasticSearch**
 
-To enable logging to ElasticSearch set `log_structured: elasticsearch` in `main.yaml`. Changes in `main.yaml` requires restart to apply 
-Configurations parameters for ElasticSearch servers are taken from  OS environment. 
+To enable logging to ElasticSearch set `log_structured: elasticsearch` in `main.yaml`. Changes in `main.yaml` requires restart to apply
+Configurations parameters for ElasticSearch servers are taken from OS environment.
 
-**These variables must be set.** 
+**These variables must be set.**
 
-- **LOG_ELASTIC_HOSTS** : URLs of Elasticsearch seed hosts, Aralez will take these hosts to construct ES client for all member hosts internally. 
-- **LOG_ELASTIC_USER** : Username for ElasticSearch authentication. 
+- **LOG_ELASTIC_HOSTS** : URLs of Elasticsearch seed hosts, Aralez will take these hosts to construct ES client for all member hosts internally.
+- **LOG_ELASTIC_USER** : Username for ElasticSearch authentication.
 - **LOG_ELASTIC_PASSWORD** : Password for ElasticSearch authentication.
-- **LOG_ELASTIC_INDEX** :  Index to send longs to. 
-- **LOG_ELASTIC_FLUSH_DURATION** : How long Aralez should keep logs in memory before flushing to ElasticSearch in bulk index api 
-- **LOG_ELASTIC_BATCH_LEN** : How many messages Aralez should keep logs in memory before flushing to ElasticSearch in bulk index api, in seconds. 
+- **LOG_ELASTIC_INDEX** :  Index to send longs to.
+- **LOG_ELASTIC_FLUSH_DURATION** : How long Aralez should keep logs in memory before flushing to ElasticSearch in bulk index api
+- **LOG_ELASTIC_BATCH_LEN** : How many messages Aralez should keep logs in memory before flushing to ElasticSearch in bulk index api, in seconds.
 
 The followings defaults fo all parameters:
 

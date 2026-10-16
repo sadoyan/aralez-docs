@@ -8,7 +8,8 @@ weight: 4
 
 Authentication works on two levels: **Global** and **per path**.
 
-If **Global** authentication is enabled, per-path authentication is ignored. Both `web.example.com` and `www.example.com` in the example below require `root:toor` credentials from the global section — the per-path `admin:admin` on `www.example.com` is overridden.
+If **Global** authentication is enabled, per-path authentication is ignored. Both `web.example.com` and `www.example.com` in the example below require `root:toor` credentials from the
+global section — the per-path `admin:admin` on `www.example.com` is overridden.
 
 The same applies to all methods (**basic, jwt, api**). Global always overrides per-path.
 
@@ -46,7 +47,7 @@ upstreams:
 Only one method can be active at a time:
 
 - **`basic`** — Standard HTTP Basic Authentication. `data` must be `user:pass`
-- **`apikey`** — Authentication via `x-api-key` header, which must match the value in config. `data` must be the actual `api_key` 
+- **`apikey`** — Authentication via `x-api-key` header, which must match the value in config. `data` must be the actual `api_key`
 - **`jwt`** — JWT authentication via `araleztoken=` URL parameter or `Authorization: Bearer <token>` header. `data` must be the `masterkey`
 - **`forward`** — Zero trust forward authentication. `data` must be the full URL to authentication server including `http://`, `https://` preffix
 
@@ -55,12 +56,17 @@ Only one method can be active at a time:
 ## JWT Authentication
 
 To obtain a JWT token, send a **generate** request to the built-in API server's `/jwt` endpoint.
+JWT Authentication requires enviroment variable `MASTER_KEY`. Make sure it's before starting Aralez. 
 
-| Field | Description |
-|---|---|
+```shell
+export MASTER_KEY="910517d9-f9a1-48de-8826-dbadacbd84af-cb6f830e-ab16-47ec-9d8f-0090de732774"
+```
+
+| Field        | Description                                                |
+|--------------|------------------------------------------------------------|
 | `master_key` | Must match `masterkey` in `main.yaml` and `upstreams.yaml` |
-| `owner` | Placeholder — can be anything |
-| `exp` | Token expity in minutes |
+| `owner`      | Placeholder — can be anything                              |
+| `exp`        | Token expity in minutes                                    |
 
 ### Generate a JWT Token
 
