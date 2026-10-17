@@ -206,7 +206,8 @@
     </div>
     <h2 id="authentication-optional">Authentication (Optional)</h2>
 <p>Authentication works on two levels: <strong>Global</strong> and <strong>per path</strong>.</p>
-<p>If <strong>Global</strong> authentication is enabled, per-path authentication is ignored. Both <code>web.example.com</code> and <code>www.example.com</code> in the example below require <code>root:toor</code> credentials from the global section — the per-path <code>admin:admin</code> on <code>www.example.com</code> is overridden.</p>
+<p>If <strong>Global</strong> authentication is enabled, per-path authentication is ignored. Both <code>web.example.com</code> and <code>www.example.com</code> in the example below require <code>root:toor</code> credentials from the
+global section — the per-path <code>admin:admin</code> on <code>www.example.com</code> is overridden.</p>
 <p>The same applies to all methods (<strong>basic, jwt, api</strong>). Global always overrides per-path.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;file&#34;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="nt">sticky_sessions</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
@@ -243,8 +244,10 @@
 </ul>
 <hr>
 <h2 id="jwt-authentication">JWT Authentication</h2>
-<p>To obtain a JWT token, send a <strong>generate</strong> request to the built-in API server&rsquo;s <code>/jwt</code> endpoint.</p>
-<table>
+<p>To obtain a JWT token, send a <strong>generate</strong> request to the built-in API server&rsquo;s <code>/jwt</code> endpoint.
+JWT Authentication requires enviroment variable <code>MASTER_KEY</code>. Make sure it&rsquo;s before starting Aralez.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">MASTER_KEY</span><span class="o">=</span><span class="s2">&#34;910517d9-f9a1-48de-8826-dbadacbd84af-cb6f830e-ab16-47ec-9d8f-0090de732774&#34;</span>
+</span></span></code></pre></div><table>
   <thead>
       <tr>
           <th>Field</th>

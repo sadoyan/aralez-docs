@@ -20,11 +20,11 @@
   </url><url>
     <loc>//localhost:1313/docs/autossl/</loc>
   </url><url>
-    <loc>//localhost:1313/docs/consul/</loc>
-  </url><url>
     <loc>//localhost:1313/</loc>
   </url><url>
     <loc>//localhost:1313/categories/</loc>
+  </url><url>
+    <loc>//localhost:1313/docs/consul/</loc>
   </url><url>
     <loc>//localhost:1313/docs/</loc>
   </url><url>

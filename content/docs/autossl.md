@@ -151,25 +151,54 @@ Aralez automatically reloads certificates when they are updated. The renewal is 
 ## DNS-01 challenge
 
 Starting from version 0.94.2 Aralez supports ACME DNS-01 challenge. 
-Support for different provider will be added granularly. 
-At the moment of this document (version 0.94.2) only Cloudflare DNS is supported.
+Support for different provider will be added granularly.
 
-To enable DNS-01 challenge in `main.yaml` add key `acme_dns_provider` with value of a provider plugin name. 
+To enable DNS-01 challenge in `main.yaml` add key `acme_dns_provider` with value of a provider's plugin name. 
 ```yaml
 acme_dns_provider: cloudflare
 ```
 
-Cloudflare plugin requires `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ZONE_ID` environment variables. 
+**Cloudflare**
+
+Requires: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ZONE_ID` environment variables. 
 
 ```shell
 export CLOUDFLARE_API_TOKEN="YOUR_TOKEN_HERE"
 export CLOUDFLARE_ZONE_ID="YOUR_ZONE_ID_HERE"
 ```
-Restart Aralez to read these enviroment variables . 
+
+**Route53**
+
+```yaml
+acme_dns_provider: route53
+```
+
+Requires: Environment variable `AWS_HOSTED_ZONE_ID` and standard `aws` cli configuration via environment variables or configuration files in `~/.aws` folder.  
+
+```shell
+export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+export AWS_DEFAULT_REGION=us-west-2
+```
+
+**Digital Ocean**
+
+```yaml
+acme_dns_provider: digitalocean
+```
+
+Requires `DIGITALOCEAN_TOKEN` environment variable. 
+
+```shell
+export DIGITALOCEAN_TOKEN="YOUR_TOKEN_HERE"
+```
+
+**Restart Aralez to read these enviroment variables .** 
 
 Ordering and renewing of certificates is processed the same was as with HTTP-01 challenge. 
-
 ## Developing custom DNS-01 challenge plugins.
+
+Development of custom DNS-01 challenge plugins is as easy as: 
 
 - Create a plugin file inside `src/tls/acme/dns/`, -> `src/tls/acme/dns/example.rs`
 - Add file name to `src/tls/acme/dns/mod.rs` -> `pub mod example`;
@@ -242,5 +271,3 @@ Now you can use new plugin just by editing `main.yaml` and setting it as prevere
 ```yaml
 acme_dns_provider: example
 ```
-
-------------------------------------------------------------------------

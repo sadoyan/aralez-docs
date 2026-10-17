@@ -245,6 +245,11 @@
           <td>Path to PID file</td>
       </tr>
       <tr>
+          <td><strong>upgrade_sock</strong></td>
+          <td>/tmp/aralez.sock</td>
+          <td>Path to unix domain socket used to coordinate zero-downtime graceful upgrades</td>
+      </tr>
+      <tr>
           <td><strong>config_address</strong></td>
           <td>0.0.0.0:3000</td>
           <td>HTTP API address for pushing upstreams.yaml from remote location</td>
@@ -288,6 +293,21 @@
           <td><strong>log_file</strong></td>
           <td>/tmp/aralez.log, 20, 5, compress</td>
           <td>Optional, the location of log file, file size in megabytes, number of log files to keep, compress files .valueas are separated by comma. Defaults to None, 100, 5, No</td>
+      </tr>
+      <tr>
+          <td><strong>log_structured</strong></td>
+          <td>elasticsearch</td>
+          <td>Optional, enable/disable structured logging with desired backend log server. Backend name must exactly match module name.</td>
+      </tr>
+      <tr>
+          <td><strong>log_pattern</strong></td>
+          <td>See log4rs official <a href="https://docs.rs/log4rs/latest/log4rs/encode/pattern/struct.PatternEncoderDeserializer.html#configuration">documentation</a></td>
+          <td>Optional log pattern, defaults to &ldquo;{d(%Y-%m-%d %H:%M:%S)} {l} - {m}{n}&rdquo;.</td>
+      </tr>
+      <tr>
+          <td><strong>acme_dns_provider</strong></td>
+          <td>DNS-01 challenge provider&rsquo;s plugin name.</td>
+          <td>Iptional, enable ACME DNS-01 challenge and sets the desired provider&rsquo;s name. Provider&rsquo;s name must exactly match module name,</td>
       </tr>
       <tr>
           <td><strong>hc_method</strong></td>
@@ -339,13 +359,33 @@
           <td>10</td>
           <td>Optional. Set Default TTL in seconds for cached items, works if cache control headers are not set via upstream. Defaults to 60 if cache_size_mb is set.</td>
       </tr>
+      <tr>
+          <td><strong>cluster_member</strong></td>
+          <td><code>master</code> or <code>worker</code></td>
+          <td>Optional. Run in cluster mode as <code>master</code> or <code>worker</code>.</td>
+      </tr>
+      <tr>
+          <td><strong>worker_nodes</strong></td>
+          <td>http://IP1:PORT, http://IP1:PORT</td>
+          <td>Comma seprated list of worker nodes. Required if running on master mode.</td>
+      </tr>
   </tbody>
 </table>
+<h3 id="cluster-mode">Cluster Mode</h3>
+<ul>
+<li><code>master</code> Master node don&rsquo;t serves the live traffic. It runs the health checks and updates worker nodes.</li>
+<li><code>worker</code> Worker nodes hadles the traffic, but iy have completely turned off health checks. These nodes receives upstreams full status from master node.</li>
+<li>Environment variable <code>MASTER_KEY</code> with the same value is required for both <code>master</code> and <code>worker</code> nodes.</li>
+</ul>
+<p>Cluster mode is designed for high loaded career proxy farms where hundreds,
+or thousands of upstreams are configures and there is needto offload heavy health checks and type detections to dedicated servers.</p>
+<h3 id="cache">Cache</h3>
 <p>When <strong>cache_size_mb</strong> is set <strong>cache_ttl</strong> will have default value of 60 seconds.
-<strong>cache_ttl</strong> honors <code>Cache-Control</code> headers from upstream. If upstream sets  these headers, it will be taken by Aralez as caching TTL. <code>Cache-Control no-store</code> or <code>Cache-Control private</code> will effectively disable caching for these URLs.
+<strong>cache_ttl</strong> honors <code>Cache-Control</code> headers from upstream. If upstream sets these headers, it will be taken by Aralez as caching TTL. <code>Cache-Control no-store</code> or
+<code>Cache-Control private</code> will effectively disable caching for these URLs.
 These headers are mutually exclusive, any will work, but only one should be set at upstream side.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">Cache-Control max-age</span><span class="o">=</span><span class="s">300;</span>
-</span></span><span class="line"><span class="cl"><span class="na">Cache-Control s-maxage</span><span class="o">=</span><span class="s">600;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">Cache-Control max-age</span> <span class="o">=</span> <span class="s">300;</span>
+</span></span><span class="line"><span class="cl"><span class="na">Cache-Control s-maxage</span> <span class="o">=</span> <span class="s">600;</span>
 </span></span><span class="line"><span class="cl"><span class="na">Cache-Control no-store;</span>
 </span></span><span class="line"><span class="cl"><span class="na">Cache-Control private;</span>
 </span></span></code></pre></div><hr>
@@ -446,6 +486,21 @@ These headers are mutually exclusive, any will work, but only one should be set 
 <li>This is a special upstream and in order to do the catch-up jub it must be <strong>DEFAULT</strong> all capitals</li>
 </ul>
 </li>
+</ul>
+<p><strong>Special note if healthcheks are disabled.</strong></p>
+<p>Aralez internally detects upstreams TLS, H2, gRPS status during healtchecks. With disabled healtchecks <code>is_http2</code> and <code>is_ssl</code> defaults to false.
+Fix these settings manually in accordance tou your upstreams server&rsquo;s protocols inside <code>upstreams.yaml</code></p>
+<p><strong>Example</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="w">  </span><span class="nt">www.yourdomain.com</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">paths</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span><span class="s2">&#34;/&#34;</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">healthcheck</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">is_http2</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">is_ssl</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">servers</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span>- <span class="s2">&#34;127.0.0.1:443&#34;</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>To enable gRPC proxy set <code>is_http2: true</code> .</li>
 </ul>
 <hr>
 <p>Since Version v.0.86.1 upstream config can be split to multiple files. Aralez will scan <code>conf.d</code> subdirectory in configuration directory and include all <code>yaml</code> files.
@@ -585,7 +640,27 @@ Naming of files is not matter, it just needs to have extension <code>.yaml</code
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">servers</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="s2">&#34;172.16.0.11:5443&#34;</span><span class="w">
 </span></span></span></code></pre></div><p>Defaults to environment variables <code>KUBERNETES_SERVICE_HOST</code> and <code>KUBERNETES_SERVICE_PORT_HTTPS</code>. For development only — delete for production use.</p>
-
+<h3 id="structured-logging">Structured logging</h3>
+<p><strong>ElasticSearch</strong></p>
+<p>To enable logging to ElasticSearch set <code>log_structured: elasticsearch</code> in <code>main.yaml</code>. Changes in <code>main.yaml</code> requires restart to apply
+Configurations parameters for ElasticSearch servers are taken from OS environment.</p>
+<p><strong>These variables must be set.</strong></p>
+<ul>
+<li><strong>LOG_ELASTIC_HOSTS</strong> : URLs of Elasticsearch seed hosts, Aralez will take these hosts to construct ES client for all member hosts internally.</li>
+<li><strong>LOG_ELASTIC_USER</strong> : Username for ElasticSearch authentication.</li>
+<li><strong>LOG_ELASTIC_PASSWORD</strong> : Password for ElasticSearch authentication.</li>
+<li><strong>LOG_ELASTIC_INDEX</strong> :  Index to send longs to.</li>
+<li><strong>LOG_ELASTIC_FLUSH_DURATION</strong> : How long Aralez should keep logs in memory before flushing to ElasticSearch in bulk index api</li>
+<li><strong>LOG_ELASTIC_BATCH_LEN</strong> : How many messages Aralez should keep logs in memory before flushing to ElasticSearch in bulk index api, in seconds.</li>
+</ul>
+<p>The followings defaults fo all parameters:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">LOG_ELASTIC_HOSTS</span> <span class="o">=</span> http://127.0.0.1:9200 
+</span></span><span class="line"><span class="cl"><span class="nv">LOG_ELASTIC_USER</span> <span class="o">=</span> elastic
+</span></span><span class="line"><span class="cl"><span class="nv">LOG_ELASTIC_PASSWORD</span> <span class="o">=</span> elastic
+</span></span><span class="line"><span class="cl"><span class="nv">LOG_ELASTIC_INDEX</span> <span class="o">=</span> aralez-logs
+</span></span><span class="line"><span class="cl"><span class="nv">LOG_ELASTIC_FLUSH_DURATION</span> <span class="o">=</span> <span class="m">2</span> 
+</span></span><span class="line"><span class="cl"><span class="nv">LOG_ELASTIC_BATCH_LEN</span> <span class="o">=</span> <span class="m">200</span> 
+</span></span></code></pre></div>
   </main>
 </div>
 

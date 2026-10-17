@@ -30,7 +30,7 @@ Built on **Rust**, on top of **Cloudflare's Pingora engine**, Aralez delivers pe
   <div class="feature-card">
     <div class="icon">🔒</div>
     <h3>TLS Termination</h3>
-    <p>Automatic certificate loading from folder, without a restart.</p>
+    <p>Automatic certificate loading without a restart. Native integration with Let's Encrypt HTTP01 and DNS challenges. </p>
   </div>
   <div class="feature-card">
     <div class="icon">🔮</div>
