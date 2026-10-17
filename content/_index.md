@@ -75,7 +75,7 @@ Built on **Rust**, on top of **Cloudflare's Pingora engine**, Aralez delivers pe
 
 - Changes to `upstreams.yaml` are applied immediately.
 - No need to restart the proxy — just save the file.
-- If `consul` provider is chosen, upstreams will be periodically updated from Consul's API.
+- If `consul` or `kubernetes` providers are chosen, upstreams will automatically updated from selected API servers.
 
 ---
 

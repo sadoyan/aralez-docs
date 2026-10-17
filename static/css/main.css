@@ -198,7 +198,7 @@ a:hover { color: var(--color-primary-dark); text-decoration: underline; }
 .main-content > ul,
 .main-content > ol,
 .main-content > blockquote {
-  max-width: 78ch;
+  max-width: 150ch;
 }
 
 /* ---- Typography ---- */
