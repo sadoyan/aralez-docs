@@ -18,57 +18,52 @@ title = "Aralez — Reverse Proxy built on Cloudflare's Pingora"
   github = "https://github.com/sadoyan/aralez"
   logo = "/images/logo.png"
 
-[[menu.main]]
-  name = "Home"
-  url = "/"
-  weight = 1
-
-[[menu.main]]
+[[menu.sub]]
   name = "Quick Start"
   url = "/docs/quickstart/"
   weight = 2
 
-[[menu.main]]
+[[menu.sub]]
   name = "Config"
   url = "/docs/config/"
   weight = 3
 
-[[menu.main]]
+[[menu.sub]]
   name = "API"
   url = "/docs/api/"
   weight = 4
 
-[[menu.main]]
+[[menu.sub]]
   name = "Comparison"
   url = "/docs/compare/"
   weight = 5
 
-[[menu.main]]
+[[menu.sub]]
   name = "Authentication"
   url = "/docs/auth/"
   weight = 6
 
-[[menu.main]]
+[[menu.sub]]
   name = "Benchmarks"
   url = "/docs/perf/"
   weight = 7
 
-[[menu.main]]
+[[menu.sub]]
   name = "Prometheus Metrics"
   url = "/docs/metrics/"
   weight = 8
 
-[[menu.main]]
+[[menu.sub]]
   name = "Kubernetes"
   url = "/docs/kubernetes/"
   weight = 9
 
-[[menu.main]]
+[[menu.sub]]
   name = "Consul"
   url = "/docs/consul/"
   weight = 10
 
-[[menu.main]]
+[[menu.sub]]
   name = "Manage Certificates"
   url = "/docs/autossl/"
   weight = 11

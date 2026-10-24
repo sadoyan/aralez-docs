@@ -17,47 +17,63 @@
   <header class="site-header">
   <a href="//localhost:1313/" class="header-brand">
     <img src="//localhost:1313/images/logo.png" alt="Aralez logo">
-    <span class="brand-name">Aralez</span>
+    <span class="brand-name">Home</span>
     
   </a>
+  <div>
 
-  <nav class="header-nav">
-    
-    <a href="//localhost:1313/" class="active">Home</a>
-    
-    <a href="//localhost:1313/docs/quickstart/">Quick Start</a>
-    
-    <a href="//localhost:1313/docs/config/">Config</a>
-    
-    <a href="//localhost:1313/docs/api/">API</a>
-    
-    <a href="//localhost:1313/docs/compare/">Comparison</a>
-    
-    <a href="//localhost:1313/docs/auth/">Authentication</a>
-    
-    <a href="//localhost:1313/docs/perf/">Benchmarks</a>
-    
-    <a href="//localhost:1313/docs/metrics/">Prometheus Metrics</a>
-    
-    <a href="//localhost:1313/docs/kubernetes/">Kubernetes</a>
-    
-    <a href="//localhost:1313/docs/consul/">Consul</a>
-    
-    <a href="//localhost:1313/docs/autossl/">Manage Certificates</a>
-    
-  </nav>
 
-  <div class="header-right">
-    <a href="https://github.com/sadoyan/aralez" class="header-github" target="_blank" rel="noopener">
-      <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+
+<div class="header-right">
+  <a href="https://github.com/sadoyan/aralez" class="header-github" target="_blank" rel="noopener">
+    <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+    </svg>
+    GitHub
+  </a>
+  <a href="https://crates.io/crates/aralez"
+     class="header-github"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Aralez on crates.io">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 2 2 7.5v9L12 22l10-5.5v-9L12 2zm0 2.3 6.9 3.8L12 12 5.1 8.1 12 4.3zM4 9.8l7 3.9v5.7l-7-3.9V9.8zm9 9.6v-5.7l7-3.9v5.7l-7 3.9z"/>
+    </svg>
+    Crates
+  </a>
+  <a href="https://hub.docker.com/r/sadoyan/aralez"
+     class="header-github"
+     target="_blank" rel="noopener">
+     <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <path d="M13.983 11.078h2.119v2.046h-2.119zm-2.628 0h2.119v2.046h-2.119zm-2.629 0h2.119v2.046H8.726zm-2.628 0h2.119v2.046H6.098zm-2.628 0h2.119v2.046H3.47zm5.257-2.568h2.119v2.046H8.727zm2.628 0h2.119v2.046h-2.119zm2.628 0h2.119v2.046h-2.119zm-2.628-2.568h2.119v2.046h-2.119zM23.4 10.63c-.65-.44-2.14-.6-3.28-.3-.15-1.1-.95-2.05-2.1-2.9l-.4-.3-.3.4c-.6.9-.85 2.1-.75 3.15.1.65.4 1.2.9 1.65-.4.25-1.15.6-2.15.6H.5l-.1.5c-.2 1.4 0 3.25 1.1 4.65 1.05 1.35 2.6 2.05 4.65 2.05 4.5 0 7.85-2.05 9.45-5.75 2.35.05 3.7-.9 4.35-1.75.45-.55.65-1.1.65-1.4l-.05-.3z"/>
       </svg>
-      GitHub
+      Docker
+    </a>
+    <a href="https://github.com/sadoyan/aralez/pkgs/container/aralez"
+       class="header-github header-ghcr"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Aralez on GitHub Container Registry"
+       title="GitHub Container Registry">
+      <svg viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="1.7"
+           stroke-linecap="round"
+           stroke-linejoin="round"
+           aria-hidden="true">
+        <path d="M12 3 21 8v8l-9 5-9-5V8l9-5Z"/>
+        <path d="m3.5 8.2 8.5 5 8.5-5"/>
+        <path d="M12 13.2V21"/>
+        <path d="m7.5 5.5 9 5"/>
+      </svg>
+      GHCR
     </a>
 
     <button class="hamburger" id="aralez-hamburger" aria-label="Open navigation menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
+  </div>
   </div>
 </header>
 
@@ -74,61 +90,6 @@
   </div>
 
   <div class="drawer-section-title">Documentation</div>
-
-  
-  <a href="//localhost:1313/" class="drawer-link active">
-    Home
-  </a>
-  
-  <a href="//localhost:1313/docs/quickstart/" class="drawer-link">
-    Quick Start
-  </a>
-  
-  <a href="//localhost:1313/docs/config/" class="drawer-link">
-    Config
-  </a>
-  
-  <a href="//localhost:1313/docs/api/" class="drawer-link">
-    API
-  </a>
-  
-  <a href="//localhost:1313/docs/compare/" class="drawer-link">
-    Comparison
-  </a>
-  
-  <a href="//localhost:1313/docs/auth/" class="drawer-link">
-    Authentication
-  </a>
-  
-  <a href="//localhost:1313/docs/perf/" class="drawer-link">
-    Benchmarks
-  </a>
-  
-  <a href="//localhost:1313/docs/metrics/" class="drawer-link">
-    Prometheus Metrics
-  </a>
-  
-  <a href="//localhost:1313/docs/kubernetes/" class="drawer-link">
-    Kubernetes
-  </a>
-  
-  <a href="//localhost:1313/docs/consul/" class="drawer-link">
-    Consul
-  </a>
-  
-  <a href="//localhost:1313/docs/autossl/" class="drawer-link">
-    Manage Certificates
-  </a>
-  
-
-  <div class="drawer-footer">
-    <a href="https://github.com/sadoyan/aralez" target="_blank" rel="noopener" class="drawer-github">
-      <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor">
-        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-      </svg>
-      View on GitHub
-    </a>
-  </div>
 </nav>
 
 <script>
@@ -270,8 +231,6 @@
     <div class="sidebar-section-title">Documentation</div>
     <nav class="sidebar-nav">
       
-      <a href="//localhost:1313/">Home</a>
-      
       <a href="//localhost:1313/docs/quickstart/">Quick Start</a>
       
       <a href="//localhost:1313/docs/config/">Config</a>
@@ -351,7 +310,7 @@
   <div class="feature-card">
     <div class="icon">💾</div>
     <h3>HTTP Caching</h3>
-    <p>Local in-memory LRU, TTL behavior, <code>Cache-Control</code> handling website accelerator.</p>
+    <p>Pluggable, multi storage, LRU, TTL behavior, <code>Cache-Control</code> handling website accelerator.</p>
   </div>
 </div>
 <hr>

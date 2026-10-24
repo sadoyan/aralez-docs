@@ -21,6 +21,7 @@ Prometheus metrics are exposed at `http://config_address/metrics` — by default
 | `aralez_cache_evicted_items_total` | Gauge           | Count   | Total number of individual items evicted from the cache.             |
 | `aralez_cache_items`               | Gauge           | Count   | Current total number of items stored in the cache.                   |
 | `aralez_cache_size_bytes`          | Gauge           | Bytes   | Current memory consumption of the cache in bytes.                    |
+| `aralez_cache_status`              | Counter         | Counter | Phases of cached responses                                           |
 | `aralez_logging_errors`            | Gauge / Counter | Count   | Total count of logging error events recorded.                        |
 | `aralez_memory_bytes`              | Gauge           | Bytes   | Total memory currently allocated by the process in bytes.            |
 | `aralez_open_files`                | Gauge           | Count   | Number of open file descriptors currently held by the application.   |

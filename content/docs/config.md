@@ -34,13 +34,14 @@ weight: 2
 | **cache_enabled**                | `bool`                                    | Optional. Disabled by default                                                                                                                                                                                          |
 | **cache_storage**                | `memory, redis://host:port`               | Optional Defaults to memory works with Redis, Valkey, Dragonfly (requires redis:// prefix)                                                                                                                             |
 | **cache_ttl**                    | `60`                                      | Optional. Set internal cache with size in megabytes of value. Defaults to 50Mb if cache_enabled: true                                                                                                                  |
+| **cache_item_max_size**          | `5`                                       | Optional. Set maximum size for cached items in megabytes. Defaults to 0 , no max size.                                                                                                                                 |
 | **tcp_keepalive_idle**           | `60`                                      | Seconds of inactivity before the kernel starts sending keepalive probes to a downstream client. Defaults to 60                                                                                                         |
 | **tcp_keepalive_interval**       | `10`                                      | Seconds between individual keepalive probes if the client does not respond. Defaults to 10                                                                                                                             |
 | **tcp_keepalive_count**          | `5`                                       | Number of unanswered probes before the kernel declares the connection dead and closes it. Defaults to 5                                                                                                                |
 | **cluster_member**               | `master, worker`                          | Optional. Enables cluster mode, Sets node type to master or worker. Disabled by default                                                                                                                                |
 | **worker_nodes**                 | `http(s)://host:port,http(s)://host:port` | Required is if cluster_member: master. Comma separated list of worker nodes http(s)://host:port                                                                                                                        |
 | **log_structured**               | `elasticsearch`                           | Optional. Enables structured logging and sets backend type. Only elasticsearch et the moment.                                                                                                                          |
-| **acme_dns_provider**            | `cloudflare, route53, digitalocean, etc`  | Optional. Enable ACME DNS-01 challenge, sets DNS provider.  ONly coudflare, route53, digitalocean at the moment.                                                                                                       |
+| **acme_dns_provider**            | `cloudflare, route53, digitalocean, etc`  | Optional. Enable ACME DNS-01 challenge, sets DNS provider. See `src/tls/acme/dns` for suported providers                                                                                                               |
 
 ### Cluster Mode
 
@@ -64,9 +65,11 @@ Controlled by :
 - `cache_enabled` Just a boolean to enable/disable cache 
 - `cache_size_mb` Set the size in MB for in memory cache, ignored if other storage is selected.  
 - `cache_ttl` Set TTL to cached items, respected by all storage backends. 
-- `cache_storage` in memory: `memory` or full url to remote cache storage : `redis://192.168.1.1:6379`.  
+- `cache_storage` in memory: `memory` or full url to remote cache storage : `redis://192.168.1.1:6379`.
+- `cache_item_max_size` Set the maximum cached item size from `Content-Length` header. 
 
-Only **GET** requests with **2xx** responses will be cached honoring `Cache-Control` headers: 
+Only **GET** requests with **2xx** responses will be cached honoring `Cache-Control` headers, `Content-Length` header is required. 
+Content without this header won't be cached or the size bigger than `cache_item_max_size` won't be cached.
 
 ```ini
 Cache-Control max-age = 300;

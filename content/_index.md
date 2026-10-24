@@ -65,7 +65,7 @@ Built on **Rust**, on top of **Cloudflare's Pingora engine**, Aralez delivers pe
   <div class="feature-card">
     <div class="icon">💾</div>
     <h3>HTTP Caching</h3>
-    <p>Local in-memory LRU, TTL behavior, <code>Cache-Control</code> handling website accelerator.</p>
+    <p>Pluggable, multi storage, LRU, TTL behavior, <code>Cache-Control</code> handling website accelerator.</p>
   </div>
 </div>
 

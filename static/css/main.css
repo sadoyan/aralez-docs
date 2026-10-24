@@ -731,8 +731,8 @@ a:hover { color: var(--color-primary-dark); text-decoration: underline; }
   display: flex;
   align-items: center;
   gap: .5rem;
+  flex-shrink: 0;
 }
-
 /* ---- Hamburger button ---- */
 .hamburger {
   display: none;
@@ -900,6 +900,20 @@ a:hover { color: var(--color-primary-dark); text-decoration: underline; }
   .hamburger { display: flex; }
 }
 
+.header-github {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  color: var(--color-nav-text);
+  font-size: .85rem;
+  font-weight: 500;
+  padding: .35rem .75rem;
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: var(--radius);
+  transition: border-color .15s, color .15s;
+  text-decoration: none;
+  margin-left: 0;
+}
 /* ---- Scrollbar ---- */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
