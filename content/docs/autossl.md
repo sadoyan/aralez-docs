@@ -1,39 +1,41 @@
 ---
 title: "Manage Certificates"
-description: "Obtain and auto-renew SSL/TLS certificates with Aralez"
+description: "Get and automatically renew SSL/TLS certificates with Aralez"
 weight: 10
 ---
-## TLS Support
 
-To enable TLS for the proxy server.
+## TLS basics
 
-- Set `proxy_address_tls` in `main.yaml`
-- Provide at least one `tls_certificate/tls_key_file` pair.
-    - **First crt/key pair is required to create the TLS listener.**
-    - This pair can be anything, even self-signed with dummy domain.
-    - After getting normal certificate it can be deleted
+TLS (HTTPS) is off until you turn it on. To enable it:
 
-## Native Let's Encrypt Integration
+1. Set `proxy_address_tls` in `main.yaml`.
+2. Put at least one certificate and key pair (`NAME.crt` and `NAME.key`) in the certificates directory.
+3. New certificates and key will be loaded on the fly without rest. 
 
-Since version **v0.92.4**, Aralez supports automatic ordering and
-renewal of SSL/TLS certificates using Let's Encrypt via the HTTP-01
-challenge.
+Aralez needs a first certificate and key pair to start the TLS listener. This pair can be anything, including a self-signed certificate for a dummy domain. Once you have a real certificate, you can delete it.
 
-### Requirements
+Certificate files must follow these rules:
 
-Make sure that `proxy_configs/certificates` directory exists and writeable by user running Aralez.
-For first run and binding to TLS address ate least one certificate/key pair is required. 
-Make sure that `proxy_configs/certificates` contains any even self-signed certificate, key pair. 
-Later  when at least one certificate is obtained these can be deleted.    
+- Use plain-text **PEM** format.
+- Give the certificate and key the same base name, with `.crt` and `.key` extensions. For example: `example.com.crt` and `example.com.key`.
 
-### Configuration
+## Let's Encrypt (automatic certificates)
 
-Aralez includes a built-in API server that responds to HTTP-01
-challenges. This endpoint must be publicly accessible for your domain.
+Since **v0.92.4**, Aralez can order and renew certificates from Let's Encrypt by itself. It supports two ways of proving you own the domain:
 
-Update your `upstreams.yaml`:
+- **HTTP-01:** Let's Encrypt requests a special URL on your domain. This is simple, but your domain must be reachable from the internet on port 80.
+- **DNS-01:** Aralez adds a temporary TXT record to your DNS zone. This needs no public web access and is described in the DNS-01 section below. It is available since **v0.94.2**.
 
-``` yaml
+### Before you start
+
+- The directory `proxy_configs/certificates` must exist, and the user running Aralez must be able to write to it.
+- It must contain at least one certificate and key pair, even a self-signed one, so the TLS listener can start. You can delete it after you get your first real certificate.
+
+### Set up HTTP-01
+
+Aralez has a small built-in API server that can answer the Let's Encrypt challenge. You only need to route the challenge path to it in `upstreams.yaml`:
+
+```yaml
 your.domain.com:
   paths:
     "/":
@@ -43,45 +45,48 @@ your.domain.com:
         - "192.168.1.3:8000"
     "/.well-known/acme-challenge":
       servers:
-        - "127.0.0.1:3000" # The address:port of internal API server
+        - "127.0.0.1:3000" # address:port of Aralez's internal API server
 ```
 
-This ensures Let's Encrypt can reach:
+Let's Encrypt will then be able to reach:
 
 ```
 http://your.domain.com/.well-known/acme-challenge/<token>
-````
+```
 
-Aralez will create CONF_DIR/autoconfig folder with following files
+### Files Aralez creates
+
+Aralez creates an `autoconfigs` folder inside your config directory with two files:
 
 ```
 acme_credentials.json
 domains.json
 ```
-These are autocreated files, never manually edit it. 
 
-Helthy content of `etc/autoconfigs/acme_credentials.json` should look like this: 
+Aralez manages both files, so don't edit them by hand.
 
-```json
-{
-  "id": "https://acme-v02.api.letsencrypt.org/acme/acct/YOUR_ID",
-  "key_pkcs8": "YOUR_KEY",
-  "directory": "https://acme-v02.api.letsencrypt.org/directory"
-}
-```
-File `etc/autoconfigs/domains.json` contains The list of ACME enable hosts . 
+- `acme_credentials.json` holds your Let's Encrypt account. A healthy file looks like this:
 
-```json
-[
-  "host1.example.com",
-  "host2.example.com",
-  "host1.example.net",
-  "host2.example.net"
-]
-```
+  ```json
+  {
+    "id": "https://acme-v02.api.letsencrypt.org/acme/acct/YOUR_ID",
+    "key_pkcs8": "YOUR_KEY",
+    "directory": "https://acme-v02.api.letsencrypt.org/directory"
+  }
+  ```
 
-Healthy structure of `etc` should look like this: 
+- `domains.json` lists the domains that use automatic certificates:
 
+  ```json
+  [
+    "host1.example.com",
+    "host2.example.com",
+    "host1.example.net",
+    "host2.example.net"
+  ]
+  ```
+
+After setup, your config directory should look like this:
 
 ```bash
 etc/
@@ -95,125 +100,110 @@ etc/
 │   ├── host2.example.com.key
 │   ├── host1.example.net.crt
 │   ├── host1.example.net.key
-│   ├── host2.example.com.crt
-│   └── host2.example.com.key
+│   ├── host2.example.net.crt
+│   └── host2.example.net.key
 ├── main.yaml
 └── upstreams.yaml
-
 ```
 
-## Register and Obtain Certificates
+## Create an account and order certificates
 
-### Register 
+### Step 1: Create your Let's Encrypt account
 
-On the first run of Aralez at first time execute the following in your command prompt.  
+Do this once, the first time you run Aralez:
 
-``` bash
+```bash
 curl http://127.0.0.1:3000/acme_create
 ```
-This will create your account at Let's Encrypt and save credentials in  `etc/autoconfigs/domains.json`
-This should be run only once on a fresh Aralez installation. 
 
-### Request a Certificate
+This creates your account at Let's Encrypt and saves the credentials in `autoconfigs/acme_credentials.json`. Don't run it again on the same installation.
 
-For each of your domains run 
+### Step 2: Order a certificate for each domain
 
-``` bash
+```bash
 curl http://127.0.0.1:3000/acme_order/host1.example.com
 curl http://127.0.0.1:3000/acme_order/host2.example.com
 curl http://127.0.0.1:3000/acme_order/host1.example.net
 curl http://127.0.0.1:3000/acme_order/host2.example.net
 ```
 
-This will issue initial certificates and store as 
-```
-├── certificates
-│   ├── host1.example.com.crt
-│   ├── host1.example.com.key
-│   ├── host2.example.com.crt
-│   ├── host2.example.com.key
-│   ├── host1.example.net.crt
-│   ├── host1.example.net.key
-│   ├── host2.example.com.crt
-│   └── host2.example.com.key
-```
+Each command gets a certificate and saves the `.crt` and `.key` files in the `certificates` folder, as shown in the tree above.
 
-Renewal of certificates will be performed automatically. 
+You only need to run each order command once per domain.
 
-You need to run `curl http://127.0.0.1:3000/acme_order/DOMAIN` only once to issues the certificates.   
+### Renewal
 
-### File system permissions
-
-Make sure the user running Aralez have write permission to config directory.  
-
-Aralez automatically reloads certificates when they are updated. The renewal is triggered \~30 days before expiration.
+Aralez renews certificates automatically, starting about 30 days before they expire. It also reloads renewed certificates on its own, so you don't need to restart anything.
 
 ## DNS-01 challenge
 
-Starting from version 0.94.2 Aralez supports ACME DNS-01 challenge. 
-Support for different provider will be added granularly.
+With DNS-01, Aralez proves domain ownership by creating a temporary TXT record through your DNS provider's API. It then deletes the record. Ordering and renewal work the same way as with HTTP-01.
 
-To enable DNS-01 challenge in `main.yaml` add key `acme_dns_provider` with value of a provider's plugin name. 
+To enable it, set `acme_dns_provider` in `main.yaml` to the provider's name:
+
 ```yaml
 acme_dns_provider: cloudflare
 ```
 
-**Cloudflare**
+Each provider needs credentials, which you pass as environment variables. **Restart Aralez after setting them so it can read them.**
 
-Requires: `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ZONE_ID` environment variables. 
+More providers will be added over time.
+
+### Cloudflare
+
+```yaml
+acme_dns_provider: cloudflare
+```
 
 ```shell
 export CLOUDFLARE_API_TOKEN="YOUR_TOKEN_HERE"
 export CLOUDFLARE_ZONE_ID="YOUR_ZONE_ID_HERE"
 ```
 
-**Route53**
+### Route53 (AWS)
 
 ```yaml
 acme_dns_provider: route53
 ```
 
-Requires: Environment variable `AWS_HOSTED_ZONE_ID` and standard `aws` cli configuration via environment variables or configuration files in `~/.aws` folder.  
+You need the `AWS_HOSTED_ZONE_ID` environment variable plus the usual AWS credentials. Set those as environment variables, or put them in the `~/.aws` folder like you would for the `aws` CLI:
 
 ```shell
+export AWS_HOSTED_ZONE_ID="YOUR_ZONE_ID_HERE"
 export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
 export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 export AWS_DEFAULT_REGION=us-west-2
 ```
 
-**Digital Ocean**
+### DigitalOcean
 
 ```yaml
 acme_dns_provider: digitalocean
 ```
 
-Requires `DIGITALOCEAN_TOKEN` environment variable. 
-
 ```shell
 export DIGITALOCEAN_TOKEN="YOUR_TOKEN_HERE"
 ```
 
-**Restart Aralez to read these enviroment variables .** 
+## Writing your own DNS-01 provider
 
-Ordering and renewing of certificates is processed the same was as with HTTP-01 challenge. 
-## Developing custom DNS-01 challenge plugins.
+If your DNS provider isn't supported, you can add it yourself. A provider is a small Rust file that knows how to create and delete a TXT record.
 
-Development of custom DNS-01 challenge plugins is as easy as: 
+1. Create the file `src/tls/acme/dns/example.rs`.
+2. Add `pub mod example;` to `src/tls/acme/dns/mod.rs`.
+3. Set `acme_dns_provider: example` in `main.yaml`.
 
-- Create a plugin file inside `src/tls/acme/dns/`, -> `src/tls/acme/dns/example.rs`
-- Add file name to `src/tls/acme/dns/mod.rs` -> `pub mod example`;
-- Enable in `main.yaml` -> `acme_dns_provider: example`
+### What goes in `example.rs`
 
-### Inside example.rs file
-
-Imports.
+**Imports**
 
 ```rust
 use crate::tls::acme::lookup::lookup_wait;
 use crate::tls::acme::types::{DnsBackendPlugin, DnsProvider};
 ```
 
-Create and initialize your plugin struct with method new():
+**A struct for your provider.** Read your credentials from environment variables in `new()`:
+
 ```rust
 pub struct ExampleProvider {
     pub hosted_zone_id: String,
@@ -228,7 +218,8 @@ impl ExampleProvider {
 }
 ```
 
-Implement trait `DnsProvider` for your provider.  
+**The `DnsProvider` trait.** It has two functions: one that creates the TXT record and one that deletes it. Fill them in with your provider's API calls:
+
 ```rust
 #[async_trait::async_trait]
 impl DnsProvider for ExampleProvider {
@@ -241,7 +232,8 @@ impl DnsProvider for ExampleProvider {
 }
 ```
 
-Submit to inventory
+**Register the plugin** so Aralez can find it by name:
+
 ```rust
 inventory::submit! {
     DnsBackendPlugin {
@@ -251,23 +243,19 @@ inventory::submit! {
 }
 ```
 
-Waiting for propagated TXT
+**Wait for DNS to update.** A new TXT record can take a moment to become visible. Call `lookup_wait` at the end of `create_txt_record`. It keeps querying DNS until the record shows the expected value, or until the timeout runs out. Its parameters are:
 
-include function below after creating TXT records in `create_txt_records` to enable lookup loop and wait till TXT records are queryable. 
-It accepts the following parameters :
-
-1. name: the txt record to lookup 
-2. Optionally DNS server to query. 
-3. Timeout in seconds. 
-4. Expected value for query 
-
-`lookup_wait` will start lookups in loops fot TXT record `name`.  If `value` matches real value or timeout exceeds the loop will exit.  
+1. `name`: the TXT record to look up.
+2. A DNS server to ask (optional).
+3. A timeout in seconds.
+4. The value the record should have.
 
 ```rust
 lookup_wait(name, Some("1.1.1.1"), 60, value).await;
 ```
 
-Now you can use new plugin just by editing `main.yaml` and setting it as prevered `acme_dns_provider`
+Once it is built, set your plugin as the provider in `main.yaml`:
+
 ```yaml
 acme_dns_provider: example
 ```

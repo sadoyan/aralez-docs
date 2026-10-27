@@ -40,34 +40,34 @@
     </svg>
     Crates
   </a>
-  <a href="https://hub.docker.com/r/sadoyan/aralez"
-     class="header-github"
-     target="_blank" rel="noopener">
-     <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M13.983 11.078h2.119v2.046h-2.119zm-2.628 0h2.119v2.046h-2.119zm-2.629 0h2.119v2.046H8.726zm-2.628 0h2.119v2.046H6.098zm-2.628 0h2.119v2.046H3.47zm5.257-2.568h2.119v2.046H8.727zm2.628 0h2.119v2.046h-2.119zm2.628 0h2.119v2.046h-2.119zm-2.628-2.568h2.119v2.046h-2.119zM23.4 10.63c-.65-.44-2.14-.6-3.28-.3-.15-1.1-.95-2.05-2.1-2.9l-.4-.3-.3.4c-.6.9-.85 2.1-.75 3.15.1.65.4 1.2.9 1.65-.4.25-1.15.6-2.15.6H.5l-.1.5c-.2 1.4 0 3.25 1.1 4.65 1.05 1.35 2.6 2.05 4.65 2.05 4.5 0 7.85-2.05 9.45-5.75 2.35.05 3.7-.9 4.35-1.75.45-.55.65-1.1.65-1.4l-.05-.3z"/>
-      </svg>
-      Docker
-    </a>
-    <a href="https://github.com/sadoyan/aralez/pkgs/container/aralez"
-       class="header-github header-ghcr"
-       target="_blank"
-       rel="noopener noreferrer"
-       aria-label="Aralez on GitHub Container Registry"
-       title="GitHub Container Registry">
-      <svg viewBox="0 0 24 24"
-           fill="none"
-           stroke="currentColor"
-           stroke-width="1.7"
-           stroke-linecap="round"
-           stroke-linejoin="round"
-           aria-hidden="true">
-        <path d="M12 3 21 8v8l-9 5-9-5V8l9-5Z"/>
-        <path d="m3.5 8.2 8.5 5 8.5-5"/>
-        <path d="M12 13.2V21"/>
-        <path d="m7.5 5.5 9 5"/>
-      </svg>
-      GHCR
-    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <button class="hamburger" id="aralez-hamburger" aria-label="Open navigation menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -89,6 +89,31 @@
   </div>
 
   <div class="drawer-section-title">Documentation</div>
+  
+  <a href="//localhost:1313/docs/quickstart/" class="drawer-link">Quick Start</a>
+  
+  <a href="//localhost:1313/docs/config/" class="drawer-link">Config</a>
+  
+  <a href="//localhost:1313/docs/api/" class="drawer-link">API</a>
+  
+  <a href="//localhost:1313/docs/compare/" class="drawer-link">Comparison</a>
+  
+  <a href="//localhost:1313/docs/auth/" class="drawer-link">Authentication</a>
+  
+  <a href="//localhost:1313/docs/perf/" class="drawer-link">Benchmarks</a>
+  
+  <a href="//localhost:1313/docs/metrics/" class="drawer-link">Prometheus Metrics</a>
+  
+  <a href="//localhost:1313/docs/kubernetes/" class="drawer-link">Kubernetes</a>
+  
+  <a href="//localhost:1313/docs/consul/" class="drawer-link">Consul</a>
+  
+  <a href="//localhost:1313/docs/autossl/" class="drawer-link">TLS &amp; Certificates</a>
+  
+
+  <div class="drawer-footer">
+    <a href="https://github.com/sadoyan/aralez" class="drawer-github" target="_blank" rel="noopener">GitHub</a>
+  </div>
 </nav>
 
 <script>
@@ -152,7 +177,7 @@
       
       <a href="//localhost:1313/docs/consul/">Consul</a>
       
-      <a href="//localhost:1313/docs/autossl/">Manage Certificates</a>
+      <a href="//localhost:1313/docs/autossl/">TLS &amp; Certificates</a>
       
     </nav>
   </div>
@@ -189,11 +214,20 @@
       <tr>
           <td><strong>Cert load</strong></td>
           <td style="text-align: center">✅ Hot</td>
-          <td style="text-align: center">❌ Reload</td>
-          <td style="text-align: center">❌ Reload</td>
+          <td style="text-align: center">⚙️ Reload</td>
+          <td style="text-align: center">⚙️ Reload</td>
           <td style="text-align: center">✅ Yes</td>
           <td style="text-align: center">✅ Yes</td>
-          <td style="text-align: center">⚙️ No ?</td>
+          <td style="text-align: center">⚙️ Manual</td>
+      </tr>
+      <tr>
+          <td><strong>Auto TLS (ACME + DNS)</strong></td>
+          <td style="text-align: center">✅ Built-in</td>
+          <td style="text-align: center">⚙️ External</td>
+          <td style="text-align: center">⚙️ Partial</td>
+          <td style="text-align: center">✅ Yes</td>
+          <td style="text-align: center">✅ Yes</td>
+          <td style="text-align: center">❌ No</td>
       </tr>
       <tr>
           <td><strong>Authentication</strong></td>
@@ -205,8 +239,8 @@
           <td style="text-align: center">✅ Yes</td>
       </tr>
       <tr>
-          <td><strong>HTTP2</strong></td>
-          <td style="text-align: center">✅ Yes</td>
+          <td><strong>HTTP/2</strong></td>
+          <td style="text-align: center">✅ Auto</td>
           <td style="text-align: center">⚙️ Manual</td>
           <td style="text-align: center">⚙️ Manual</td>
           <td style="text-align: center">✅ Yes</td>
@@ -241,15 +275,6 @@
           <td style="text-align: center">✅ Yes</td>
       </tr>
       <tr>
-          <td><strong>HTTP/2</strong></td>
-          <td style="text-align: center">✅ Auto</td>
-          <td style="text-align: center">⚙️ Manual</td>
-          <td style="text-align: center">⚙️ Manual</td>
-          <td style="text-align: center">✅ Yes</td>
-          <td style="text-align: center">✅ Yes</td>
-          <td style="text-align: center">✅ Yes</td>
-      </tr>
-      <tr>
           <td><strong>WebSocket</strong></td>
           <td style="text-align: center">✅ Auto</td>
           <td style="text-align: center">⚙️ Manual</td>
@@ -262,10 +287,46 @@
           <td><strong>Sticky Session</strong></td>
           <td style="text-align: center">✅ Yes</td>
           <td style="text-align: center">❌ No</td>
-          <td style="text-align: center">⚙️ Yes</td>
+          <td style="text-align: center">✅ Yes</td>
           <td style="text-align: center">✅ Yes</td>
           <td style="text-align: center">⚙️ Limited</td>
-          <td style="text-align: center">✅ Manual</td>
+          <td style="text-align: center">⚙️ Manual</td>
+      </tr>
+      <tr>
+          <td><strong>Response Cache</strong></td>
+          <td style="text-align: center">✅ Built-in</td>
+          <td style="text-align: center">✅ Yes</td>
+          <td style="text-align: center">⚙️ Limited</td>
+          <td style="text-align: center">⚙️ Plugin¹</td>
+          <td style="text-align: center">⚙️ Plugin</td>
+          <td style="text-align: center">⚙️ Manual</td>
+      </tr>
+      <tr>
+          <td><strong>Redis / Valkey Cache</strong></td>
+          <td style="text-align: center">✅ Built-in</td>
+          <td style="text-align: center">⚙️ Plugin</td>
+          <td style="text-align: center">❌ No</td>
+          <td style="text-align: center">❌ No</td>
+          <td style="text-align: center">⚙️ Plugin</td>
+          <td style="text-align: center">❌ No</td>
+      </tr>
+      <tr>
+          <td><strong>Remote Config</strong></td>
+          <td style="text-align: center">✅ Push API</td>
+          <td style="text-align: center">⚙️ External</td>
+          <td style="text-align: center">⚙️ External</td>
+          <td style="text-align: center">⚙️ Limited</td>
+          <td style="text-align: center">✅ Yes</td>
+          <td style="text-align: center">⚙️ External</td>
+      </tr>
+      <tr>
+          <td><strong>Cluster (master/worker)</strong></td>
+          <td style="text-align: center">✅ Built-in</td>
+          <td style="text-align: center">⚙️ External</td>
+          <td style="text-align: center">⚙️ External</td>
+          <td style="text-align: center">⚙️ External</td>
+          <td style="text-align: center">⚙️ External</td>
+          <td style="text-align: center">⚙️ External</td>
       </tr>
       <tr>
           <td><strong>Prometheus</strong></td>
@@ -280,7 +341,7 @@
           <td><strong>Consul</strong></td>
           <td style="text-align: center">✅ Yes</td>
           <td style="text-align: center">❌ No</td>
-          <td style="text-align: center">⚙️DNS API</td>
+          <td style="text-align: center">⚙️ Limited</td>
           <td style="text-align: center">✅ Yes</td>
           <td style="text-align: center">❌ No</td>
           <td style="text-align: center">✅ Yes</td>
@@ -288,7 +349,7 @@
       <tr>
           <td><strong>Kubernetes</strong></td>
           <td style="text-align: center">✅ Yes</td>
-          <td style="text-align: center">⚙️ Ingress</td>
+          <td style="text-align: center">⚙️ External</td>
           <td style="text-align: center">⚙️ External</td>
           <td style="text-align: center">✅ Yes</td>
           <td style="text-align: center">⚙️ Limited</td>
@@ -307,7 +368,7 @@
           <td><strong>Static Files</strong></td>
           <td style="text-align: center">✅ Yes</td>
           <td style="text-align: center">✅ Yes</td>
-          <td style="text-align: center">⚙️ Lua ?</td>
+          <td style="text-align: center">⚙️ Manual</td>
           <td style="text-align: center">✅ Yes</td>
           <td style="text-align: center">✅ Yes</td>
           <td style="text-align: center">❌ No</td>
@@ -322,6 +383,42 @@
           <td style="text-align: center">✅ Yes</td>
       </tr>
       <tr>
+          <td><strong>Structured Logs (ELK)</strong></td>
+          <td style="text-align: center">✅ Built-in</td>
+          <td style="text-align: center">⚙️ Manual</td>
+          <td style="text-align: center">⚙️ Manual</td>
+          <td style="text-align: center">✅ Yes</td>
+          <td style="text-align: center">✅ Yes</td>
+          <td style="text-align: center">✅ Yes</td>
+      </tr>
+      <tr>
+          <td><strong>Log Rotation</strong></td>
+          <td style="text-align: center">✅ Built-in</td>
+          <td style="text-align: center">⚙️ External</td>
+          <td style="text-align: center">⚙️ External</td>
+          <td style="text-align: center">⚙️ Manual</td>
+          <td style="text-align: center">✅ Yes</td>
+          <td style="text-align: center">⚙️ Manual</td>
+      </tr>
+      <tr>
+          <td><strong>Privilege Drop</strong></td>
+          <td style="text-align: center">✅ Yes</td>
+          <td style="text-align: center">✅ Yes</td>
+          <td style="text-align: center">✅ Yes</td>
+          <td style="text-align: center">❌ No</td>
+          <td style="text-align: center">❌ No</td>
+          <td style="text-align: center">❌ No</td>
+      </tr>
+      <tr>
+          <td><strong>Memory Safe</strong></td>
+          <td style="text-align: center">✅ Yes</td>
+          <td style="text-align: center">❌ No</td>
+          <td style="text-align: center">❌ No</td>
+          <td style="text-align: center">✅ Yes</td>
+          <td style="text-align: center">✅ Yes</td>
+          <td style="text-align: center">❌ No</td>
+      </tr>
+      <tr>
           <td><strong>Built With</strong></td>
           <td style="text-align: center">Rust</td>
           <td style="text-align: center">C</td>
@@ -332,36 +429,53 @@
       </tr>
   </tbody>
 </table>
-<hr>
-<p>✅ <strong>Auto</strong> – Automatically detected and loaded<br>
-✅ <strong>Hot</strong> – Works immediately, no reload/restart is required<br>
-✅ <strong>Yes</strong> – Works immediately, no setup required<br>
-⚙️ <strong>Manual</strong> – Requires explicit configuration or modules<br>
-⚙️ <strong>Reload</strong> – Reload or restart is required<br>
-⚙️ <strong>Limited</strong> – Support is limited to certain features<br>
-⚙️ <strong>External</strong> – Requires an external module<br>
+<p><sub>¹ Traefik response caching is available only as a plugin or in the enterprise edition.</sub></p>
+<p>✅ <strong>Auto</strong> – Automatically detected and configured, no setup needed<br>
+✅ <strong>Hot</strong> – Applied immediately, no reload or restart required<br>
+✅ <strong>Yes</strong> – Supported natively, works out of the box<br>
+✅ <strong>Built-in</strong> – Included in the core binary, no plugins or external tools<br>
+✅ <strong>Push API</strong> – Config can be pushed remotely over a built-in HTTP API<br>
+⚙️ <strong>Manual</strong> – Requires explicit configuration or extra modules<br>
+⚙️ <strong>Reload</strong> – Reload or restart is required to apply<br>
+⚙️ <strong>Limited</strong> – Support covers only certain features<br>
+⚙️ <strong>Partial</strong> – Available, but incomplete or only in recent versions<br>
+⚙️ <strong>Plugin</strong> – Requires a third-party plugin or module<br>
+⚙️ <strong>External</strong> – Requires an external tool, service or control plane<br>
 ❌ <strong>No</strong> – Not supported</p>
-<h3 id="interpretation">Interpretation</h3>
-<p>Aralez aims to combine the <strong>simplicity of NGINX</strong>, the <strong>observability of Envoy</strong>, and the <strong>dynamic features of Traefik</strong>, all in a modern, lightweight Rust codebase.</p>
-<p>Where most proxies require external tooling or complex configuration for dynamic updates, Aralez focuses on <strong>automatic behavior by default</strong>:</p>
+<h3 id="overview">Overview</h3>
+<p>Aralez is a reverse proxy written in Rust on top of Cloudflare&rsquo;s Pingora framework. It is built around runtime-reloadable configuration and protocol handling that works without per-route setup.</p>
 <ul>
-<li>Upstreams and certificates <strong>reload instantly</strong> with zero downtime.</li>
-<li><strong>Health checks, TLS termination, and protocol upgrades</strong> happen automatically.</li>
-<li><strong>Authentication and metrics</strong> are built-in, not bolted on.</li>
-<li><strong>Consul and Kubernetes integration</strong> make it mesh-ready without extra agents.</li>
-<li>Written in <strong>safe, high-performance Rust</strong>, offering reliability and modern concurrency.</li>
+<li><strong>Hot reload:</strong> upstream definitions and TLS certificates are applied at runtime without restarting the process or dropping connections.</li>
+<li><strong>Protocol handling:</strong> HTTP/2, gRPC, WebSocket and TLS termination are detected and proxied without extra configuration.</li>
+<li><strong>Built-in features:</strong> authentication, rate limiting, health checks, Prometheus metrics, response caching and a static file server are part of the binary. No plugins or sidecars are needed.</li>
+<li><strong>Service discovery:</strong> Consul and Kubernetes are supported as upstream sources.</li>
+<li><strong>Memory safety:</strong> Rust removes the common memory-safety bug classes found in C and C++ proxies, and async I/O handles concurrency.</li>
 </ul>
-<p>In short, Aralez is designed for developers and operators who want <strong>a fast, self-contained reverse proxy</strong> that &ldquo;just works,&rdquo; while still being flexible enough to scale into a service-mesh-like architecture.</p>
-<h3 id="zero-config-features">Zero-Config Features</h3>
-<p>Aralez is designed to <strong>just work out of the box</strong>, minimizing setup and manual configuration. With Aralez, you get:</p>
+<h3 id="default-behavior">Default Behavior</h3>
+<p>With a minimal <code>main.yaml</code> and an upstreams file, the following works without further setup:</p>
 <ul>
-<li><strong>Automatic protocol detection:</strong> gRPC, HTTP/2, WebSockets, and SSL are proxied correctly without extra config.</li>
-<li><strong>Hot reloads &amp; zero downtime:</strong> Upstreams and configuration changes take effect immediately without restarting the server.</li>
-<li><strong>Automatic TLS / certificate updates:</strong> Drop new certificates on disk and Aralez picks them up instantly.</li>
-<li><strong>Built-in authentication &amp; rate limiting:</strong> Basic auth, API key, JWT, and request limits are ready-to-use.</li>
-<li><strong>Observability &amp; metrics:</strong> Prometheus metrics are available automatically.</li>
-<li><strong>Service discovery integration:</strong> Works seamlessly with Consul and Kubernetes DNS without extra setup.</li>
+<li><strong>Protocol detection:</strong> gRPC, HTTP/2, WebSocket and TLS traffic is proxied correctly without per-route flags.</li>
+<li><strong>Hot reload:</strong> changes to the upstreams file, or pushed through the config API, apply without a restart.</li>
+<li><strong>Certificates:</strong> certificates and keys placed in <code>proxy_configs</code> (named <code>{NAME}.crt</code> and <code>{NAME}.key</code>) are loaded at runtime. ACME certificate issuance with DNS-01 challenge is supported, with the provider set by <code>acme_dns_provider</code>.</li>
+<li><strong>TLS profiles:</strong> <code>proxy_tls_grade</code> selects a cipher suite profile (<code>high</code>, <code>medium</code>, <code>unsafe</code>) aligned with Qualys SSL Labs grades.</li>
+<li><strong>Authentication and rate limiting:</strong> Basic auth, API key, JWT, Forward Auth and request limits are configured per upstream or globally.</li>
+<li><strong>Health checks:</strong> active checks run at a set interval (<code>hc_interval</code>) using HEAD, GET or POST (<code>hc_method</code>).</li>
+<li><strong>Metrics:</strong> Prometheus metrics are exposed by default.</li>
+<li><strong>Service discovery:</strong> Consul and Kubernetes upstreams are supported.</li>
+<li><strong>Connection pooling:</strong> upstream keepalive pool size is configurable.</li>
 </ul>
+<h3 id="optional-features">Optional Features</h3>
+<p>These are disabled until configured:</p>
+<ul>
+<li><strong>Response cache:</strong> in-memory or Redis-compatible (Redis, Valkey, Dragonfly), with configurable size, default TTL and maximum item size. It uses upstream cache-control headers when they are present.</li>
+<li><strong>Remote config API:</strong> upstreams can be pushed over HTTP (<code>config_api_enabled</code>, <code>config_address</code>).</li>
+<li><strong>Cluster mode:</strong> master and worker nodes (<code>cluster_member</code>, <code>worker_nodes</code>) for distributing configuration.</li>
+<li><strong>Static file server:</strong> serves a local directory on its own address and can be used as an upstream.</li>
+<li><strong>Logging:</strong> access log filtering (<code>all</code> or <code>error</code>), a custom log pattern, file output with size-based rotation and compression, and structured output for Elasticsearch.</li>
+<li><strong>Process options:</strong> privilege drop (<code>runuser</code>, <code>rungroup</code>), PID file, an upgrade socket, and TCP keepalive tuning for downstream connections.</li>
+</ul>
+<h3 id="intended-use">Intended Use</h3>
+<p>Aralez targets setups that need a self-contained reverse proxy or ingress with dynamic upstreams and little configuration. It can also run as a clustered deployment with Consul or Kubernetes service discovery.</p>
 
   </main>
 </div>

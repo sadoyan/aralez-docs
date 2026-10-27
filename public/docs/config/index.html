@@ -40,34 +40,34 @@
     </svg>
     Crates
   </a>
-  <a href="https://hub.docker.com/r/sadoyan/aralez"
-     class="header-github"
-     target="_blank" rel="noopener">
-     <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M13.983 11.078h2.119v2.046h-2.119zm-2.628 0h2.119v2.046h-2.119zm-2.629 0h2.119v2.046H8.726zm-2.628 0h2.119v2.046H6.098zm-2.628 0h2.119v2.046H3.47zm5.257-2.568h2.119v2.046H8.727zm2.628 0h2.119v2.046h-2.119zm2.628 0h2.119v2.046h-2.119zm-2.628-2.568h2.119v2.046h-2.119zM23.4 10.63c-.65-.44-2.14-.6-3.28-.3-.15-1.1-.95-2.05-2.1-2.9l-.4-.3-.3.4c-.6.9-.85 2.1-.75 3.15.1.65.4 1.2.9 1.65-.4.25-1.15.6-2.15.6H.5l-.1.5c-.2 1.4 0 3.25 1.1 4.65 1.05 1.35 2.6 2.05 4.65 2.05 4.5 0 7.85-2.05 9.45-5.75 2.35.05 3.7-.9 4.35-1.75.45-.55.65-1.1.65-1.4l-.05-.3z"/>
-      </svg>
-      Docker
-    </a>
-    <a href="https://github.com/sadoyan/aralez/pkgs/container/aralez"
-       class="header-github header-ghcr"
-       target="_blank"
-       rel="noopener noreferrer"
-       aria-label="Aralez on GitHub Container Registry"
-       title="GitHub Container Registry">
-      <svg viewBox="0 0 24 24"
-           fill="none"
-           stroke="currentColor"
-           stroke-width="1.7"
-           stroke-linecap="round"
-           stroke-linejoin="round"
-           aria-hidden="true">
-        <path d="M12 3 21 8v8l-9 5-9-5V8l9-5Z"/>
-        <path d="m3.5 8.2 8.5 5 8.5-5"/>
-        <path d="M12 13.2V21"/>
-        <path d="m7.5 5.5 9 5"/>
-      </svg>
-      GHCR
-    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <button class="hamburger" id="aralez-hamburger" aria-label="Open navigation menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -89,6 +89,31 @@
   </div>
 
   <div class="drawer-section-title">Documentation</div>
+  
+  <a href="//localhost:1313/docs/quickstart/" class="drawer-link">Quick Start</a>
+  
+  <a href="//localhost:1313/docs/config/" class="drawer-link">Config</a>
+  
+  <a href="//localhost:1313/docs/api/" class="drawer-link">API</a>
+  
+  <a href="//localhost:1313/docs/compare/" class="drawer-link">Comparison</a>
+  
+  <a href="//localhost:1313/docs/auth/" class="drawer-link">Authentication</a>
+  
+  <a href="//localhost:1313/docs/perf/" class="drawer-link">Benchmarks</a>
+  
+  <a href="//localhost:1313/docs/metrics/" class="drawer-link">Prometheus Metrics</a>
+  
+  <a href="//localhost:1313/docs/kubernetes/" class="drawer-link">Kubernetes</a>
+  
+  <a href="//localhost:1313/docs/consul/" class="drawer-link">Consul</a>
+  
+  <a href="//localhost:1313/docs/autossl/" class="drawer-link">TLS &amp; Certificates</a>
+  
+
+  <div class="drawer-footer">
+    <a href="https://github.com/sadoyan/aralez" class="drawer-github" target="_blank" rel="noopener">GitHub</a>
+  </div>
 </nav>
 
 <script>
@@ -152,7 +177,7 @@
       
       <a href="//localhost:1313/docs/consul/">Consul</a>
       
-      <a href="//localhost:1313/docs/autossl/">Manage Certificates</a>
+      <a href="//localhost:1313/docs/autossl/">TLS &amp; Certificates</a>
       
     </nav>
   </div>
@@ -304,6 +329,11 @@
           <td>Optional. Set internal cache with size in megabytes of value. Defaults to 50Mb if cache_enabled: true</td>
       </tr>
       <tr>
+          <td><strong>cache_item_max_size</strong></td>
+          <td><code>5</code></td>
+          <td>Optional. Set maximum size for cached items in megabytes. Defaults to 0 , no max size.</td>
+      </tr>
+      <tr>
           <td><strong>tcp_keepalive_idle</strong></td>
           <td><code>60</code></td>
           <td>Seconds of inactivity before the kernel starts sending keepalive probes to a downstream client. Defaults to 60</td>
@@ -336,7 +366,7 @@
       <tr>
           <td><strong>acme_dns_provider</strong></td>
           <td><code>cloudflare, route53, digitalocean, etc</code></td>
-          <td>Optional. Enable ACME DNS-01 challenge, sets DNS provider.  ONly coudflare, route53, digitalocean at the moment.</td>
+          <td>Optional. Enable ACME DNS-01 challenge, sets DNS provider. See <code>src/tls/acme/dns</code> for suported providers</td>
       </tr>
   </tbody>
 </table>
@@ -361,8 +391,10 @@ Currently, a single master is supported, Master consensus with full RAFT impleme
 <li><code>cache_size_mb</code> Set the size in MB for in memory cache, ignored if other storage is selected.</li>
 <li><code>cache_ttl</code> Set TTL to cached items, respected by all storage backends.</li>
 <li><code>cache_storage</code> in memory: <code>memory</code> or full url to remote cache storage : <code>redis://192.168.1.1:6379</code>.</li>
+<li><code>cache_item_max_size</code> Set the maximum cached item size from <code>Content-Length</code> header.</li>
 </ul>
-<p>Only <strong>GET</strong> requests with <strong>2xx</strong> responses will be cached honoring <code>Cache-Control</code> headers:</p>
+<p>Only <strong>GET</strong> requests with <strong>2xx</strong> responses will be cached honoring <code>Cache-Control</code> headers, <code>Content-Length</code> header is required.
+Content without this header won&rsquo;t be cached or the size bigger than <code>cache_item_max_size</code> won&rsquo;t be cached.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">Cache-Control max-age</span> <span class="o">=</span> <span class="s">300;</span>
 </span></span><span class="line"><span class="cl"><span class="na">Cache-Control s-maxage</span> <span class="o">=</span> <span class="s">600;</span>
 </span></span><span class="line"><span class="cl"><span class="na">Cache-Control no-store;</span>
