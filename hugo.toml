@@ -67,3 +67,8 @@ title = "Aralez — Reverse Proxy built on Cloudflare's Pingora"
   name = "TLS & Certificates"
   url = "/docs/autossl/"
   weight = 11
+
+[[menu.side]]
+  name = "Cache"
+  url = "/docs/cache/"
+  weight = 12

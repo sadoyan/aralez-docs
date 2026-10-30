@@ -4,6 +4,8 @@
   <url>
     <loc>//localhost:1313/docs/quickstart/</loc>
   </url><url>
+    <loc>//localhost:1313/docs/cache/</loc>
+  </url><url>
     <loc>//localhost:1313/docs/config/</loc>
   </url><url>
     <loc>//localhost:1313/docs/api/</loc>

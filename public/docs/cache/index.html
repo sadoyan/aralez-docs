@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cache — Aralez — Reverse Proxy built on Cloudflare&#39;s Pingora</title>
+  <meta name="description" content="Types and configuration">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="//localhost:1313/css/main.css">
+</head>
+<body>
+
+  <header class="site-header">
+  <a href="//localhost:1313/" class="header-brand">
+    <img src="//localhost:1313/images/logo.png" alt="Aralez logo">
+    <span class="brand-name">Home</span>
+    
+  </a>
+  <div>
+
+
+
+<div class="header-right">
+  <a href="https://github.com/sadoyan/aralez" class="header-github" target="_blank" rel="noopener">
+    <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+    </svg>
+    GitHub
+  </a>
+  <a href="https://crates.io/crates/aralez"
+     class="header-github"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Aralez on crates.io">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 2 2 7.5v9L12 22l10-5.5v-9L12 2zm0 2.3 6.9 3.8L12 12 5.1 8.1 12 4.3zM4 9.8l7 3.9v5.7l-7-3.9V9.8zm9 9.6v-5.7l7-3.9v5.7l-7 3.9z"/>
+    </svg>
+    Crates
+  </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <button class="hamburger" id="aralez-hamburger" aria-label="Open navigation menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  </div>
+</header>
+
+<div class="drawer-overlay" id="aralez-overlay"></div>
+
+<nav class="mobile-drawer" id="aralez-drawer" aria-label="Mobile navigation">
+  <div class="drawer-header">
+    <span class="drawer-title">Aralez Docs</span>
+    <button class="drawer-close" id="aralez-drawer-close" aria-label="Close menu">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="drawer-section-title">Documentation</div>
+  
+  <a href="//localhost:1313/docs/quickstart/" class="drawer-link">Quick Start</a>
+  
+  <a href="//localhost:1313/docs/config/" class="drawer-link">Config</a>
+  
+  <a href="//localhost:1313/docs/api/" class="drawer-link">API</a>
+  
+  <a href="//localhost:1313/docs/compare/" class="drawer-link">Comparison</a>
+  
+  <a href="//localhost:1313/docs/auth/" class="drawer-link">Authentication</a>
+  
+  <a href="//localhost:1313/docs/perf/" class="drawer-link">Benchmarks</a>
+  
+  <a href="//localhost:1313/docs/metrics/" class="drawer-link">Prometheus Metrics</a>
+  
+  <a href="//localhost:1313/docs/kubernetes/" class="drawer-link">Kubernetes</a>
+  
+  <a href="//localhost:1313/docs/consul/" class="drawer-link">Consul</a>
+  
+  <a href="//localhost:1313/docs/autossl/" class="drawer-link">TLS &amp; Certificates</a>
+  
+  <a href="//localhost:1313/docs/cache/" class="drawer-link">Cache</a>
+  
+
+  <div class="drawer-footer">
+    <a href="https://github.com/sadoyan/aralez" class="drawer-github" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</nav>
+
+<script>
+(function () {
+  var ham     = document.getElementById('aralez-hamburger');
+  var drawer  = document.getElementById('aralez-drawer');
+  var overlay = document.getElementById('aralez-overlay');
+  var closeBtn= document.getElementById('aralez-drawer-close');
+
+  function openDrawer() {
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+    ham.classList.add('open');
+    ham.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    ham.classList.remove('open');
+    ham.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  ham.addEventListener('click', function () {
+    drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+  });
+  closeBtn.addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+
+  drawer.querySelectorAll('.drawer-link').forEach(function (a) {
+    a.addEventListener('click', closeDrawer);
+  });
+})();
+</script>
+
+
+  
+<div class="page-wrapper">
+  <aside class="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Documentation</div>
+    <nav class="sidebar-nav">
+      
+      <a href="//localhost:1313/docs/quickstart/">Quick Start</a>
+      
+      <a href="//localhost:1313/docs/config/">Config</a>
+      
+      <a href="//localhost:1313/docs/api/">API</a>
+      
+      <a href="//localhost:1313/docs/compare/">Comparison</a>
+      
+      <a href="//localhost:1313/docs/auth/">Authentication</a>
+      
+      <a href="//localhost:1313/docs/perf/">Benchmarks</a>
+      
+      <a href="//localhost:1313/docs/metrics/">Prometheus Metrics</a>
+      
+      <a href="//localhost:1313/docs/kubernetes/">Kubernetes</a>
+      
+      <a href="//localhost:1313/docs/consul/">Consul</a>
+      
+      <a href="//localhost:1313/docs/autossl/">TLS &amp; Certificates</a>
+      
+      <a href="//localhost:1313/docs/cache/">Cache</a>
+      
+    </nav>
+  </div>
+</aside>
+
+  <main class="main-content">
+    <div class="page-header">
+      <h1>Cache</h1>
+      <p class="page-desc">Types and configuration</p>
+    </div>
+    <p>Caching is disabled if the <code>cache:</code> block is commented out or omitted. Aralez supports three storage backends:</p>
+<ul>
+<li><strong><code>memory</code></strong>: Content is stored entirely in local RAM.
+<ul>
+<li><strong>Performance:</strong> Blazing fast with the lowest possible latency.</li>
+<li><strong>Persistence:</strong> Ephemeral; data does not survive process restarts.</li>
+<li><strong>Use Case:</strong> Ideal for single-instance setups requiring maximum speed and zero storage configuration overhead.</li>
+</ul>
+</li>
+<li><strong><code>hybrid</code></strong>: Content is tiered between local RAM and the local file system.
+<ul>
+<li><strong>Capacity:</strong> Allows cache sizes significantly larger than available physical RAM.</li>
+<li><strong>Tier Management:</strong> Hot and cold items are dynamically balanced across memory and disk.</li>
+<li><strong>Persistence:</strong> Memory states are periodically flushed to disk. Only flushed data survives restarts; any changes made after the last flush will be lost.</li>
+<li><strong>Disk Behavior:</strong> Expired data is lazily overwritten rather than actively purged, meaning the file system storage will quickly grow to its maximum configured capacity and remain stable at that size.</li>
+<li><strong>Use Case:</strong> Ideal for datasets larger than available RAM that require high-capacity local storage and persistence across restarts without an external Redis cluster.</li>
+</ul>
+</li>
+<li><strong><code>redis</code></strong>: Uses external RESP-compatible servers (e.g., Redis, Valkey, Dragonfly, KeyDB) as a centralized cache storage layer.
+<ul>
+<li><strong>Architecture:</strong> Requires an accessible external RESP-compliant cluster or instance.</li>
+<li><strong>Persistence:</strong> Handled externally by the database layer.</li>
+<li><strong>Use Case:</strong> Essential for horizontal scaling where multiple Aralez proxy instances need to share a unified cache pool.</li>
+</ul>
+</li>
+</ul>
+<p>Controlled by :</p>
+<ul>
+<li><code>cache:</code> Block to enable/disabe cache entirely. Removal of block will entirely cache</li>
+<li><code>cache.mem_size_mb</code> Set the size in MB for in memory cache, for <code>memory</code> or <code>hybrid</code> storage.</li>
+<li><code>cache.file_size_mb</code> Set the size in MB for in disk storage, for <code>hybrid</code> storage only.</li>
+<li><code>cache.ttl</code> Set TTL to cached items, respected by all storage backends. Required for all storage backends.</li>
+<li><code>cache.storage</code> Storage backend: <code>memory</code>, <code>hybrid</code>, or <code>redis://host:port</code>. Defaults to <code>memory</code>.</li>
+<li><code>cache.flush_interval</code> Interval in seconds to flush memory to disk. For <code>hybrid</code> mode only.</li>
+<li><code>cache.item_max_size</code> Maximum allowed size for a single cached item in megabytes. Do not set to more than 10-15Mb</li>
+</ul>
+<p>Only <strong>GET</strong> requests with <strong>2xx</strong> responses will be cached honoring <code>Cache-Control</code> headers, <code>Content-Length</code> header is required.
+Content without this header won&rsquo;t be cached or the size bigger than <code>cache_item_max_size</code> won&rsquo;t be cached.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="na">Cache-Control max-age</span> <span class="o">=</span> <span class="s">300;</span>
+</span></span><span class="line"><span class="cl"><span class="na">Cache-Control s-maxage</span> <span class="o">=</span> <span class="s">600;</span>
+</span></span><span class="line"><span class="cl"><span class="na">Cache-Control no-store;</span>
+</span></span><span class="line"><span class="cl"><span class="na">Cache-Control private;</span>
+</span></span></code></pre></div>
+  </main>
+</div>
+
+
+  <footer class="site-footer">
+  <span>© 2026 Aralez — Built on <a href="https://github.com/cloudflare/pingora" target="_blank" rel="noopener">Cloudflare Pingora</a></span>
+  <span>
+    <a href="https://github.com/sadoyan/aralez" target="_blank" rel="noopener">GitHub</a> ·
+    <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener">Apache 2.0 License</a>
+  </span>
+</footer>
+
+
+</body>
+</html>
