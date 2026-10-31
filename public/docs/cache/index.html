@@ -217,6 +217,19 @@
 <li><strong>Use Case:</strong> Essential for horizontal scaling where multiple Aralez proxy instances need to share a unified cache pool.</li>
 </ul>
 </li>
+<li><strong><code>tikv</code></strong> Uses a distributed transactional and raw key-value store (TiKV) backed by Placement Driver (PD) endpoints as a centralized, highly scalable cache storage layer.
+<ul>
+<li><strong>Architecture:</strong> Requires an accessible external TiKV cluster with list of or single PD endpoints (e.g., tikv://127.0.0.1:2379,127.0.0.2:2379).</li>
+<li><strong>Capacity:</strong> Horizontally scalable and distributed, allowing massive cache capacities far beyond single-node RAM or disk and Redis limits.</li>
+<li><strong>Persistence:</strong> Handled externally and reliably by the distributed TiKV cluster storage engine.</li>
+<li><strong>Requires:</strong> Externally running TiKV cluster with enabled <strong>TTL</strong>.
+<ul>
+<li><strong>TTL</strong> must be enabled on TiKV cluster otherwise cache will fail to write data. <a href="https://tikv.org/docs/5.1/concepts/explore-tikv-features/ttl/"><strong>How to enable TTL on TiKV</strong></a>:</li>
+</ul>
+</li>
+<li><strong>Use Case:</strong> Ideal for distributed, high-availability deployments where multiple Aralez proxy instances require a fault-tolerant, and horizontally scalable unified cache pool.</li>
+</ul>
+</li>
 </ul>
 <p>Controlled by :</p>
 <ul>
@@ -224,7 +237,7 @@
 <li><code>cache.mem_size_mb</code> Set the size in MB for in memory cache, for <code>memory</code> or <code>hybrid</code> storage.</li>
 <li><code>cache.file_size_mb</code> Set the size in MB for in disk storage, for <code>hybrid</code> storage only.</li>
 <li><code>cache.ttl</code> Set TTL to cached items, respected by all storage backends. Required for all storage backends.</li>
-<li><code>cache.storage</code> Storage backend: <code>memory</code>, <code>hybrid</code>, or <code>redis://host:port</code>. Defaults to <code>memory</code>.</li>
+<li><code>cache.storage</code> Storage backend: <code>memory</code>, <code>hybrid</code>, <code>redis://host:port</code> or <code>tikv://host1:port,host2:port</code>. Defaults to <code>memory</code>.</li>
 <li><code>cache.flush_interval</code> Interval in seconds to flush memory to disk. For <code>hybrid</code> mode only.</li>
 <li><code>cache.item_max_size</code> Maximum allowed size for a single cached item in megabytes. Do not set to more than 10-15Mb</li>
 </ul>
