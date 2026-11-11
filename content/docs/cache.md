@@ -10,7 +10,7 @@ Caching is disabled if the `cache:` block is commented out or omitted. Aralez su
   - **Performance:** Blazing fast with the lowest possible latency.
   - **Persistence:** Ephemeral; data does not survive process restarts.
   - **Use Case:** Ideal for single-instance setups requiring maximum speed and zero storage configuration overhead.
-- **`hybrid`**: Content is tiered between local RAM and the local file system.
+- **`hybrid`**: Content is tiered between local RAM and the local file system. **Experimental, do not use in production**
   - **Capacity:** Allows cache sizes significantly larger than available physical RAM.
   - **Tier Management:** Hot and cold items are dynamically balanced across memory and disk.
   - **Persistence:** Memory states are periodically flushed to disk. Only flushed data survives restarts; any changes made after the last flush will be lost.

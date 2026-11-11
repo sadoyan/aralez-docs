@@ -60,7 +60,8 @@ or thousands of upstreams are configures and there is need to offload heavy heal
 Currently, a single master is supported, Master consensus with full RAFT implementation is planned. 
 
 ### [Cache Documentation]({{% relref "/docs/cache" %}})
-
+---
+### [Logging Documentation]({{% relref "/docs/log" %}})
 ---
 
 ## `upstreams.yaml` — Upstream Mappings
@@ -324,30 +325,3 @@ servers:
 ```
 
 Defaults to environment variables `KUBERNETES_SERVICE_HOST` and `KUBERNETES_SERVICE_PORT_HTTPS`. For development only — delete for production use.
-
-### Structured logging
-
-**ElasticSearch**
-
-To enable logging to ElasticSearch set `log_structured: elasticsearch` in `main.yaml`. Changes in `main.yaml` requires restart to apply
-Configurations parameters for ElasticSearch servers are taken from OS environment.
-
-**These variables must be set.**
-
-- **LOG_ELASTIC_HOSTS** : URLs of Elasticsearch seed hosts, Aralez will take these hosts to construct ES client for all member hosts internally.
-- **LOG_ELASTIC_USER** : Username for ElasticSearch authentication.
-- **LOG_ELASTIC_PASSWORD** : Password for ElasticSearch authentication.
-- **LOG_ELASTIC_INDEX** :  Index to send longs to.
-- **LOG_ELASTIC_FLUSH_DURATION** : How long Aralez should keep logs in memory before flushing to ElasticSearch in bulk index api
-- **LOG_ELASTIC_BATCH_LEN** : How many messages Aralez should keep logs in memory before flushing to ElasticSearch in bulk index api, in seconds.
-
-The followings defaults fo all parameters:
-
-```bash
-LOG_ELASTIC_HOSTS = http://127.0.0.1:9200 
-LOG_ELASTIC_USER = elastic
-LOG_ELASTIC_PASSWORD = elastic
-LOG_ELASTIC_INDEX = aralez-logs
-LOG_ELASTIC_FLUSH_DURATION = 2 
-LOG_ELASTIC_BATCH_LEN = 200 
-```

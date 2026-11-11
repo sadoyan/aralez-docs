@@ -112,6 +112,8 @@
   
   <a href="//localhost:1313/docs/cache/" class="drawer-link">Cache</a>
   
+  <a href="//localhost:1313/docs/log/" class="drawer-link">Logging</a>
+  
 
   <div class="drawer-footer">
     <a href="https://github.com/sadoyan/aralez" class="drawer-github" target="_blank" rel="noopener">GitHub</a>
@@ -182,6 +184,8 @@
       <a href="//localhost:1313/docs/autossl/">TLS &amp; Certificates</a>
       
       <a href="//localhost:1313/docs/cache/">Cache</a>
+      
+      <a href="//localhost:1313/docs/log/">Logging</a>
       
     </nav>
   </div>
@@ -414,6 +418,8 @@
 or thousands of upstreams are configures and there is need to offload heavy health checks and type detections.
 Currently, a single master is supported, Master consensus with full RAFT implementation is planned.</p>
 <h3 id="cache-documentation"><a href="//localhost:1313/docs/cache/">Cache Documentation</a></h3>
+<hr>
+<h3 id="logging-documentation"><a href="//localhost:1313/docs/log/">Logging Documentation</a></h3>
 <hr>
 <h2 id="upstreamsyaml--upstream-mappings"><code>upstreams.yaml</code> — Upstream Mappings</h2>
 <ul>
@@ -666,27 +672,7 @@ Naming of files is not matter, it just needs to have extension <code>.yaml</code
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">servers</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="s2">&#34;172.16.0.11:5443&#34;</span><span class="w">
 </span></span></span></code></pre></div><p>Defaults to environment variables <code>KUBERNETES_SERVICE_HOST</code> and <code>KUBERNETES_SERVICE_PORT_HTTPS</code>. For development only — delete for production use.</p>
-<h3 id="structured-logging">Structured logging</h3>
-<p><strong>ElasticSearch</strong></p>
-<p>To enable logging to ElasticSearch set <code>log_structured: elasticsearch</code> in <code>main.yaml</code>. Changes in <code>main.yaml</code> requires restart to apply
-Configurations parameters for ElasticSearch servers are taken from OS environment.</p>
-<p><strong>These variables must be set.</strong></p>
-<ul>
-<li><strong>LOG_ELASTIC_HOSTS</strong> : URLs of Elasticsearch seed hosts, Aralez will take these hosts to construct ES client for all member hosts internally.</li>
-<li><strong>LOG_ELASTIC_USER</strong> : Username for ElasticSearch authentication.</li>
-<li><strong>LOG_ELASTIC_PASSWORD</strong> : Password for ElasticSearch authentication.</li>
-<li><strong>LOG_ELASTIC_INDEX</strong> :  Index to send longs to.</li>
-<li><strong>LOG_ELASTIC_FLUSH_DURATION</strong> : How long Aralez should keep logs in memory before flushing to ElasticSearch in bulk index api</li>
-<li><strong>LOG_ELASTIC_BATCH_LEN</strong> : How many messages Aralez should keep logs in memory before flushing to ElasticSearch in bulk index api, in seconds.</li>
-</ul>
-<p>The followings defaults fo all parameters:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">LOG_ELASTIC_HOSTS</span> <span class="o">=</span> http://127.0.0.1:9200 
-</span></span><span class="line"><span class="cl"><span class="nv">LOG_ELASTIC_USER</span> <span class="o">=</span> elastic
-</span></span><span class="line"><span class="cl"><span class="nv">LOG_ELASTIC_PASSWORD</span> <span class="o">=</span> elastic
-</span></span><span class="line"><span class="cl"><span class="nv">LOG_ELASTIC_INDEX</span> <span class="o">=</span> aralez-logs
-</span></span><span class="line"><span class="cl"><span class="nv">LOG_ELASTIC_FLUSH_DURATION</span> <span class="o">=</span> <span class="m">2</span> 
-</span></span><span class="line"><span class="cl"><span class="nv">LOG_ELASTIC_BATCH_LEN</span> <span class="o">=</span> <span class="m">200</span> 
-</span></span></code></pre></div>
+
   </main>
 </div>
 

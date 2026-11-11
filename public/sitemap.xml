@@ -10,6 +10,8 @@
   </url><url>
     <loc>//localhost:1313/docs/api/</loc>
   </url><url>
+    <loc>//localhost:1313/docs/log/</loc>
+  </url><url>
     <loc>//localhost:1313/docs/auth/</loc>
   </url><url>
     <loc>//localhost:1313/docs/perf/</loc>

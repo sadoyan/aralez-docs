@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logging Configuration — Aralez — Reverse Proxy built on Cloudflare&#39;s Pingora</title>
+  <meta name="description" content="Reference for logging, access logs, custom patterns, file rotation, and structured Elasticsearch sinks">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="//localhost:1313/css/main.css">
+</head>
+<body>
+
+  <header class="site-header">
+  <a href="//localhost:1313/" class="header-brand">
+    <img src="//localhost:1313/images/logo.png" alt="Aralez logo">
+    <span class="brand-name">Home</span>
+    
+  </a>
+  <div>
+
+
+
+<div class="header-right">
+  <a href="https://github.com/sadoyan/aralez" class="header-github" target="_blank" rel="noopener">
+    <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+    </svg>
+    GitHub
+  </a>
+  <a href="https://crates.io/crates/aralez"
+     class="header-github"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Aralez on crates.io">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 2 2 7.5v9L12 22l10-5.5v-9L12 2zm0 2.3 6.9 3.8L12 12 5.1 8.1 12 4.3zM4 9.8l7 3.9v5.7l-7-3.9V9.8zm9 9.6v-5.7l7-3.9v5.7l-7 3.9z"/>
+    </svg>
+    Crates
+  </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <button class="hamburger" id="aralez-hamburger" aria-label="Open navigation menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  </div>
+</header>
+
+<div class="drawer-overlay" id="aralez-overlay"></div>
+
+<nav class="mobile-drawer" id="aralez-drawer" aria-label="Mobile navigation">
+  <div class="drawer-header">
+    <span class="drawer-title">Aralez Docs</span>
+    <button class="drawer-close" id="aralez-drawer-close" aria-label="Close menu">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="drawer-section-title">Documentation</div>
+  
+  <a href="//localhost:1313/docs/quickstart/" class="drawer-link">Quick Start</a>
+  
+  <a href="//localhost:1313/docs/config/" class="drawer-link">Config</a>
+  
+  <a href="//localhost:1313/docs/api/" class="drawer-link">API</a>
+  
+  <a href="//localhost:1313/docs/compare/" class="drawer-link">Comparison</a>
+  
+  <a href="//localhost:1313/docs/auth/" class="drawer-link">Authentication</a>
+  
+  <a href="//localhost:1313/docs/perf/" class="drawer-link">Benchmarks</a>
+  
+  <a href="//localhost:1313/docs/metrics/" class="drawer-link">Prometheus Metrics</a>
+  
+  <a href="//localhost:1313/docs/kubernetes/" class="drawer-link">Kubernetes</a>
+  
+  <a href="//localhost:1313/docs/consul/" class="drawer-link">Consul</a>
+  
+  <a href="//localhost:1313/docs/autossl/" class="drawer-link">TLS &amp; Certificates</a>
+  
+  <a href="//localhost:1313/docs/cache/" class="drawer-link">Cache</a>
+  
+  <a href="//localhost:1313/docs/log/" class="drawer-link">Logging</a>
+  
+
+  <div class="drawer-footer">
+    <a href="https://github.com/sadoyan/aralez" class="drawer-github" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</nav>
+
+<script>
+(function () {
+  var ham     = document.getElementById('aralez-hamburger');
+  var drawer  = document.getElementById('aralez-drawer');
+  var overlay = document.getElementById('aralez-overlay');
+  var closeBtn= document.getElementById('aralez-drawer-close');
+
+  function openDrawer() {
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+    ham.classList.add('open');
+    ham.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    ham.classList.remove('open');
+    ham.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  ham.addEventListener('click', function () {
+    drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+  });
+  closeBtn.addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+
+  drawer.querySelectorAll('.drawer-link').forEach(function (a) {
+    a.addEventListener('click', closeDrawer);
+  });
+})();
+</script>
+
+
+  
+<div class="page-wrapper">
+  <aside class="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Documentation</div>
+    <nav class="sidebar-nav">
+      
+      <a href="//localhost:1313/docs/quickstart/">Quick Start</a>
+      
+      <a href="//localhost:1313/docs/config/">Config</a>
+      
+      <a href="//localhost:1313/docs/api/">API</a>
+      
+      <a href="//localhost:1313/docs/compare/">Comparison</a>
+      
+      <a href="//localhost:1313/docs/auth/">Authentication</a>
+      
+      <a href="//localhost:1313/docs/perf/">Benchmarks</a>
+      
+      <a href="//localhost:1313/docs/metrics/">Prometheus Metrics</a>
+      
+      <a href="//localhost:1313/docs/kubernetes/">Kubernetes</a>
+      
+      <a href="//localhost:1313/docs/consul/">Consul</a>
+      
+      <a href="//localhost:1313/docs/autossl/">TLS &amp; Certificates</a>
+      
+      <a href="//localhost:1313/docs/cache/">Cache</a>
+      
+      <a href="//localhost:1313/docs/log/">Logging</a>
+      
+    </nav>
+  </div>
+</aside>
+
+  <main class="main-content">
+    <div class="page-header">
+      <h1>Logging Configuration</h1>
+      <p class="page-desc">Reference for logging, access logs, custom patterns, file rotation, and structured Elasticsearch sinks</p>
+    </div>
+    <h2 id="overview">Overview</h2>
+<p>Aralez provides flexible logging controls supporting standard error output, file-based rotation, custom date/format patterns, access logging, and bulk-shipped structured logs to
+Elasticsearch.</p>
+<hr>
+<h2 id="mainyaml-logging-parameters"><code>main.yaml</code> Logging Parameters</h2>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Key</th>
+          <th style="text-align: left">Example Value</th>
+          <th style="text-align: left">Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>error_log</strong></td>
+          <td style="text-align: left"><code>/tmp/aralez_err.log</code></td>
+          <td style="text-align: left">Optional. File path for directing standard error log output when enabled.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>log_level</strong></td>
+          <td style="text-align: left"><code>info</code></td>
+          <td style="text-align: left">Global logging verbosity threshold (<code>info</code>, <code>warn</code>, <code>error</code>, <code>debug</code>, <code>trace</code>, <code>off</code>).</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>access_log</strong></td>
+          <td style="text-align: left"><code>all</code></td>
+          <td style="text-align: left">Access logging mode (<code>all</code>, <code>error</code>). Omit or comment out to disable.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>log_pattern</strong></td>
+          <td style="text-align: left"><code>{d(%Y-%m-%d %H:%M:%S)} {h({l})} - {t} - {m} {n}</code></td>
+          <td style="text-align: left">Optional custom log pattern. Defaults to <code>{d(%Y-%m-%d %H:%M:%S)} {l} - {m}{n}</code>.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>log_file</strong></td>
+          <td style="text-align: left"><code>/tmp/aralez.log, 20, 5, compress</code></td>
+          <td style="text-align: left">Optional file logging config: file path, max size (MB), rotated files to keep, and compression toggle.</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>log_structured</strong></td>
+          <td style="text-align: left"><code>elasticsearch</code></td>
+          <td style="text-align: left">Optional structured logging sink target (e.g., <code>elasticsearch</code>).</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="log-output-modes">Log Output Modes</h2>
+<ul>
+<li><strong>Standard Output (Stdout):</strong> If no file logging or <code>error_log</code> parameters are configured, Aralez automatically directs logs to standard output.</li>
+<li><strong>Access Logging:</strong> When enabled via <code>access_log: all</code>, every processed request logs its HTTP status code, result (<code>hit</code>/<code>miss</code>), request path, Virtual Host (<code>Host</code> header), client
+IP, protocol version, and User-Agent.</li>
+</ul>
+<hr>
+<h2 id="structured-logging-elasticsearch">Structured Logging (Elasticsearch)</h2>
+<p>To enable structured bulk logging to Elasticsearch, configure the following parameter in <code>main.yaml</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">log_structured</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;elasticsearch&#34;</span><span class="w">
+</span></span></span></code></pre></div><p><strong>Required Environment Variables</strong></p>
+<ul>
+<li><code>LOG_ELASTIC_HOSTS</code>: URLs of Elasticsearch seed hosts used to construct the internal bulk client.</li>
+<li><code>LOG_ELASTIC_USER</code>: Username for Elasticsearch HTTP authentication.</li>
+<li><code>LOG_ELASTIC_PASSWORD</code>: Password for Elasticsearch HTTP authentication.</li>
+<li><code>LOG_ELASTIC_INDEX</code>: Target Elasticsearch index name for log ingestion.</li>
+<li><code>LOG_ELASTIC_FLUSH_DURATION</code>: Time window (in seconds) to buffer logs in memory before flushing.</li>
+<li><code>LOG_ELASTIC_BATCH_LEN</code>: Maximum batch message count held in memory before triggering a bulk index flush.</li>
+</ul>
+<p>The followings defaults fo all parameters:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LOG_ELASTIC_HOSTS</span><span class="o">=</span>http://127.0.0.1:9200 
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LOG_ELASTIC_USER</span><span class="o">=</span>elastic
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LOG_ELASTIC_PASSWORD</span><span class="o">=</span>elastic
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LOG_ELASTIC_INDEX</span><span class="o">=</span>aralez-logs
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LOG_ELASTIC_FLUSH_DURATION</span><span class="o">=</span><span class="m">2</span> 
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LOG_ELASTIC_BATCH_LEN</span><span class="o">=</span><span class="m">200</span> 
+</span></span></code></pre></div><hr>
+<h2 id="writing-a-custom-logging-module">Writing a Custom Logging Module</h2>
+<p><strong>Overview</strong></p>
+<p>Aralez features a modular, decoupled logging architecture powered by asynchronous message-passing (mpsc channels) and the inventory crate for compile-time plugin registration.</p>
+<p>This guide walks through how to implement a custom logging backend (such as shipping logs to a custom sink, database, or external API) by writing a plugin that conforms to the WriteLog trait.</p>
+<p><strong>Architectural Pattern</strong></p>
+<ul>
+<li>Decoupled Workloads: Application and access logs are pushed into a Tokio multi-producer, single-consumer (mpsc) channel, ensuring that slow logging sinks never block the proxy&rsquo;s high-performance request hot path.</li>
+<li>Trait Implementation: Your custom struct implements the WriteLog trait via #[async_trait], listening asynchronously for incoming StructuredSystemLog messages.</li>
+<li>Inventory Registration: The inventory::submit! macro registers your plugin at compile time, making it dynamically available to the Aralez core engine without modifying core routing logic.</li>
+</ul>
+<p><strong>Code Example</strong></p>
+<p>Here is a fully functional reference implementation of a custom logging module.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="k">crate</span>::<span class="n">logging</span>::<span class="n">core</span>::<span class="n">StructuredSystemLog</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="k">crate</span>::<span class="n">logging</span>::<span class="n">types</span>::<span class="p">{</span><span class="n">LogBackendPlugin</span><span class="p">,</span><span class="w"> </span><span class="n">WriteLog</span><span class="p">};</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">async_trait</span>::<span class="n">async_trait</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">tokio</span>::<span class="n">sync</span>::<span class="n">mpsc</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">struct</span> <span class="nc">Example</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#[async_trait]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">impl</span><span class="w"> </span><span class="n">WriteLog</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Example</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">run</span><span class="p">(</span><span class="o">&amp;</span><span class="bp">self</span><span class="p">,</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">rx</span>: <span class="nc">mpsc</span>::<span class="n">Receiver</span><span class="o">&lt;</span><span class="n">StructuredSystemLog</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">while</span><span class="w"> </span><span class="kd">let</span><span class="w"> </span><span class="nb">Some</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rx</span><span class="p">.</span><span class="n">recv</span><span class="p">().</span><span class="k">await</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">            </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;Sending log Example : </span><span class="si">{:?}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">msg</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">inventory</span>::<span class="fm">submit!</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">LogBackendPlugin</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">name</span>: <span class="s">&#34;example&#34;</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="n">factory</span>: <span class="o">||</span><span class="w"> </span><span class="nb">Box</span>::<span class="n">new</span><span class="p">(</span><span class="n">Example</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><p>Replace <code>println!(&quot;Sending log Example : {:?}&quot;, msg);</code> with your logic.</p>
+<p><strong>Step-by-Step Implementation Guide</strong></p>
+<ol>
+<li>
+<p>Define the Plugin Struct
+Create a unit struct or stateful struct (e.g., pub struct Example;) that will represent your logging backend handler.</p>
+</li>
+<li>
+<p>Implement the WriteLog Trait Annotate your implementation block with #[async_trait] and define the run method.</p>
+<ul>
+<li>The rx receiver is a Tokio mpsc::Receiver<StructuredSystemLog> channel.</li>
+<li>Use a while let Some(msg) = rx.recv().await loop to process log messages as they arrive asynchronously.</li>
+</ul>
+</li>
+<li>
+<p>Register via inventory::submit! Expose your plugin to the Aralez runtime by submitting a LogBackendPlugin description:</p>
+<ul>
+<li>name: The string identifier users will reference in their configuration (e.g., &ldquo;example&rdquo;).</li>
+<li>factory: A closure returning a boxed instance of your struct (Box::new(Example)).</li>
+</ul>
+</li>
+</ol>
+<p><strong>Activating Your Custom Module</strong></p>
+<p>Once compiled into the binary, you can select and enable your custom logging backend in your configuration or initialization flow just like built-in sinks.</p>
+
+  </main>
+</div>
+
+
+  <footer class="site-footer">
+  <span>© 2026 Aralez — Built on <a href="https://github.com/cloudflare/pingora" target="_blank" rel="noopener">Cloudflare Pingora</a></span>
+  <span>
+    <a href="https://github.com/sadoyan/aralez" target="_blank" rel="noopener">GitHub</a> ·
+    <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener">Apache 2.0 License</a>
+  </span>
+</footer>
+
+
+</body>
+</html>
