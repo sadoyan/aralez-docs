@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> — Aralez — Reverse Proxy built on Cloudflare&#39;s Pingora</title>
+  <meta name="description" content="High-performance Rust reverse proxy with zero-config TLS, gRPC, WebSocket, Consul &amp; Kubernetes support">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="//localhost:1313/css/main.css">
+</head>
+<body>
+
+  <header class="site-header">
+  <a href="//localhost:1313/" class="header-brand">
+    <img src="//localhost:1313/images/logo.png" alt="Aralez logo">
+    <span class="brand-name">Home</span>
+    
+  </a>
+  <div>
+
+
+
+<div class="header-right">
+  <a href="https://github.com/sadoyan/aralez" class="header-github" target="_blank" rel="noopener">
+    <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+    </svg>
+    GitHub
+  </a>
+  <a href="https://crates.io/crates/aralez"
+     class="header-github"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Aralez on crates.io">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 2 2 7.5v9L12 22l10-5.5v-9L12 2zm0 2.3 6.9 3.8L12 12 5.1 8.1 12 4.3zM4 9.8l7 3.9v5.7l-7-3.9V9.8zm9 9.6v-5.7l7-3.9v5.7l-7 3.9z"/>
+    </svg>
+    Crates
+  </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <button class="hamburger" id="aralez-hamburger" aria-label="Open navigation menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  </div>
+</header>
+
+<div class="drawer-overlay" id="aralez-overlay"></div>
+
+<nav class="mobile-drawer" id="aralez-drawer" aria-label="Mobile navigation">
+  <div class="drawer-header">
+    <span class="drawer-title">Aralez Docs</span>
+    <button class="drawer-close" id="aralez-drawer-close" aria-label="Close menu">
+      <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor">
+        <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="drawer-section-title">Documentation</div>
+  
+  <a href="//localhost:1313/docs/quickstart/" class="drawer-link">Quick Start</a>
+  
+  <a href="//localhost:1313/docs/config/" class="drawer-link">Config</a>
+  
+  <a href="//localhost:1313/docs/api/" class="drawer-link">API</a>
+  
+  <a href="//localhost:1313/docs/compare/" class="drawer-link">Comparison</a>
+  
+  <a href="//localhost:1313/docs/auth/" class="drawer-link">Authentication</a>
+  
+  <a href="//localhost:1313/docs/perf/" class="drawer-link">Benchmarks</a>
+  
+  <a href="//localhost:1313/docs/metrics/" class="drawer-link">Prometheus Metrics</a>
+  
+  <a href="//localhost:1313/docs/kubernetes/" class="drawer-link">Kubernetes</a>
+  
+  <a href="//localhost:1313/docs/consul/" class="drawer-link">Consul</a>
+  
+  <a href="//localhost:1313/docs/autossl/" class="drawer-link">TLS &amp; Certificates</a>
+  
+  <a href="//localhost:1313/docs/cache/" class="drawer-link">Cache</a>
+  
+  <a href="//localhost:1313/docs/log/" class="drawer-link">Logging</a>
+  
+  <a href="//localhost:1313/docs/features/" class="drawer-link">Features</a>
+  
+
+  <div class="drawer-footer">
+    <a href="https://github.com/sadoyan/aralez" class="drawer-github" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</nav>
+
+<script>
+(function () {
+  var ham     = document.getElementById('aralez-hamburger');
+  var drawer  = document.getElementById('aralez-drawer');
+  var overlay = document.getElementById('aralez-overlay');
+  var closeBtn= document.getElementById('aralez-drawer-close');
+
+  function openDrawer() {
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+    ham.classList.add('open');
+    ham.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    ham.classList.remove('open');
+    ham.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  ham.addEventListener('click', function () {
+    drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+  });
+  closeBtn.addEventListener('click', closeDrawer);
+  overlay.addEventListener('click', closeDrawer);
+
+  drawer.querySelectorAll('.drawer-link').forEach(function (a) {
+    a.addEventListener('click', closeDrawer);
+  });
+})();
+</script>
+
+
+  
+<div class="page-wrapper">
+  <aside class="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Documentation</div>
+    <nav class="sidebar-nav">
+      
+      <a href="//localhost:1313/docs/quickstart/">Quick Start</a>
+      
+      <a href="//localhost:1313/docs/config/">Config</a>
+      
+      <a href="//localhost:1313/docs/api/">API</a>
+      
+      <a href="//localhost:1313/docs/compare/">Comparison</a>
+      
+      <a href="//localhost:1313/docs/auth/">Authentication</a>
+      
+      <a href="//localhost:1313/docs/perf/">Benchmarks</a>
+      
+      <a href="//localhost:1313/docs/metrics/">Prometheus Metrics</a>
+      
+      <a href="//localhost:1313/docs/kubernetes/">Kubernetes</a>
+      
+      <a href="//localhost:1313/docs/consul/">Consul</a>
+      
+      <a href="//localhost:1313/docs/autossl/">TLS &amp; Certificates</a>
+      
+      <a href="//localhost:1313/docs/cache/">Cache</a>
+      
+      <a href="//localhost:1313/docs/log/">Logging</a>
+      
+      <a href="//localhost:1313/docs/features/">Features</a>
+      
+    </nav>
+  </div>
+</aside>
+
+  <main class="main-content">
+    <div class="page-header">
+      <h1></h1>
+      
+    </div>
+    <h1 id="feature-list">Feature List</h1>
+<p>Aralez is a Rust-based reverse proxy and load balancer built on
+Cloudflare&rsquo;s Pingora framework. It provides runtime-reloadable routing,
+automatic protocol handling, service discovery, traffic controls,
+caching, and operational APIs.</p>
+<h2 id="1-proxying-and-protocol-support">1. Proxying and Protocol Support</h2>
+<ul>
+<li>Reverse proxy for HTTP and HTTPS traffic.</li>
+<li>HTTP/2 support with automatic protocol handling.</li>
+<li>gRPC proxying over HTTP/2.</li>
+<li>WebSocket proxying.</li>
+<li>TLS termination for incoming connections.</li>
+<li>TLS connections to upstream servers are detected automatically during health checks.</li>
+<li>Automatic handling of upstream HTTP/2 and gRPC capabilities through health checks.</li>
+<li>Configurable upstream keepalive connection pool size.</li>
+<li>Configurable downstream TCP keepalive parameters.</li>
+<li>Optional TCP Fast Open.</li>
+<li>Support for distributing connections across worker threads.</li>
+</ul>
+<h2 id="2-routing-and-upstream-management">2. Routing and Upstream Management</h2>
+<ul>
+<li>Virtual-host routing based on the requested hostname.</li>
+<li>Path-based routing, including deeply nested paths.</li>
+<li>Best-match path selection.</li>
+<li>Multiple backend servers per route.</li>
+<li>A special <code>DEFAULT</code> upstream for catch-all routing.</li>
+<li>HTTP-to-HTTPS redirects, configurable globally or per host/path.</li>
+<li>Explicit redirects to another URL through <code>redirect_to</code>.</li>
+<li>Global, host-level, and path-level configuration.</li>
+<li>Custom request headers sent to upstream servers.</li>
+<li>Custom response headers sent to clients.</li>
+<li>Global headers, including headers commonly used for CORS.</li>
+<li>Sticky sessions using a cookie with a configurable <code>Max-Age</code>.</li>
+<li>File-based upstream configuration.</li>
+<li>Configuration split across multiple YAML files in <code>conf.d</code>.</li>
+<li>Split configuration files can define multiple hosts; conflicting host settings are resolved according to file application order, with later files taking precedence.</li>
+<li>Runtime changes to upstream configuration without restarting Aralez.</li>
+</ul>
+<h2 id="3-service-discovery-and-orchestration">3. Service Discovery and Orchestration</h2>
+<h3 id="consul">Consul</h3>
+<ul>
+<li>Consul API integration for discovering upstream services.</li>
+<li>Periodic configuration updates from Consul.</li>
+<li>Multiple Consul server endpoints.</li>
+<li>Consul ACL token support.</li>
+<li>Service filtering using the <code>aralez.service=yes</code> tag.</li>
+<li>Hostname and path mapping through service tags.</li>
+<li>Nomad integration through Consul service registration.</li>
+<li>Tag-based configuration of request limits, HTTPS redirects, and client/server headers.</li>
+<li>Multiple client and server header tags per service.</li>
+</ul>
+<h3 id="kubernetes">Kubernetes</h3>
+<ul>
+<li>Kubernetes API integration for discovering services and upstream endpoints.</li>
+<li>Kubernetes API server configuration.</li>
+<li>Service-account token authentication.</li>
+<li>Configurable token file path for development or custom deployments.</li>
+<li>Hostname, service, and path mappings.</li>
+<li>Per-service request limits, HTTPS redirects, and custom headers.</li>
+<li>Kubernetes service discovery can use the in-cluster API endpoint and  service-account credentials.</li>
+</ul>
+<h2 id="4-tls-and-certificate-management">4. TLS and Certificate Management</h2>
+<ul>
+<li>Optional HTTPS listener.</li>
+<li>PEM certificate and private-key support.</li>
+<li>Certificate and key files use matching names with <code>.crt</code> and <code>.key</code> extensions.</li>
+<li>Certificates are loaded at runtime when new certificate files are added; a restart is not required.</li>
+<li>Configurable TLS security profile:
+<ul>
+<li><code>high</code></li>
+<li><code>medium</code></li>
+<li><code>unsafe</code></li>
+</ul>
+</li>
+<li>The documented <code>high</code> profile is aligned with Qualys SSL Labs A+.</li>
+<li>Built-in Let&rsquo;s Encrypt ACME account creation.</li>
+<li>Automatic certificate ordering.</li>
+<li>Automatic certificate renewal, beginning approximately 30 days before expiry.</li>
+<li>Automatic loading of renewed certificates without restarting Aralez.</li>
+<li>HTTP-01 ACME challenge support.</li>
+<li>DNS-01 ACME challenge support.</li>
+<li>DNS-01 provider integrations documented for:
+<ul>
+<li>Cloudflare</li>
+<li>AWS Route 53</li>
+<li>DigitalOcean</li>
+</ul>
+</li>
+<li>Extensible DNS-01 provider interface for implementing additional DNS providers.</li>
+<li>ACME account credentials and managed domain lists are stored in the <code>autoconfigs</code> directory.</li>
+</ul>
+<h2 id="5-authentication-and-access-control">5. Authentication and Access Control</h2>
+<p>Authentication can be configured globally or per path. Global authentication overrides per-path authentication.</p>
+<p>Supported methods:</p>
+<ul>
+<li><strong>HTTP Basic :</strong> Username and password.</li>
+<li><strong>API Key:</strong> Validates the <code>x-api-key</code> request header.</li>
+<li><strong>JWT:</strong> Accepts a token through the <code>Authorization: Bearer</code> header or the <code>araleztoken</code> URL parameter.</li>
+<li><strong>Forward:</strong> Delegates authentication to an external authentication service. (Forward Auth)</li>
+</ul>
+<p>Additional authentication capabilities:</p>
+<ul>
+<li>One authentication method can be active at a time for a configuration scope.</li>
+<li>Built-in API endpoint for generating JWT tokens.</li>
+<li>JWT expiration configured in minutes.</li>
+<li>Master-key-based JWT generation and validation.</li>
+<li>Authentication can be applied globally or to individual virtual hosts and paths.</li>
+</ul>
+<h2 id="6-rate-limiting-and-traffic-controls">6. Rate Limiting and Traffic Controls</h2>
+<ul>
+<li>Request rate limiting.</li>
+<li>Separate limits for requests that produce 4xx responses.</li>
+<li>Limits can be configured globally, per host, and per path.</li>
+<li>Limits are calculated per requester IP and virtual host.</li>
+<li>Requests exceeding configured limits receive <code>429 Too Many Requests</code>.</li>
+<li>Rate limits can be configured for Consul-discovered services through service tags.</li>
+<li>Health checks can be enabled or disabled per upstream/path.</li>
+</ul>
+<h2 id="7-health-checks-and-upstream-status">7. Health Checks and Upstream Status</h2>
+<ul>
+<li>Active upstream health checks.</li>
+<li>Configurable health-check interval.</li>
+<li>Configurable health-check method:
+<ul>
+<li><code>HEAD</code></li>
+<li><code>GET</code></li>
+<li><code>POST</code></li>
+</ul>
+</li>
+<li>Health-check status is used to track backend availability.</li>
+<li>Health checks detect upstream TLS, HTTP/2, and gRPC characteristics.</li>
+<li>Health checks can be disabled for individual routes.</li>
+<li>When health checks are disabled, upstream protocol flags such as <code>is_ssl</code> and <code>is_http2</code> can be configured manually.</li>
+<li>Status API exposes live backend health information and configured upstream details.</li>
+</ul>
+<h2 id="8-response-caching">8. Response Caching</h2>
+<p>Caching is optional and disabled when the <code>cache</code> configuration block is omitted.</p>
+<p>Supported storage backends:</p>
+<ul>
+<li><strong>Memory:</strong> Local in-memory cache.</li>
+<li><strong>Hybrid:</strong> Memory and local disk tiers; documented as experimental and not recommended for production.</li>
+<li><strong>Redis:</strong> Supports RESP-compatible systems such as Redis, Valkey, Dragonfly, and KeyDB.</li>
+<li><strong>TiKV:</strong> Distributed key-value storage using TiKV PD endpoints; the TiKV cluster must have TTL enabled.</li>
+</ul>
+<p>Cache controls include:</p>
+<ul>
+<li>Configurable memory capacity.</li>
+<li>Configurable disk capacity for hybrid storage.</li>
+<li>Configurable cache directory for hybrid storage.</li>
+<li>Configurable item size limit.</li>
+<li>Configurable TTL.</li>
+<li>Configurable memory-to-disk flush interval for hybrid storage.</li>
+<li>Upstream <code>Cache-Control</code> header support, including <code>max-age</code>, <code>s-maxage</code>, <code>no-store</code>, and <code>private</code>.</li>
+<li>Cache eligibility limited to successful 2xx GET responses.</li>
+<li><code>Content-Length</code> is required for a response to be cached.</li>
+<li>Responses exceeding the configured maximum item size are not cached.</li>
+<li>Redis-compatible and TiKV backends allow cache storage to be shared outside a single Aralez process.</li>
+</ul>
+<h2 id="9-remote-configuration-and-management-api">9. Remote Configuration and Management API</h2>
+<ul>
+<li>Built-in HTTP API for pushing a new upstream YAML configuration.</li>
+<li>Configuration updates are applied immediately without restarting Aralez.</li>
+<li>API authentication using the <code>MASTERKEY</code> environment variable.</li>
+<li>Master key can be supplied using the <code>API-KEY</code> header or the <code>key</code> URL query parameter.</li>
+<li>Configuration updates can be temporary or persisted to the local upstream configuration file using the <code>save</code> parameter.</li>
+<li>Status endpoint for retrieving live upstream and backend health.</li>
+<li>Status endpoint for retrieving the full configured upstream list and route/backend properties.</li>
+<li>Built-in JWT generation endpoint.</li>
+<li>Built-in ACME account creation and certificate-ordering endpoints.</li>
+</ul>
+<p><strong>Security note:</strong> The configuration API does not provide TLS itself.
+Its documentation recommends keeping it bound to localhost and using a
+TLS-terminating reverse proxy with authentication for remote access.</p>
+<h2 id="10-cluster-mode">10. Cluster Mode</h2>
+<ul>
+<li>Master/worker deployment model.</li>
+<li>Master node performs health checks and distributes configuration/status updates.</li>
+<li>Worker nodes serve live proxy traffic.</li>
+<li>Worker health checks are disabled; workers receive status from the master.</li>
+<li>Shared <code>MASTER_KEY</code> is required on master and worker nodes.</li>
+<li>Master configuration includes worker management endpoints.</li>
+<li>Intended to offload health checks and protocol detection in deployments with large numbers of upstreams.</li>
+<li>The documented implementation supports a single master; RAFT-based master consensus is described as planned, not currently available.</li>
+</ul>
+<h2 id="11-static-file-serving">11. Static File Serving</h2>
+<ul>
+<li>Built-in static file server.</li>
+<li>Configurable local directory to serve.</li>
+<li>Configurable bind address and port.</li>
+<li>Can be used as a standalone endpoint or as an upstream target.</li>
+</ul>
+<h2 id="12-logging-and-observability">12. Logging and Observability</h2>
+<ul>
+<li>Configurable global log verbosity:
+<ul>
+<li><code>info</code></li>
+<li><code>warn</code></li>
+<li><code>error</code></li>
+<li><code>debug</code></li>
+<li><code>trace</code></li>
+<li><code>off</code></li>
+</ul>
+</li>
+<li>Optional access logging.</li>
+<li>Access log modes for all requests or errors only.</li>
+<li>Configurable log output pattern.</li>
+<li>Optional log file output.</li>
+<li>Size-based log rotation.</li>
+<li>Configurable number of rotated files to retain.</li>
+<li>Optional log compression.</li>
+<li>Structured logging output for Elasticsearch.</li>
+<li>Prometheus metrics endpoint.</li>
+<li>Status API for inspecting configured upstreams and live backend health.</li>
+</ul>
+<h2 id="13-process-and-runtime-operations">13. Process and Runtime Operations</h2>
+<ul>
+<li>Configurable number of proxy worker threads.</li>
+<li>Optional privilege dropping using a configured user and group.</li>
+<li>PID file support.</li>
+<li>Upgrade socket for zero-downtime binary upgrades and state handoffs.</li>
+<li>Configurable upstream keepalive pool size.</li>
+<li>Configurable TCP keepalive idle time, probe interval, and probe
+count.</li>
+<li>Optional <code>SO_REUSEPORT</code>.</li>
+<li>Configurable TCP Fast Open backlog.</li>
+</ul>
+<h2 id="14-configuration-and-deployment">14. Configuration and Deployment</h2>
+<ul>
+<li>YAML-based startup configuration (<code>main.yaml</code>).</li>
+<li>YAML-based upstream configuration (<code>upstreams.yaml</code>).</li>
+<li>File and service-discovery-based upstream providers.</li>
+<li>Multiple upstream configuration files through <code>conf.d</code>.</li>
+<li>Environment-variable configuration for secrets and integrations,
+including ACME DNS credentials and master keys.</li>
+<li>Designed to run standalone or as part of Nomad/Consul and Kubernetes
+deployments.</li>
+<li>Can be deployed as a self-contained proxy binary without requiring
+plugins or sidecars for the documented built-in features.</li>
+</ul>
+<h2 id="feature-summary">Feature Summary</h2>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: left">Area</th>
+          <th style="text-align: left">Capabilities</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: left"><strong>Proxy protocols</strong></td>
+          <td style="text-align: left">HTTP, HTTPS, HTTP/2, gRPC,WebSocket</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Routing</strong></td>
+          <td style="text-align: left">Virtual hosts, path matching, catch-all routing, redirects</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Upstreams</strong></td>
+          <td style="text-align: left">Multiple backends, keepalive pooling, sticky sessions</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Discovery</strong></td>
+          <td style="text-align: left">Consul, Kubernetes, Nomad via Consul</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>TLS</strong></td>
+          <td style="text-align: left">TLS termination, TLS profiles, hot certificate loading</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>ACME</strong></td>
+          <td style="text-align: left">Let&rsquo;s Encrypt, HTTP-01, DNS-01, automatic renewal</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Authentication</strong></td>
+          <td style="text-align: left">Basic, API key, JWT, Forward Auth</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Traffic controls</strong></td>
+          <td style="text-align: left">Rate limits, 4xx limits</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Health</strong></td>
+          <td style="text-align: left">Active checks, backend status, protocol detection</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Cache</strong></td>
+          <td style="text-align: left">Memory, hybrid, Redis-compatible, TiKV</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Configuration</strong></td>
+          <td style="text-align: left">YAML files, split configuration, remote push API, hot updates</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Clustering</strong></td>
+          <td style="text-align: left">Master/worker configuration and status distribution</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Static content</strong></td>
+          <td style="text-align: left">Built-in static file server</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Observability</strong></td>
+          <td style="text-align: left">Prometheus, access logs, structured Elasticsearch and OpenTelemetery logs, status API</td>
+      </tr>
+      <tr>
+          <td style="text-align: left"><strong>Operations</strong></td>
+          <td style="text-align: left">Privilege drop, PID file, upgrade socket, TCP tuning</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="notes-on-scope">Notes on Scope</h2>
+<ul>
+<li>This list consolidates the supplied documentation files: API, authentication, automatic TLS, cache, feature comparison, configuration, and Consul integration.</li>
+<li>The documentation index file contains site metadata rather than additional feature descriptions.</li>
+<li>The comparison table describes some features as built-in or automatic; detailed descriptions above follow the specific feature and configuration documentation where available.</li>
+<li>Hybrid cache is explicitly marked experimental and not recommended for production in the cache documentation.</li>
+<li>RAFT-based master consensus is listed as planned in the cluster documentation, not as an implemented feature.</li>
+</ul>
+
+  </main>
+</div>
+
+
+  <footer class="site-footer">
+  <span>© 2026 Aralez — Built on <a href="https://github.com/cloudflare/pingora" target="_blank" rel="noopener">Cloudflare Pingora</a></span>
+  <span>
+    <a href="https://github.com/sadoyan/aralez" target="_blank" rel="noopener">GitHub</a> ·
+    <a href="https://www.apache.org/licenses/LICENSE-2.0" target="_blank" rel="noopener">Apache 2.0 License</a>
+  </span>
+</footer>
+
+
+</body>
+</html>

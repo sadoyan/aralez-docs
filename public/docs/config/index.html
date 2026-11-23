@@ -114,6 +114,8 @@
   
   <a href="//localhost:1313/docs/log/" class="drawer-link">Logging</a>
   
+  <a href="//localhost:1313/docs/features/" class="drawer-link">Features</a>
+  
 
   <div class="drawer-footer">
     <a href="https://github.com/sadoyan/aralez" class="drawer-github" target="_blank" rel="noopener">GitHub</a>
@@ -186,6 +188,8 @@
       <a href="//localhost:1313/docs/cache/">Cache</a>
       
       <a href="//localhost:1313/docs/log/">Logging</a>
+      
+      <a href="//localhost:1313/docs/features/">Features</a>
       
     </nav>
   </div>
@@ -327,31 +331,6 @@
           <td>Optional. Local bind address for static file server.</td>
       </tr>
       <tr>
-          <td><strong>log_level</strong></td>
-          <td><code>info</code></td>
-          <td>Global logging verbosity threshold (<code>info</code>, <code>warn</code>, <code>error</code>, <code>debug</code>, <code>trace</code>, <code>off</code>).</td>
-      </tr>
-      <tr>
-          <td><strong>access_log</strong></td>
-          <td><code>all</code></td>
-          <td>Access logging mode (<code>all</code>, <code>error</code>). Omit/comment out to disable.</td>
-      </tr>
-      <tr>
-          <td><strong>log_pattern</strong></td>
-          <td><code>{d(%Y-%m-%d %H:%M:%S)} {h({l})} - {t} - {m} {n}</code></td>
-          <td>Optional custom log pattern. Defaults to <code>{d(%Y-%m-%d %H:%M:%S)} {l} - {m}{n}</code>.</td>
-      </tr>
-      <tr>
-          <td><strong>log_file</strong></td>
-          <td><code>/tmp/aralez.log, 20, 5, compress</code></td>
-          <td>Optional file logging config: path, max size (MB), rotated files to keep, compression.</td>
-      </tr>
-      <tr>
-          <td><strong>log_structured</strong></td>
-          <td><code>elasticsearch</code></td>
-          <td>Optional structured logging sink target (e.g., <code>elasticsearch</code>).</td>
-      </tr>
-      <tr>
           <td><strong>acme_dns_provider</strong></td>
           <td><code>cloudflare</code></td>
           <td>DNS provider API integration for automated ACME DNS-01 challenges (<code>cloudflare</code>, <code>route53</code>, <code>digitalocean</code>).</td>
@@ -405,6 +384,36 @@
           <td><strong>tcp.tcp_fastopen</strong></td>
           <td><code>4096</code></td>
           <td>Enables TCP Fast Open backlog queue size. Set to <code>0</code> if unsupported by host kernel/container. Defaults to <code>4096</code>.</td>
+      </tr>
+      <tr>
+          <td><strong>log</strong></td>
+          <td>Optional Block</td>
+          <td>If omitted logs to stdout.</td>
+      </tr>
+      <tr>
+          <td><strong>log.log_level</strong></td>
+          <td><code>info</code></td>
+          <td>Global logging verbosity threshold (<code>info</code>, <code>warn</code>, <code>error</code>, <code>debug</code>, <code>trace</code>, <code>off</code>).</td>
+      </tr>
+      <tr>
+          <td><strong>log.access_log</strong></td>
+          <td><code>all</code></td>
+          <td>Access logging mode (<code>all</code>, <code>error</code>). Omit or comment out to disable.</td>
+      </tr>
+      <tr>
+          <td><strong>log.log_pattern</strong></td>
+          <td><code>{d(%Y-%m-%d %H:%M:%S)} {h({l})} - {t} - {m} {n}</code></td>
+          <td>Optional custom log pattern. Defaults to <code>{d(%Y-%m-%d %H:%M:%S)} {l} - {m}{n}</code>.</td>
+      </tr>
+      <tr>
+          <td><strong>log.log_file</strong></td>
+          <td><code>/tmp/aralez.log, 20, 5, compress</code></td>
+          <td>Optional file logging config: file path, max size (MB), rotated files to keep, and compression toggle.</td>
+      </tr>
+      <tr>
+          <td><strong>log.log_structured</strong></td>
+          <td>Disabled by default</td>
+          <td>Optional structured logging sink target (e.g., <code>elasticsearch\otel</code>).</td>
       </tr>
   </tbody>
 </table>

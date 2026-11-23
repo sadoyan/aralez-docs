@@ -114,6 +114,8 @@
   
   <a href="//localhost:1313/docs/log/" class="drawer-link">Logging</a>
   
+  <a href="//localhost:1313/docs/features/" class="drawer-link">Features</a>
+  
 
   <div class="drawer-footer">
     <a href="https://github.com/sadoyan/aralez" class="drawer-github" target="_blank" rel="noopener">GitHub</a>
@@ -187,6 +189,8 @@
       
       <a href="//localhost:1313/docs/log/">Logging</a>
       
+      <a href="//localhost:1313/docs/features/">Features</a>
+      
     </nav>
   </div>
 </aside>
@@ -211,39 +215,45 @@ Elasticsearch.</p>
   </thead>
   <tbody>
       <tr>
-          <td style="text-align: left"><strong>error_log</strong></td>
-          <td style="text-align: left"><code>/tmp/aralez_err.log</code></td>
-          <td style="text-align: left">Optional. File path for directing standard error log output when enabled.</td>
+          <td style="text-align: left"><strong>log</strong></td>
+          <td style="text-align: left">Optional Block</td>
+          <td style="text-align: left">If omitted logs to stdout.</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>log_level</strong></td>
+          <td style="text-align: left"><strong>log.log_level</strong></td>
           <td style="text-align: left"><code>info</code></td>
           <td style="text-align: left">Global logging verbosity threshold (<code>info</code>, <code>warn</code>, <code>error</code>, <code>debug</code>, <code>trace</code>, <code>off</code>).</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>access_log</strong></td>
+          <td style="text-align: left"><strong>log.access_log</strong></td>
           <td style="text-align: left"><code>all</code></td>
           <td style="text-align: left">Access logging mode (<code>all</code>, <code>error</code>). Omit or comment out to disable.</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>log_pattern</strong></td>
+          <td style="text-align: left"><strong>log.log_pattern</strong></td>
           <td style="text-align: left"><code>{d(%Y-%m-%d %H:%M:%S)} {h({l})} - {t} - {m} {n}</code></td>
           <td style="text-align: left">Optional custom log pattern. Defaults to <code>{d(%Y-%m-%d %H:%M:%S)} {l} - {m}{n}</code>.</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>log_file</strong></td>
+          <td style="text-align: left"><strong>log.log_file</strong></td>
           <td style="text-align: left"><code>/tmp/aralez.log, 20, 5, compress</code></td>
           <td style="text-align: left">Optional file logging config: file path, max size (MB), rotated files to keep, and compression toggle.</td>
       </tr>
       <tr>
-          <td style="text-align: left"><strong>log_structured</strong></td>
-          <td style="text-align: left"><code>elasticsearch</code></td>
-          <td style="text-align: left">Optional structured logging sink target (e.g., <code>elasticsearch</code>).</td>
+          <td style="text-align: left"><strong>log.log_structured</strong></td>
+          <td style="text-align: left">Disabled by default</td>
+          <td style="text-align: left">Optional structured logging sink target (e.g., <code>elasticsearch\otel</code>).</td>
       </tr>
   </tbody>
 </table>
-<hr>
-<h2 id="log-output-modes">Log Output Modes</h2>
+<h3 id="example">Example</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">log</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l">info</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">access</span><span class="p">:</span><span class="w"> </span><span class="l">all</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;{d(%Y-%m-%d %H:%M:%S)} {h({l})} - {t} - {m} {n}&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="l">/tmp/aralez.log, 20, 5, compress</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">remote</span><span class="p">:</span><span class="w"> </span><span class="l">otel </span><span class="w">
+</span></span></span></code></pre></div><h2 id="log-output-modes">Log Output Modes</h2>
 <ul>
 <li><strong>Standard Output (Stdout):</strong> If no file logging or <code>error_log</code> parameters are configured, Aralez automatically directs logs to standard output.</li>
 <li><strong>Access Logging:</strong> When enabled via <code>access_log: all</code>, every processed request logs its HTTP status code, result (<code>hit</code>/<code>miss</code>), request path, Virtual Host (<code>Host</code> header), client
@@ -252,7 +262,8 @@ IP, protocol version, and User-Agent.</li>
 <hr>
 <h2 id="structured-logging-elasticsearch">Structured Logging (Elasticsearch)</h2>
 <p>To enable structured bulk logging to Elasticsearch, configure the following parameter in <code>main.yaml</code>:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">log_structured</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;elasticsearch&#34;</span><span class="w">
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">log</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">remote</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;elasticsearch&#34;</span><span class="w">
 </span></span></span></code></pre></div><p><strong>Required Environment Variables</strong></p>
 <ul>
 <li><code>LOG_ELASTIC_HOSTS</code>: URLs of Elasticsearch seed hosts used to construct the internal bulk client.</li>
@@ -262,23 +273,48 @@ IP, protocol version, and User-Agent.</li>
 <li><code>LOG_ELASTIC_FLUSH_DURATION</code>: Time window (in seconds) to buffer logs in memory before flushing.</li>
 <li><code>LOG_ELASTIC_BATCH_LEN</code>: Maximum batch message count held in memory before triggering a bulk index flush.</li>
 </ul>
-<p>The followings defaults fo all parameters:</p>
+<p>The followings are example environment variables configuration defaults:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LOG_ELASTIC_HOSTS</span><span class="o">=</span>http://127.0.0.1:9200 
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LOG_ELASTIC_USER</span><span class="o">=</span>elastic
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LOG_ELASTIC_PASSWORD</span><span class="o">=</span>elastic
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LOG_ELASTIC_INDEX</span><span class="o">=</span>aralez-logs
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LOG_ELASTIC_FLUSH_DURATION</span><span class="o">=</span><span class="m">2</span> 
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LOG_ELASTIC_BATCH_LEN</span><span class="o">=</span><span class="m">200</span> 
-</span></span></code></pre></div><hr>
-<h2 id="writing-a-custom-logging-module">Writing a Custom Logging Module</h2>
+</span></span></code></pre></div><h2 id="structured-logging-opentelemetry">Structured Logging (OpenTelemetry)</h2>
+<p>To enable structured bulk logging to OpenTelemetry Collector, configure the following parameter in <code>main.yaml</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">log</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">remote</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;otel&#34;</span><span class="w">
+</span></span></span></code></pre></div><p><strong>Required Environment Variables</strong></p>
+<ul>
+<li><code>LOG_OTEL_GRPC_HOST</code>: URLs of OpenTelemetry gRPC host:port.</li>
+<li><code>LOG_OTEL_HTTP_HOST</code>: URLs of OpenTelemetry HTTP host:port.</li>
+<li><code>LOG_OTEL_PROTOCOL</code>: OpenTelemetry Collector protocol <code>grpc|http</code>.</li>
+<li><code>LOG_OTEL_DELAY</code>: Time window (in milliseconds) to buffer logs in memory before flushing.</li>
+<li><code>LOG_OTEL_BATCH_SIZE</code>: Number of message to buffer in memory before flushing.</li>
+<li><code>LOG_OTEL_HEADERS</code>: Optionally authentication headers if OpenTelemetry Collector requires authentication.
+<ul>
+<li>example : <code>&quot;authorization=Bearer 1H7TA4a7GCDqfXM2kAW1bz3OSxyPaHJw4xMlLWYWsP6ih1ZuYq&quot;</code></li>
+</ul>
+</li>
+</ul>
+<p>The followings are example environment variables configuration defaults, except <code>LOG_OTEL_HEADERS</code>, default it&rsquo;s not set: disabled.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LOG_OTEL_GRPC_HOST</span><span class="o">=</span>http://127.0.0.1:4318
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LOG_OTEL_PROTOCOL</span><span class="o">=</span>grpc
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LOG_OTEL_DELAY</span><span class="o">=</span><span class="m">2000</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LOG_OTEL_BATCH_SIZE</span><span class="o">=</span><span class="m">512</span>
+</span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">LOG_OTEL_HEADERS</span><span class="o">=</span><span class="s2">&#34;authorization=Bearer 1H7TA4a7GCDqfXM2kAW1bz3OSxyPaHJw4xMlLWYWsP6ih1ZuYq&#34;</span>
+</span></span></code></pre></div><h2 id="writing-a-custom-logging-module">Writing a Custom Logging Module</h2>
 <p><strong>Overview</strong></p>
 <p>Aralez features a modular, decoupled logging architecture powered by asynchronous message-passing (mpsc channels) and the inventory crate for compile-time plugin registration.</p>
-<p>This guide walks through how to implement a custom logging backend (such as shipping logs to a custom sink, database, or external API) by writing a plugin that conforms to the WriteLog trait.</p>
+<p>This guide walks through how to implement a custom logging backend (such as shipping logs to a custom sink, database, or external API) by writing a plugin that conforms to the WriteLog
+trait.</p>
 <p><strong>Architectural Pattern</strong></p>
 <ul>
-<li>Decoupled Workloads: Application and access logs are pushed into a Tokio multi-producer, single-consumer (mpsc) channel, ensuring that slow logging sinks never block the proxy&rsquo;s high-performance request hot path.</li>
+<li>Decoupled Workloads: Application and access logs are pushed into a Tokio multi-producer, single-consumer (mpsc) channel, ensuring that slow logging sinks never block the proxy&rsquo;s
+high-performance request hot path.</li>
 <li>Trait Implementation: Your custom struct implements the WriteLog trait via #[async_trait], listening asynchronously for incoming StructuredSystemLog messages.</li>
-<li>Inventory Registration: The inventory::submit! macro registers your plugin at compile time, making it dynamically available to the Aralez core engine without modifying core routing logic.</li>
+<li>Inventory Registration: The inventory::submit! macro registers your plugin at compile time, making it dynamically available to the Aralez core engine without modifying core routing
+logic.</li>
 </ul>
 <p><strong>Code Example</strong></p>
 <p>Here is a fully functional reference implementation of a custom logging module.</p>

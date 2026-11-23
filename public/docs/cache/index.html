@@ -114,6 +114,8 @@
   
   <a href="//localhost:1313/docs/log/" class="drawer-link">Logging</a>
   
+  <a href="//localhost:1313/docs/features/" class="drawer-link">Features</a>
+  
 
   <div class="drawer-footer">
     <a href="https://github.com/sadoyan/aralez" class="drawer-github" target="_blank" rel="noopener">GitHub</a>
@@ -187,6 +189,8 @@
       
       <a href="//localhost:1313/docs/log/">Logging</a>
       
+      <a href="//localhost:1313/docs/features/">Features</a>
+      
     </nav>
   </div>
 </aside>
@@ -205,7 +209,7 @@
 <li><strong>Use Case:</strong> Ideal for single-instance setups requiring maximum speed and zero storage configuration overhead.</li>
 </ul>
 </li>
-<li><strong><code>hybrid</code></strong>: Content is tiered between local RAM and the local file system.
+<li><strong><code>hybrid</code></strong>: Content is tiered between local RAM and the local file system. <strong>Experimental, do not use in production</strong>
 <ul>
 <li><strong>Capacity:</strong> Allows cache sizes significantly larger than available physical RAM.</li>
 <li><strong>Tier Management:</strong> Hot and cold items are dynamically balanced across memory and disk.</li>
